@@ -75,6 +75,13 @@ This project is a sound-based solution to help keep patients motivated in their 
 Below is a list of applications used for building out project. Make sure to familiarise yourself with these before attempting to work on it
 
 * [![Unity3D][Unity.com]][Unity-url]
+* [![Xsens][Xsens.com]][Xsens-url]
+* [![Cubase Pro12][Cubase.com]][Cubase-url]
+* [![Office Suite][Office.com]][Office-url]
+* [![Adobe][Adobe.com]][Adobe-url]
+* [![FL Studio][FLSudio.com]][FLSudio-url]
+* [![FMOD][Fmod.com]][Fmod-url]
+* [![JetBrains Rider][JetBrains.com]][JetBrains-url]
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -214,5 +221,19 @@ These are some special credits for our project.
 [product-screenshot]: images/screenshot.png
 [Unity.com]: https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white
 [Unity-url]: https://unity.com
-[Xsens.com]: https://img.shields.io/badge/Xsens-000000?style=for-the-badge&logo=unity&logoColor=white
-[Xsens-url]: https://www.xsens.comcom
+[Xsens.com]: https://img.shields.io/badge/Xsens-ff8800?style=for-the-badge&logo=XState&logoColor=white
+[Xsens-url]: https://www.xsens.com
+[Ableton.com]: https://img.shields.io/badge/Ableton-000000?style=for-the-badge&logo=abletonlive&logoColor=white
+[Ableton-url]: https://www.ableton.com/en/
+[Cubase.com]: https://img.shields.io/badge/Cubase-b30c00?style=for-the-badge
+[Cubse-url]: https://www.steinberg.net/cubase/
+[Adobe.com]: https://img.shields.io/badge/Adobe-b30c00?style=for-the-badge&logo=adobe&logoColor=white
+[Adobe-url]: https://www.adobe.com/#
+[Office.com]: https://img.shields.io/badge/Office-000000?style=for-the-badge&logo=microsoftoffice&logoColor=white
+[Office-url]: https://www.office.com
+[FLStudio.com]: https://img.shields.io/badge/FLStudio-000000?style=for-the-badge&logo=instacart&logoColor=white
+[FLStudio-url]: https://www.image-line.com
+[Fmod.com]: https://img.shields.io/badge/FMOD-000000?style=for-the-badge&logo=fmod&logoColor=white
+[Fmod-url]: https://www.fmod.com
+[JetBrains.com]: https://img.shields.io/badge/JetBrains-000000?style=for-the-badge&logo=jetbrains&logoColor=white
+[JetBrains-url]: https://www.jetbrains.com/rider/
