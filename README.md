@@ -79,7 +79,7 @@ Below is a list of applications used for building out project. Make sure to fami
 * [![Cubase Pro12][Cubase.com]][Cubase-url]
 * [![Office Suite][Office.com]][Office-url]
 * [![Adobe][Adobe.com]][Adobe-url]
-* [![FL Studio][FLSudio.com]][FLSudio-url]
+* [![FL Studio][FLStudio.com]][FLStudio-url]
 * [![FMOD][Fmod.com]][Fmod-url]
 * [![JetBrains Rider][JetBrains.com]][JetBrains-url]
 
@@ -225,8 +225,8 @@ These are some special credits for our project.
 [Xsens-url]: https://www.xsens.com
 [Ableton.com]: https://img.shields.io/badge/Ableton-000000?style=for-the-badge&logo=abletonlive&logoColor=white
 [Ableton-url]: https://www.ableton.com/en/
-[Cubase.com]: https://img.shields.io/badge/Cubase-b30c00?style=for-the-badge
-[Cubse-url]: https://www.steinberg.net/cubase/
+[Cubase.com]: https://img.shields.io/badge/Cubase-b30c00?style=for-the-badge&logo=abletonLive&logoColor=white
+[Cubase-url]: https://www.steinberg.net/cubase/
 [Adobe.com]: https://img.shields.io/badge/Adobe-b30c00?style=for-the-badge&logo=adobe&logoColor=white
 [Adobe-url]: https://www.adobe.com/#
 [Office.com]: https://img.shields.io/badge/Office-000000?style=for-the-badge&logo=microsoftoffice&logoColor=white
