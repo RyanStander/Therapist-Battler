@@ -214,3 +214,5 @@ These are some special credits for our project.
 [product-screenshot]: images/screenshot.png
 [Unity.com]: https://img.shields.io/badge/Unity-000000?style=for-the-badge&logo=unity&logoColor=white
 [Unity-url]: https://unity.com
+[Xsens.com]: https://img.shields.io/badge/Xsens-000000?style=for-the-badge&logo=unity&logoColor=white
+[Xsens-url]: https://www.xsens.comcom
