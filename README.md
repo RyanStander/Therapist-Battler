@@ -89,7 +89,7 @@ Below is a list of applications used for building our project. Make sure to fami
 
 <!-- GETTING STARTED -->
 ## Getting Started
-Below we will discuss how to get everything you need to run the Therapy game
+Below we will discuss how to get everything you need to run the Therapy project in Unity
 
 ### Prerequisites
 
@@ -101,7 +101,7 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
+_Below is a template example of how to install the software._
 
 1. Get a free API Key at [https://example.com](https://example.com)
 2. Clone the repo
@@ -124,18 +124,16 @@ _Below is an example of how you can instruct your audience on installing and set
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-
-Use this space to show useful examples of how a project can be used. Additional screenshots, code examples and demos work well in this space. You may also link to more resources.
+This is where we will show examples of how the project can be used, screenshots, code examples and demos would work.
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- ROADMAP -->
 ## Roadmap
 
+ _Template roadmap_
 - [x] Add Changelog
 - [x] Add back to top links
 - [ ] Add Additional Templates w/ Examples
@@ -171,7 +169,7 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-Distributed under the MIT License. See `LICENSE.txt` for more information.
+_Figure out what liscence we work under_
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -180,7 +178,7 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-Your Name - [@ryanstander]https://twitter.com/ryan_stander) - stander.ryan@gmail.com
+Ryan Stander - [@ryanstander](https://twitter.com/ryan_stander) - stander.ryan@gmail.com
 
 Project Link: [https://github.com/RyanStander/Therapist-Battler](https://github.com/RyanStander/Therapist-Battler)
 
@@ -193,6 +191,7 @@ Project Link: [https://github.com/RyanStander/Therapist-Battler](https://github.
 
 These are some special credits for our project.
 
+_Template acknowledgements_
 * [Choose an Open Source License](https://choosealicense.com)
 * [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
 * [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
