@@ -18,7 +18,7 @@
   <h3 align="center">Therapist Battler</h3>
 
   <p align="center">
-    Welcome to the AmI ACL Rehabilitation game repository. You are most likely a CMGT student continueing our project. Below you will find a guide explaining how to work with the software and hardware!
+    Welcome to the AMI ACL Rehabilitation game repository. You are most likely a CMGT student continueing our project. Below you will find a guide explaining how to work with the software and hardware!
     <br />
     <a href="https://github.com/RyanStander/Therapist-Battler"><strong>Explore the docs »</strong></a>
     <br />
@@ -72,7 +72,7 @@ This project is a sound-based solution to help keep patients motivated in their 
 
 
 ### Built With
-Below is a list of applications used for building out project. Make sure to familiarise yourself with these before attempting to work on it
+Below is a list of applications used for building our project. Make sure to familiarise yourself with these before attempting to work on it
 
 * [![Unity3D][Unity.com]][Unity-url]
 * [![Xsens][Xsens.com]][Xsens-url]
