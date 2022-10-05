@@ -5,7 +5,8 @@ using UnityEngine;
 public class LevelSelect : ScriptableObject
 {
     public string LevelName;
-    public int LevelCount;
-    public float HeightValue;
-    public Sprite[] Images;
+    public int LevelNumber;
+    public int HeightValue;
+    public Sprite Images;
+    public int StarCount;
 }
