@@ -16,19 +16,39 @@ public class levelFunctionality : MonoBehaviour
     GameObject StarOne;
     GameObject StarTwo;
     GameObject StarThree;
-
+    //namegetting
+    public LevelSelect levelSO;
+    string nameObject;
+    string levelNumberStringRemove;
+    string levelNumberString;
+    string testString = "LevelSO 01";
 
     void Start()
     {
+        //getScriptableObject
+        levelSO = Resources.Load<LevelSelect>("LevelSO/" + testString);
+        levelSelect = levelSO;
+        //getnamenumber
+        nameObject = this.ToString();
+        levelNumberStringRemove = nameObject.Replace("Level", "LevelSO");
+        levelNumberString = levelNumberStringRemove.Replace("(Clone) (levelFunctionality)", string.Empty);
         //position
         heightValue = levelSelect.HeightValue;
         transform.position = transform.position + new Vector3(0, heightValue, 0);
+        
         //image
         spriteImage = levelSelect.Images;
         S_Image = GetComponent<Image>();
+
+        S_Image.sprite = spriteImage;
         //text
         levelString = levelSelect.LevelName;
         levelNumber = levelSelect.LevelNumber.ToString();
+
+        TMPro.TextMeshProUGUI ProText = transform.Find("LevelName").GetComponent<TMPro.TextMeshProUGUI>();
+        TMPro.TextMeshProUGUI ProTextNumber = transform.Find("LevelNumber").GetComponent<TMPro.TextMeshProUGUI>();
+        ProText.text = levelString;
+        ProTextNumber.text = levelNumber;
         //stars
         StarOne = GameObject.Find("Star 1");
         StarTwo = GameObject.Find("Star 2");
@@ -52,7 +72,7 @@ public class levelFunctionality : MonoBehaviour
             StarThree.SetActive(true);
         }
     }
-
+    /*
     void Update()
     {
         //image
@@ -63,4 +83,5 @@ public class levelFunctionality : MonoBehaviour
         ProText.text = levelString;
         ProTextNumber.text = levelNumber;
     }
+    */
 }
