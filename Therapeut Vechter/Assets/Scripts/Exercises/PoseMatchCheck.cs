@@ -6,19 +6,13 @@ namespace Exercises
     public class PoseMatchCheck : MonoBehaviour
     {
         [SerializeField] private ModelBodyPoints modelBodyPoints;
-        [SerializeField] private PoseData poseData;
         [Range(0, 90)] [SerializeField] private float angleTolerance = 5f;
 
         private int totalPartsCorrect;
 
         [Range(0, 8)] [SerializeField] private int minimumRequiredMatches=6;
 
-        private void FixedUpdate()
-        {
-            PoseMatches();
-        }
-
-        private bool PoseMatches()
+        public bool PoseMatches(PoseData poseData)
         {
             totalPartsCorrect = 0;
             

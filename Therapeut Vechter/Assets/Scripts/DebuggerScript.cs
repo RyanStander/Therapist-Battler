@@ -18,7 +18,7 @@ public class DebuggerScript : MonoBehaviour
 
     private void CallPerformNextAction()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            gameManager.PerformNextActionInEvent();
+        //if (Input.GetKeyDown(KeyCode.A))
+            //gameManager.PerformNextActionInEvent();
     }
 }
