@@ -3,31 +3,29 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class levelFunctionality : MonoBehaviour
+public class LevelFunctionality : MonoBehaviour
 {
-    public LevelSelect levelSelect;
+    private LevelSelect levelSelect;
     private Sprite spriteImage;
-    private Image S_Image;
+    private Image levelIcon;
     private string levelString;
     private string levelNumber;
     private int starCount;
     private int heightValue;
 
-    GameObject StarOne;
-    GameObject StarTwo;
-    GameObject StarThree;
+    private GameObject starOne;
+    private GameObject starTwo;
+    private GameObject starThree;
     //namegetting
-    public LevelSelect levelSO;
-    string nameObject;
-    string levelNumberStringRemove;
-    string levelNumberString;
-    string testString = "LevelSO 01";
+    private string nameObject;
+    private string levelNumberStringRemove;
+    private string levelNumberString;
+    private string testString = "LevelSO 01";
 
     void Start()
     {
         //getScriptableObject
-        levelSO = Resources.Load<LevelSelect>("LevelSO/" + testString);
-        levelSelect = levelSO;
+        levelSelect = Resources.Load<LevelSelect>("LevelSO/" + testString);
         //getnamenumber
         nameObject = this.ToString();
         levelNumberStringRemove = nameObject.Replace("Level", "LevelSO");
@@ -37,10 +35,10 @@ public class levelFunctionality : MonoBehaviour
         transform.position = transform.position + new Vector3(0, heightValue, 0);
         
         //image
-        spriteImage = levelSelect.Images;
-        S_Image = GetComponent<Image>();
+        spriteImage = levelSelect.SpriteIcon;
+        levelIcon = GetComponent<Image>();
 
-        S_Image.sprite = spriteImage;
+        levelIcon.sprite = spriteImage;
         //text
         levelString = levelSelect.LevelName;
         levelNumber = levelSelect.LevelNumber.ToString();
@@ -50,38 +48,26 @@ public class levelFunctionality : MonoBehaviour
         ProText.text = levelString;
         ProTextNumber.text = levelNumber;
         //stars
-        StarOne = GameObject.Find("Star 1");
-        StarTwo = GameObject.Find("Star 2");
-        StarThree = GameObject.Find("Star 3");
+        starOne = GameObject.Find("Star 1");
+        starTwo = GameObject.Find("Star 2");
+        starThree = GameObject.Find("Star 3");
         starCount = levelSelect.StarCount;
 
-        StarOne.SetActive(false);
-        StarTwo.SetActive(false);
-        StarThree.SetActive(false);
+        starOne.SetActive(false);
+        starTwo.SetActive(false);
+        starThree.SetActive(false);
         //stars activation
         if (starCount >= 1)
         {
-            StarOne.SetActive(true);
+            starOne.SetActive(true);
         }
         if (starCount >= 2)
         {
-            StarTwo.SetActive(true);
+            starTwo.SetActive(true);
         }
         if (starCount == 3)
         {
-            StarThree.SetActive(true);
+            starThree.SetActive(true);
         }
     }
-    /*
-    void Update()
-    {
-        //image
-        S_Image.sprite = spriteImage;
-        //text
-        TMPro.TextMeshProUGUI ProText = transform.Find("LevelName").GetComponent<TMPro.TextMeshProUGUI>();
-        TMPro.TextMeshProUGUI ProTextNumber = transform.Find("LevelNumber").GetComponent<TMPro.TextMeshProUGUI>();
-        ProText.text = levelString;
-        ProTextNumber.text = levelNumber;
-    }
-    */
 }

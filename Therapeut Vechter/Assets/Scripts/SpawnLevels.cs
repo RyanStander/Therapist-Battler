@@ -4,14 +4,16 @@ using UnityEngine;
 
 public class SpawnLevels : MonoBehaviour
 {
-    public GameObject[] blockPrefabs;
+    [SerializeField] private GameObject[] blockPrefabs;
+    [SerializeField] private int spawnDistance = 50;
+    [SerializeField] private int startDistance = 25;
 
     void Start()
     {
         blockPrefabs = Resources.LoadAll<GameObject>("Prefabs");
         for (var i = 0; i < blockPrefabs.Length; i++)
         {
-            Instantiate(blockPrefabs[i], new Vector3(i * 50.0f, 100, 0), Quaternion.identity, this.transform);
+            Instantiate(blockPrefabs[i], new Vector3(startDistance + i * spawnDistance, 0, 0), Quaternion.identity, this.transform);
         }
     }
 }

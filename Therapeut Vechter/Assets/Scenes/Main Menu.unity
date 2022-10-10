@@ -135,6 +135,7 @@ GameObject:
   - component: {fileID: 41745675}
   - component: {fileID: 41745674}
   - component: {fileID: 41745673}
+  - component: {fileID: 41745678}
   - component: {fileID: 41745677}
   m_Layer: 5
   m_Name: Menu
@@ -239,14 +240,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba2dda34a945a144e9ec3bba3b71c19d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Mixer: {fileID: 24100000, guid: 779dcf04fef52cd42bff7c57694c19f6, type: 2}
-  Menus:
+  audioMixer: {fileID: 24100000, guid: 779dcf04fef52cd42bff7c57694c19f6, type: 2}
+  menus:
   - {fileID: 1950214695}
   - {fileID: 1280741579}
   - {fileID: 1361696581}
-  ChangeScene: SampleScene
-  VolumeName:
+  volumeName:
   - MusicVol
+--- !u!114 &41745678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41745672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5020e2c8dfaab0a429c81cf9da4b25bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &44962439
 GameObject:
   m_ObjectHideFlags: 0
@@ -331,9 +343,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41745677}
-        m_TargetAssemblyTypeName: MainMenuScript, Assembly-CSharp
-        m_MethodName: QuitGame
+      - m_Target: {fileID: 41745678}
+        m_TargetAssemblyTypeName: QuitGame, Assembly-CSharp
+        m_MethodName: Quit
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1049,6 +1061,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockPrefabs:
   - {fileID: 1592790554119166677, guid: 13a3a03525ab46c429ce9893b0c317bb, type: 3}
+  spawnDistance: 50
+  startDistance: 25
 --- !u!1 &654663320
 GameObject:
   m_ObjectHideFlags: 0
@@ -2090,7 +2104,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1361696582}
   m_Layer: 5
-  m_Name: Ingame UI
+  m_Name: IngameUi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
