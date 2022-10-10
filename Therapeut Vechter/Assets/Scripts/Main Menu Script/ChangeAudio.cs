@@ -6,18 +6,11 @@ using UnityEngine.Audio;
 public class ChangeAudio : MonoBehaviour
 {
     [SerializeField] private AudioMixer audioMixer;
-    [SerializeField] private GameObject[] menus;
     [SerializeField] private string[] volumeName;
-    private GameObject menuObjectZero;
-    private GameObject menuObjectOne;
-    private GameObject menuObjectTwo;
+    [SerializeField] private GameObject menuObjectZero;
+    [SerializeField] private GameObject menuObjectOne;
+    [SerializeField] private GameObject menuObjectTwo;
 
-    void Start()
-    {
-        menuObjectZero = menus[0];
-        menuObjectOne = menus[1];
-        menuObjectTwo = menus[2];
-    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)&& menuObjectOne.activeInHierarchy == false)
