@@ -2,9 +2,10 @@ using UnityEngine;
 
 namespace Exercises
 {
-    [CreateAssetMenu(menuName = "Exercise Data/Pose Data")]
+    [CreateAssetMenuAttribute(fileName = "PoseData",menuName = "Exercise Data/Pose Data")]
     public class PoseData : ScriptableObject
     {
+
         [Header("Feet")]
         public Quaternion leftFootRotation;
         public Quaternion rightFootRotation;
