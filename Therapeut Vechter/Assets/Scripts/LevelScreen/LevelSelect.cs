@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace LevelScreen
@@ -13,6 +14,8 @@ namespace LevelScreen
         public Sprite SpriteIcon;
         [Range(0, 3)]
         public int StarCount;
-        //public GameObject LevelPrefab;
+
+        public bool FinishedLevel;
+        // public GameObject LevelPrefab;
     }
 }

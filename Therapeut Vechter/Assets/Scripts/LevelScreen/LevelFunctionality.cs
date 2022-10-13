@@ -24,6 +24,8 @@ namespace LevelScreen
         private string levelNumberStringRemove;
         private string levelNumberString;
         public string TestString = "LevelSO 01";
+        //finished?
+        public bool IsLevelFinished;
 
         private void Start()
         {
@@ -76,6 +78,8 @@ namespace LevelScreen
             {
                 starThree.SetActive(true);
             }
+            //finished?
+            IsLevelFinished = levelSelect.FinishedLevel;
         }
     }
 }
