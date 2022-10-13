@@ -656,6 +656,7 @@ GameObject:
   - component: {fileID: 635659035}
   - component: {fileID: 635659034}
   - component: {fileID: 635659033}
+  - component: {fileID: 635659036}
   - component: {fileID: 635659032}
   m_Layer: 0
   m_Name: CharacterDummy
@@ -747,6 +748,24 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &635659036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 635659031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c96309171ec856942a07158aeba74234, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modelBodyPoints: {fileID: 635659033}
+  poseDataSetToSaveTo: {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
+  addPoseToPoseDataSet: 1
+  savePath: Assets/ScriptableObjects/Exercises/Poses/DoubleLegJump/
+  poseSetSaveName: DoubleLegJump
+  poseSaveName: DoubleLegJumpStandingBack
 --- !u!1 &650970106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1592,6 +1611,10 @@ PrefabInstance:
     - target: {fileID: 922715380427148467, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Controller
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635195262647078812, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5865332442972015731, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Name

@@ -80,7 +80,7 @@ public class GameManager : MonoBehaviour
 
     private void CheckExercise()
     {
-        if (currentPoseDataSet==null||currentPoseDataSet.poseDatas.Length-1<poseDataProgress)
+        if (currentPoseDataSet==null||currentPoseDataSet.poseDatas.Count-1<poseDataProgress)
         {
             poseDataProgress = 0;
             AdvanceExercise();
