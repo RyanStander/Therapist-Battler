@@ -761,11 +761,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelBodyPoints: {fileID: 635659033}
-  poseDataSetToSaveTo: {fileID: 0}
+  poseDataSetToSaveTo: {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
   addPoseToPoseDataSet: 1
   savePath: Assets/ScriptableObjects/Exercises/Poses/DoubleLegJump/
   poseSetSaveName: DoubleLegJump
-  poseSaveName: DoubleLegJumpStanding
+  poseSaveName: DoubleLegJumpStandingBack
 --- !u!1 &650970106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1611,6 +1611,10 @@ PrefabInstance:
     - target: {fileID: 922715380427148467, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Controller
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5635195262647078812, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5865332442972015731, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Name
