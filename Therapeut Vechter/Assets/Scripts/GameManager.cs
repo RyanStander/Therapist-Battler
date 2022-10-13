@@ -1,29 +1,42 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using Exercises;
 using GameEvents;
+using TMPro;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
     [SerializeField] private GameEventDataHolder gameEventDataHolder;
     [SerializeField] private PoseMatchCheck poseMatchCheck;
-    private Queue<BaseGameEvent> gameEvents=new Queue<BaseGameEvent>();
+    [SerializeField] private TextMeshProUGUI scoreText;
+
+    [Range(0,1)][SerializeField] private float scoreUpdateSpeed=0.5f;
+    private Queue<BaseGameEvent> gameEvents = new Queue<BaseGameEvent>();
     private Queue<PoseDataSet> poseDataSets = new Queue<PoseDataSet>();
     private BaseGameEvent currentGameEvent;
     private PoseDataSet currentPoseDataSet;
 
     private int poseDataProgress;
+
+    private float totalScore;
+    private float currentDisplayScore;
+
     private void Awake()
     {
         InitialiseGame();
+        scoreText.text = 0.ToString();
     }
 
     private void FixedUpdate()
     {
         RunLevel();
+
+        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * 100, scoreUpdateSpeed);
+
+        scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
     }
 
     private void InitialiseGame()
@@ -38,25 +51,25 @@ public class GameManager : MonoBehaviour
 
     private void RunLevel()
     {
-        if (poseDataSets.Count==0)
+        if (poseDataSets.Count == 0)
         {
             PerformNextActionInEvent();
         }
-        
+
         CheckExercise();
     }
-    
+
     private void AdvanceLevel()
     {
-        if (gameEvents.Count>0)
+        if (gameEvents.Count > 0)
         {
             Debug.Log("Advancing level");
             currentGameEvent = gameEvents.Dequeue();
-        }else
+        }
+        else
             Debug.Log("Level cleared");
-        
     }
-    
+
     private void PerformNextActionInEvent()
     {
         Debug.Log("Moving to next action");
@@ -69,7 +82,7 @@ public class GameManager : MonoBehaviour
                 poseDataSets.Enqueue(poseDataSet);
             }
         }
-        
+
         AdvanceLevel();
     }
 
@@ -80,16 +93,20 @@ public class GameManager : MonoBehaviour
 
     private void CheckExercise()
     {
-        if (currentPoseDataSet==null||currentPoseDataSet.poseDatas.Count-1<poseDataProgress)
+        if (currentPoseDataSet == null || currentPoseDataSet.poseDatas.Count - 1 < poseDataProgress)
         {
             poseDataProgress = 0;
             AdvanceExercise();
+            return;
         }
-        else if (poseMatchCheck.PoseMatches(currentPoseDataSet.poseDatas[poseDataProgress]))
-        {
-            Debug.Log("Good job!");
-            poseDataProgress++;
-        }
+
+        var score = poseMatchCheck.PoseScoring(currentPoseDataSet.poseDatas[poseDataProgress]);
+        if (score == -1)
+            return;
+
+        Debug.Log(score/8*100);
+        totalScore += score / 8;
+        scoreText.text = totalScore.ToString(CultureInfo.CurrentCulture);
+        poseDataProgress++;
     }
 }
-
