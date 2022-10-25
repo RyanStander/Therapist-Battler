@@ -446,103 +446,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &435255396
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 435255400}
-  - component: {fileID: 435255399}
-  - component: {fileID: 435255398}
-  - component: {fileID: 435255397}
-  m_Layer: 0
-  m_Name: Sphere
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!135 &435255397
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435255396}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.5
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &435255398
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435255396}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &435255399
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435255396}
-  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!4 &435255400
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 435255396}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.4329892, y: -1.7601827, z: -14.113155}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 9
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &529578213
 GameObject:
   m_ObjectHideFlags: 0
@@ -882,7 +785,7 @@ Transform:
   m_Children:
   - {fileID: 1716965584}
   m_Father: {fileID: 0}
-  m_RootOrder: 11
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &635659036
 MonoBehaviour:
@@ -898,10 +801,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelBodyPoints: {fileID: 635659033}
   poseDataSetToSaveTo: {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
-  addPoseToPoseDataSet: 1
+  addPoseToPoseDataSet: 0
   savePath: Assets/ScriptableObjects/Exercises/Poses/DoubleLegJump/
   poseSetSaveName: DoubleLegJump
-  poseSaveName: DoubleLegJumpStandingBack
+  poseSaveName: SquatLower
 --- !u!1 &650970106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1420,7 +1323,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1173119076}
   m_LocalRotation: {x: -0, y: -0.9982679, z: 0.05883276, w: 0}
-  m_LocalPosition: {x: 0, y: 3.935, z: 9.2}
+  m_LocalPosition: {x: 0, y: 1.73, z: 3.41}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1662,6 +1565,8 @@ MonoBehaviour:
   gameEventDataHolder: {fileID: 11400000, guid: 17f86bb51fde38d4dad6ac0ea2596b2c, type: 2}
   poseMatchCheck: {fileID: 1354624409}
   scoreText: {fileID: 531890031}
+  scoreUpdateSpeed: 0.5
+  scoreModifier: 100
 --- !u!4 &1354624408
 Transform:
   m_ObjectHideFlags: 0
@@ -1748,6 +1653,34 @@ PrefabInstance:
     - target: {fileID: 922715380427148467, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Controller
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510939499326756863, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9996907
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510939499326756863, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.02415265
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510939499326756863, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0.0002181863
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510939499326756863, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.005918941
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510939499326756863, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: -2.768
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510939499326756863, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: -0.041
+      objectReference: {fileID: 0}
+    - target: {fileID: 4510939499326756863, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0.679
       objectReference: {fileID: 0}
     - target: {fileID: 5635195262647078812, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Enabled
@@ -1993,7 +1926,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e27ac8e168f6b64896a2905a6927fb8, type: 3}
       propertyPath: m_RootOrder
-      value: 10
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 1e27ac8e168f6b64896a2905a6927fb8, type: 3}
       propertyPath: m_LocalPosition.x

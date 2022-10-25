@@ -14,6 +14,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI scoreText;
 
     [Range(0,1)][SerializeField] private float scoreUpdateSpeed=0.5f;
+    [SerializeField] private float scoreModifier = 100;
+    
     private Queue<BaseGameEvent> gameEvents = new Queue<BaseGameEvent>();
     private Queue<PoseDataSet> poseDataSets = new Queue<PoseDataSet>();
     private BaseGameEvent currentGameEvent;
@@ -34,7 +36,7 @@ public class GameManager : MonoBehaviour
     {
         RunLevel();
 
-        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * 100, scoreUpdateSpeed);
+        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
 
         scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
     }
@@ -103,9 +105,10 @@ public class GameManager : MonoBehaviour
         var score = poseMatchCheck.PoseScoring(currentPoseDataSet.poseDatas[poseDataProgress]);
         if (score == -1)
             return;
-
-        Debug.Log(score/8*100);
-        totalScore += score / 8;
+        
+        Debug.Log(score);
+        
+        totalScore += score;
         scoreText.text = totalScore.ToString(CultureInfo.CurrentCulture);
         poseDataProgress++;
     }

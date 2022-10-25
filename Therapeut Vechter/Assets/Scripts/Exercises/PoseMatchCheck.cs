@@ -10,7 +10,7 @@ namespace Exercises
 
         private int totalPartsCorrect;
 
-        [Range(0, 8)] [SerializeField] private int minimumRequiredMatches=6;
+        [Range(0, 8)] [SerializeField] private int minimumRequiredMatches = 6;
 
         private float scoring;
         private float maxAngle = 180;
@@ -22,17 +22,19 @@ namespace Exercises
             #region Left Parts
 
             //Upper Legs
-            if (Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Lower Legs
-            if (Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Feet
             if (Quaternion.Angle(poseData.leftFootRotation, modelBodyPoints.leftFoot.localRotation) < angleTolerance)
             {
@@ -42,19 +44,21 @@ namespace Exercises
             #endregion
 
             #region Right Parts
-            
+
             //Upper Legs
-            if (Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Lower Legs
-            if (Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Feet
             if (Quaternion.Angle(poseData.rightFootRotation, modelBodyPoints.rightFoot.localRotation) < angleTolerance)
             {
@@ -64,13 +68,13 @@ namespace Exercises
             #endregion
 
             #region Body Parts
-            
+
             //Pelvis
             if (Quaternion.Angle(poseData.pelvisRotation, modelBodyPoints.pelvis.localRotation) < angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Sternum
             if (Quaternion.Angle(poseData.sternumRotation, modelBodyPoints.sternum.localRotation) < angleTolerance)
             {
@@ -79,13 +83,12 @@ namespace Exercises
 
             #endregion
 
-            Debug.Log("Player achieved score of: "+ PoseScoring(poseData));
-            
-            if (totalPartsCorrect < minimumRequiredMatches) 
+            Debug.Log("Player achieved score of: " + PoseScoring(poseData));
+
+            if (totalPartsCorrect < minimumRequiredMatches)
                 return false;
 
             return true;
-
         }
 
         //Returns a percentile scoring that the player obtains for their exercise
@@ -97,17 +100,19 @@ namespace Exercises
             #region Left Parts
 
             //Upper Legs
-            if (Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Lower Legs
-            if (Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Feet
             if (Quaternion.Angle(poseData.leftFootRotation, modelBodyPoints.leftFoot.localRotation) < angleTolerance)
             {
@@ -117,19 +122,21 @@ namespace Exercises
             #endregion
 
             #region Right Parts
-            
+
             //Upper Legs
-            if (Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Lower Legs
-            if (Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation) < angleTolerance)
+            if (Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation) <
+                angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Feet
             if (Quaternion.Angle(poseData.rightFootRotation, modelBodyPoints.rightFoot.localRotation) < angleTolerance)
             {
@@ -139,13 +146,13 @@ namespace Exercises
             #endregion
 
             #region Body Parts
-            
+
             //Pelvis
             if (Quaternion.Angle(poseData.pelvisRotation, modelBodyPoints.pelvis.localRotation) < angleTolerance)
             {
                 totalPartsCorrect++;
             }
-            
+
             //Sternum
             if (Quaternion.Angle(poseData.sternumRotation, modelBodyPoints.sternum.localRotation) < angleTolerance)
             {
@@ -155,23 +162,36 @@ namespace Exercises
             #endregion
 
             //Left
-            scoring+= 1-Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation)/maxAngle;
-            scoring+= 1-Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation)/maxAngle;
-            scoring+= 1-Quaternion.Angle(poseData.leftFootRotation, modelBodyPoints.leftFoot.localRotation)/maxAngle;
-            
+            scoring += 1 - Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation) /
+                maxAngle * poseData.leftUpperLegScoreValue;
+            scoring += 1 - Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation) /
+                maxAngle * poseData.leftLowerLegScoreValue;
+            scoring += 1 - Quaternion.Angle(poseData.leftFootRotation, modelBodyPoints.leftFoot.localRotation) /
+                maxAngle * poseData.leftFootScoreValue;
+
             //Right
-            scoring+= 1-Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation)/maxAngle;
-            scoring+= 1-Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation)/maxAngle;
-            scoring+= 1-Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightFoot.localRotation)/maxAngle;
-            
+            scoring +=
+                1 - Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation) /
+                maxAngle * poseData.rightUpperLegScoreValue;
+            scoring +=
+                1 - Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation) /
+                maxAngle * poseData.rightLowerLegScoreValue;
+            scoring += 1 - Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightFoot.localRotation) /
+                maxAngle * poseData.rightFootScoreValue;
+
             //Upper body
-            scoring+= 1-Quaternion.Angle(poseData.pelvisRotation, modelBodyPoints.pelvis.localRotation)/maxAngle;
-            scoring+= 1-Quaternion.Angle(poseData.sternumRotation, modelBodyPoints.sternum.localRotation)/maxAngle;
-            
+            scoring += 1 - Quaternion.Angle(poseData.pelvisRotation, modelBodyPoints.pelvis.localRotation) / maxAngle *
+                poseData.pelvisScoreValue;
+            scoring += 1 - Quaternion.Angle(poseData.sternumRotation, modelBodyPoints.sternum.localRotation) /
+                maxAngle * poseData.sternumScoreValue;
+
             if (totalPartsCorrect < minimumRequiredMatches)
                 return -1;
-            
-            return scoring;
+
+            return (scoring / (poseData.leftUpperLegScoreValue + poseData.leftLowerLegScoreValue +
+                              poseData.leftFootScoreValue + poseData.rightUpperLegScoreValue +
+                              poseData.rightLowerLegScoreValue + poseData.rightFootScoreValue +
+                              poseData.pelvisScoreValue + poseData.sternumScoreValue))*poseData.scoreModifier;
         }
     }
 }
