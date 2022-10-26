@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace Exercises
 {
+    /// <summary>
+    /// Holds the data of a pose
+    /// </summary>
     [CreateAssetMenuAttribute(fileName = "PoseData", menuName = "Exercise Data/Pose Data")]
     public class PoseData : ScriptableObject
     {

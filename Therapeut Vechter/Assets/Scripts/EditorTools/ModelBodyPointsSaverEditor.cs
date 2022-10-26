@@ -1,9 +1,11 @@
-using Exercises;
 using UnityEditor;
 using UnityEngine;
 
 namespace EditorTools
 {
+    /// <summary>
+    /// This tooling is rather simple and is just an extension to the model body points save script, adds 2 buttons
+    /// </summary>
     [CustomEditor(typeof(ModelBodyPointsSaver))]
     public class ModelBodyPointsSaverEditor : Editor
     {
