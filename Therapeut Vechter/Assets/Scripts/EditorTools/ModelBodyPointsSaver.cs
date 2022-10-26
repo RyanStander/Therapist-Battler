@@ -1,10 +1,12 @@
-using System;
 using Exercises;
 using UnityEditor;
 using UnityEngine;
 
 namespace EditorTools
 {
+    /// <summary>
+    /// saves the rotations of different body points to a scriptable object based on given data.
+    /// </summary>
     public class ModelBodyPointsSaver : MonoBehaviour
     {
         [SerializeField] private ModelBodyPoints modelBodyPoints;
@@ -13,7 +15,7 @@ namespace EditorTools
         [TextArea][SerializeField] private string savePath = "Assets/ScriptableObjects/Exercises/Poses/";
         [SerializeField] private string poseSetSaveName = "PoseSet";
         [SerializeField] private string poseSaveName = "Pose";
-
+        
         private void OnValidate()
         {
             //Make sure a model body point is connected
