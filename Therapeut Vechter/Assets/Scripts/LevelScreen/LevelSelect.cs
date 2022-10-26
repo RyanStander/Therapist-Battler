@@ -14,6 +14,8 @@ namespace LevelScreen
         public Sprite SpriteIcon;
         [Range(0, 3)]
         public int StarCount;
+        
+        public int StarRequirement;
 
         public bool FinishedLevel;
         // public GameObject LevelPrefab;

@@ -6,7 +6,7 @@ namespace LevelScreen
     public class SpawnLevels : MonoBehaviour
     {
         [SerializeField] private GameObject[] blockPrefabs;
-        [SerializeField] private int spawnDistance = 50;
+        public int SpawnDistance;
         [SerializeField] private int startDistance = 25;
         [SerializeField] private int lineWidth;
         [SerializeField] private LineRenderer lineRenderComplete;
@@ -30,7 +30,7 @@ namespace LevelScreen
             blockPrefabs = Resources.LoadAll<GameObject>("Prefabs");
             for (var i = 0; i < blockPrefabs.Length; i++)
             {
-                var levelPrefab = Instantiate(blockPrefabs[i], new Vector3(startDistance + i * spawnDistance, 0, 0),
+                var levelPrefab = Instantiate(blockPrefabs[i], new Vector3(startDistance + i * SpawnDistance, 0, 0),
                     Quaternion.identity, transform);
             }
         }
@@ -38,11 +38,11 @@ namespace LevelScreen
         //line renderer functionality
         private void Update()
         {
-            //get all children in spawning object to draw line between
-            levelPrefabPosition = transform.Cast<Transform>().ToArray();
             //line drawing
             if (allLinesDrawn == false)
             {
+                //get all children in spawning object to draw line between
+                levelPrefabPosition = transform.Cast<Transform>().ToArray();
                 for (var i = 0; i < levelPrefabPosition.Length; i++)
                 {
                     //draw line between finished levels

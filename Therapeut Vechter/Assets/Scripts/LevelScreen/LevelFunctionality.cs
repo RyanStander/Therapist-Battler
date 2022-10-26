@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -26,9 +27,13 @@ namespace LevelScreen
         public string TestString = "LevelSO 01";
         //finished?
         public bool IsLevelFinished;
+        //unlocked?
+        private GameObject sceneStarCount;
+        private bool isUnlockedBool;
 
         private void Start()
         {
+            sceneStarCount = GameObject.Find("StarAmount");
             //getScriptableObject
             levelSelect = Resources.Load<LevelSelect>("LevelSO/" + TestString);
             //getnamenumber
@@ -80,6 +85,16 @@ namespace LevelScreen
             }
             //finished?
             IsLevelFinished = levelSelect.FinishedLevel;
+        }
+
+        private void Update()
+        {
+            //is level unlocked?
+            if(sceneStarCount.GetComponent<StarCountScript>().starsInScene >= levelSelect.StarRequirement && isUnlockedBool == false)
+            {
+                GameObject.Find("LockIcon").SetActive(false);
+                isUnlockedBool = true;
+            }
         }
     }
 }
