@@ -6,6 +6,7 @@ using Exercises;
 using GameEvents;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -13,21 +14,30 @@ public class GameManager : MonoBehaviour
     [SerializeField] private PoseMatchCheck poseMatchCheck;
     [SerializeField] private TextMeshProUGUI scoreText;
 
-    [Range(0,1)][SerializeField] private float scoreUpdateSpeed=0.5f;
+    [Range(0, 1)] [SerializeField] private float scoreUpdateSpeed = 0.5f;
     [SerializeField] private float scoreModifier = 100;
-    
-    private Queue<BaseGameEvent> gameEvents = new Queue<BaseGameEvent>();
-    private Queue<PoseDataSet> poseDataSets = new Queue<PoseDataSet>();
+
+    [Header("Game event objects")] [SerializeField]
+    private Image exerciseImage;
+
+    [SerializeField] private AudioSource exerciseAudioSource;
+
+    private List<BaseGameEvent> gameEvents = new List<BaseGameEvent>();
+    private Queue<GameEventData> gameEventDatas = new Queue<GameEventData>();
     private BaseGameEvent currentGameEvent;
-    private PoseDataSet currentPoseDataSet;
+    private GameEventData currentgameGameEventData;
 
     private int poseDataProgress;
 
     private float totalScore;
     private float currentDisplayScore;
 
+    private bool levelCleared;
+    private bool exerciseComplete;
+
     private void Awake()
     {
+        //Sets the starting values for the game
         InitialiseGame();
         scoreText.text = 0.ToString();
     }
@@ -36,42 +46,38 @@ public class GameManager : MonoBehaviour
     {
         RunLevel();
 
-        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
-
-        scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
+        SlowScoreIncreaseOverTime();
     }
 
     private void InitialiseGame()
     {
+        //Enques all of the game events into a queue
         foreach (var gameEvent in gameEventDataHolder.gameEvents)
         {
             gameEvents.Enqueue(gameEvent);
         }
 
-        AdvanceLevel();
+        //Starts the first event
+        AdvanceToNextEvent();
     }
 
+    //Manages the functionality of the level
     private void RunLevel()
     {
-        if (poseDataSets.Count == 0)
+        //Do not proceed if the level has been finished
+        //TODO: Implement functionality for finishing a level
+        if (levelCleared)
+            return;
+        
+        if (gameEventDatas.Count == 0 && (currentgameGameEventData.ExerciseToPerform == null ||
+            currentgameGameEventData.ExerciseToPerform.poseDatas.Count == poseDataProgress))
         {
             PerformNextActionInEvent();
         }
 
         CheckExercise();
     }
-
-    private void AdvanceLevel()
-    {
-        if (gameEvents.Count > 0)
-        {
-            Debug.Log("Advancing level");
-            currentGameEvent = gameEvents.Dequeue();
-        }
-        else
-            Debug.Log("Level cleared");
-    }
-
+    
     private void PerformNextActionInEvent()
     {
         Debug.Log("Moving to next action");
@@ -79,37 +85,71 @@ public class GameManager : MonoBehaviour
 
         if (currentGameEvent is EnvironmentPuzzleData environmentPuzzleData)
         {
-            foreach (var poseDataSet in environmentPuzzleData.exerciseToPerform)
+            foreach (var poseDataSet in environmentPuzzleData.exerciseData)
             {
-                poseDataSets.Enqueue(poseDataSet);
+                gameEventDatas.Enqueue(poseDataSet);
             }
         }
 
-        AdvanceLevel();
+        AdvanceToNextEvent();
     }
 
-    private void AdvanceExercise()
+    private void AdvanceToNextEvent()
     {
-        currentPoseDataSet = poseDataSets.Dequeue();
+        if (gameEvents.Count > 0)
+        {
+            currentGameEvent = gameEvents.Dequeue();
+        }
     }
 
     private void CheckExercise()
     {
-        if (currentPoseDataSet == null || currentPoseDataSet.poseDatas.Count - 1 < poseDataProgress)
+        if (currentgameGameEventData == null || currentgameGameEventData.ExerciseToPerform == null ||
+            currentgameGameEventData.ExerciseToPerform.poseDatas.Count - 1 < poseDataProgress)
         {
             poseDataProgress = 0;
             AdvanceExercise();
             return;
         }
 
-        var score = poseMatchCheck.PoseScoring(currentPoseDataSet.poseDatas[poseDataProgress]);
+        var score = poseMatchCheck.PoseScoring(currentgameGameEventData.ExerciseToPerform.poseDatas[poseDataProgress]);
+
         if (score == -1)
             return;
-        
-        Debug.Log(score);
-        
+
         totalScore += score;
         scoreText.text = totalScore.ToString(CultureInfo.CurrentCulture);
         poseDataProgress++;
+
+        if (gameEvents.Count == 0 && gameEventDatas.Count==0  &&
+            (currentgameGameEventData.ExerciseToPerform.poseDatas.Count == poseDataProgress&&currentgameGameEventData.ExerciseToPerform.poseDatas.Count!=0)&& exerciseComplete)
+        {
+            Debug.Log("Level cleared");
+            levelCleared = true;
+        }
+    }
+    
+    private void AdvanceExercise()
+    {
+        Debug.Log("Advancing exercise");
+        exerciseComplete = false;
+        currentgameGameEventData = gameEventDatas.Dequeue();
+
+        if (currentgameGameEventData != null)
+        {
+            //Play sound
+            exerciseAudioSource.clip = currentgameGameEventData.VoiceLineToPlay;
+            exerciseAudioSource.Play();
+
+            //display visuals
+            exerciseImage.sprite = currentgameGameEventData.SpriteToShow;
+        }
+    }
+
+    private void SlowScoreIncreaseOverTime()
+    {
+        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
+
+        scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
     }
 }
