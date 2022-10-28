@@ -24,8 +24,11 @@ namespace LevelScreen
         {
             //set line render width
             lineRenderComplete.startWidth = lineWidth;
+            lineRenderComplete.sortingOrder = -1;
             lineRenderUnComplete.startWidth = lineWidth;
+            lineRenderUnComplete.sortingOrder = -1;
             lineRenderGradient.startWidth = lineWidth;
+            lineRenderGradient.sortingOrder = -1;
             //spawn level objects in
             blockPrefabs = Resources.LoadAll<GameObject>("Prefabs");
             for (var i = 0; i < blockPrefabs.Length; i++)
