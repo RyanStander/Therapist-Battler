@@ -23,6 +23,8 @@ public class GameManager : MonoBehaviour
     private Image exerciseImage;
 
     [SerializeField] private AudioSource dialogueAudioSource;
+    [SerializeField] private AudioSource musicAudioSource;
+    private bool hasSwappedMusicAudioSource;
 
     private List<GameEventData> gameEventDatas = new List<GameEventData>();
     private int gameEventDatasIndex;
@@ -67,6 +69,14 @@ public class GameManager : MonoBehaviour
     {
         if (gameEventsIndex>=gameEventDataHolder.gameEvents.Length)
             return;
+
+        if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic&&!hasSwappedMusicAudioSource)
+        {
+            musicAudioSource.Stop();
+            musicAudioSource.clip = gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic;
+            musicAudioSource.Play();
+            hasSwappedMusicAudioSource = true;
+        }
         
         if (gameEventDataHolder.gameEvents[gameEventsIndex] is EnvironmentPuzzleData puzzleEvent)
         {
