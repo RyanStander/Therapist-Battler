@@ -8,12 +8,4 @@ namespace GameEvents
     {
         public GameEventData[] exerciseData;
     }
-
-    [System.Serializable]
-    public class GameEventData
-    {
-    public PoseDataSet ExerciseToPerform;
-    public AudioClip VoiceLineToPlay;
-    public Sprite SpriteToShow;
-    }
 }

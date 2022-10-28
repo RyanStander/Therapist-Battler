@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class GameManager : MonoBehaviour
 {
     [SerializeField] private GameEventDataHolder gameEventDataHolder;
+    public int gameEventsIndex;
+
     [SerializeField] private PoseMatchCheck poseMatchCheck;
     [SerializeField] private TextMeshProUGUI scoreText;
 
@@ -22,8 +24,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AudioSource exerciseAudioSource;
 
-    private List<BaseGameEvent> gameEvents = new List<BaseGameEvent>();
-    private Queue<GameEventData> gameEventDatas = new Queue<GameEventData>();
+    private List<GameEventData> gameEventDatas = new List<GameEventData>();
+    private int gameEventDatasIndex;
     private BaseGameEvent currentGameEvent;
     private GameEventData currentgameGameEventData;
 
@@ -35,11 +37,17 @@ public class GameManager : MonoBehaviour
     private bool levelCleared;
     private bool exerciseComplete;
 
+
+    //TODO: Move around for organising
+    private int eventExerciseDataIndex;
+    private int poseDataIndex;
+
+    private bool hasPlayedAudio;
+
     private void Awake()
     {
         //Sets the starting values for the game
         InitialiseGame();
-        scoreText.text = 0.ToString();
     }
 
     private void FixedUpdate()
@@ -51,34 +59,70 @@ public class GameManager : MonoBehaviour
 
     private void InitialiseGame()
     {
-        //Enques all of the game events into a queue
-        foreach (var gameEvent in gameEventDataHolder.gameEvents)
-        {
-            gameEvents.Enqueue(gameEvent);
-        }
-
-        //Starts the first event
-        AdvanceToNextEvent();
+        scoreText.text = 0.ToString();
     }
 
     //Manages the functionality of the level
     private void RunLevel()
     {
-        //Do not proceed if the level has been finished
-        //TODO: Implement functionality for finishing a level
-        if (levelCleared)
+        if (gameEventsIndex>=gameEventDataHolder.gameEvents.Length)
             return;
         
-        if (gameEventDatas.Count == 0 && (currentgameGameEventData.ExerciseToPerform == null ||
-            currentgameGameEventData.ExerciseToPerform.poseDatas.Count == poseDataProgress))
+        if (gameEventDataHolder.gameEvents[gameEventsIndex] is EnvironmentPuzzleData puzzleEvent)
         {
-            PerformNextActionInEvent();
+            ManagePuzzleEvent(puzzleEvent);
+        }
+    }
+
+    private void ManagePuzzleEvent(EnvironmentPuzzleData puzzleEvent)
+    {
+        //if it reaches the end of the pose data list
+        if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataProgress)
+        {
+            eventExerciseDataIndex++;
+            poseDataProgress = 0;
+            hasPlayedAudio = false;
+            
+            if (puzzleEvent.exerciseData.Length == eventExerciseDataIndex)
+            {
+                eventExerciseDataIndex = 0;
+                gameEventsIndex++;
+                return;
+            }
+
+            return;
         }
 
-        CheckExercise();
+        if (poseDataProgress==0 && !hasPlayedAudio)
+        {
+            hasPlayedAudio = true;
+            exerciseAudioSource.PlayOneShot(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+            exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
+        }
+
+        var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
+            .poseDatas[poseDataProgress]);
+
+        Debug.Log("Checking for: " + puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas[poseDataProgress].name);
+        
+        //if it returns -1 it means the player did not achieve a good pose
+        if (score == -1)
+            return;
+
+        totalScore += score;
+        poseDataProgress++;
     }
-    
-    private void PerformNextActionInEvent()
+
+
+    private void SlowScoreIncreaseOverTime()
+    {
+        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
+
+        scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
+    }
+}
+
+/*private void PerformNextActionInEvent()
     {
         Debug.Log("Moving to next action");
         //go on to next action
@@ -87,7 +131,7 @@ public class GameManager : MonoBehaviour
         {
             foreach (var poseDataSet in environmentPuzzleData.exerciseData)
             {
-                gameEventDatas.Enqueue(poseDataSet);
+                //gameEventDatas.Enqueue(poseDataSet);
             }
         }
 
@@ -98,7 +142,7 @@ public class GameManager : MonoBehaviour
     {
         if (gameEvents.Count > 0)
         {
-            currentGameEvent = gameEvents.Dequeue();
+            //currentGameEvent = gameEvents.Dequeue();
         }
     }
 
@@ -133,7 +177,7 @@ public class GameManager : MonoBehaviour
     {
         Debug.Log("Advancing exercise");
         exerciseComplete = false;
-        currentgameGameEventData = gameEventDatas.Dequeue();
+        //currentgameGameEventData = gameEventDatas.Dequeue();
 
         if (currentgameGameEventData != null)
         {
@@ -144,12 +188,4 @@ public class GameManager : MonoBehaviour
             //display visuals
             exerciseImage.sprite = currentgameGameEventData.SpriteToShow;
         }
-    }
-
-    private void SlowScoreIncreaseOverTime()
-    {
-        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
-
-        scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
-    }
-}
+    }*/

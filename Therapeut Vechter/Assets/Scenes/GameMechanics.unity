@@ -801,11 +801,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelBodyPoints: {fileID: 635659033}
-  poseDataSetToSaveTo: {fileID: 0}
-  addPoseToPoseDataSet: 0
+  poseDataSetToSaveTo: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
+  addPoseToPoseDataSet: 1
   savePath: Assets/ScriptableObjects/Exercises/Poses/SplitLegSquat/
-  poseSetSaveName: DoubleLegJump
-  poseSaveName: SplitLegSquatStanding
+  poseSetSaveName: SplitLegSquat
+  poseSaveName: SplitLegSquat-SquatRightLegForward
 --- !u!1 &650970106
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,6 +1692,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gameEventDataHolder: {fileID: 11400000, guid: 17f86bb51fde38d4dad6ac0ea2596b2c, type: 2}
+  gameEventsIndex: 0
   poseMatchCheck: {fileID: 1354624409}
   scoreText: {fileID: 531890031}
   scoreUpdateSpeed: 0.5
@@ -1727,7 +1728,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   modelBodyPoints: {fileID: 635659033}
   angleTolerance: 15
-  minimumRequiredMatches: 4
+  minimumRequiredMatches: 6
 --- !u!4 &1490788906 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1620832592722261597, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
