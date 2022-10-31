@@ -7,6 +7,7 @@ using GameEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,8 +25,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AudioSource dialogueAudioSource;
     [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource SFXAudioSource;
     [SerializeField] private Slider enemyHealthBar;//TODO: separate to own script functionality
-
+    [SerializeField] private Slider playerHealthBar;
+    
     [SerializeField] private float comboDuration=3;
     
     private bool hasSwappedMusicAudioSource;
@@ -44,18 +47,20 @@ public class GameManager : MonoBehaviour
 
 
     //TODO: Move around for organising
-    public int eventExerciseDataIndex;
-    public int poseDataIndex;
+    private int eventExerciseDataIndex;
+    private int poseDataIndex;
 
     private bool hasPlayedAudio;
 
-    public int playerAttackIndex;
+    private int playerAttackIndex;
+    private float playerCurrentDisplayHealth;
+    private float playerHealth=100;
     private float enemyHealth;
     private float enemyCurrentDisplayHealth;
     private bool hasSetupEnemyFirstTime;
 
     private float timeStamp;
-    public int comboCount;
+    private int comboCount;
     private float comboCountDamageModifier;
     //The damage that the player will deal to the enemy
     private float playerDamage;
@@ -76,6 +81,9 @@ public class GameManager : MonoBehaviour
     private void InitialiseGame()
     {
         scoreText.text = 0.ToString();
+
+        playerHealthBar.maxValue = playerHealth;
+        playerHealthBar.value = playerHealth;
     }
 
     //Manages the functionality of the level
@@ -142,15 +150,17 @@ public class GameManager : MonoBehaviour
             timeStamp = Time.time + comboDuration;
             comboCount++;
             enemyHealth -= playerDamage;
+            if (fightingEvent.enemyAttackedSounds.Length>0)
+                SFXAudioSource.PlayOneShot(fightingEvent.enemyAttackedSounds[Random.Range(0,fightingEvent.enemyAttackedSounds.Length)]);
 
             if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length<= eventExerciseDataIndex)
             {
                 playerAttackIndex++;
                 eventExerciseDataIndex = 0;
                 
-                
-                
-                //TODO: handle player damage here
+                playerHealth -= fightingEvent.enemyDamage;
+                if (fightingEvent.enemyAttackSounds.Length>0)
+                    SFXAudioSource.PlayOneShot(fightingEvent.enemyAttackSounds[Random.Range(0,fightingEvent.enemyAttackSounds.Length)]);
 
                 //We reset the attack index so that it starts the first attack again
                 if (fightingEvent.playerAttackSequence.Length<=playerAttackIndex)
@@ -163,9 +173,11 @@ public class GameManager : MonoBehaviour
         }
 
         //have a combo timer running, depending on how many combos they get, they get higher damage
-        if (timeStamp<=Time.time)
+        if (timeStamp<=Time.time && comboCount>0)
         {
             enemyHealth -= comboCount * comboCountDamageModifier;
+            if (fightingEvent.enemyAttackedSounds.Length>0)
+                SFXAudioSource.PlayOneShot(fightingEvent.enemyAttackedSounds[Random.Range(0,fightingEvent.enemyAttackedSounds.Length)]);
             comboCount = 0;
         }
         
@@ -242,5 +254,7 @@ public class GameManager : MonoBehaviour
         enemyCurrentDisplayHealth = Mathf.Lerp(enemyCurrentDisplayHealth, enemyHealth, scoreUpdateSpeed);
         
         enemyHealthBar.value = enemyCurrentDisplayHealth;
+
+        playerCurrentDisplayHealth = Mathf.Lerp(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
     }
 }
