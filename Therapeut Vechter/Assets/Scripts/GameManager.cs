@@ -24,9 +24,12 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] private AudioSource dialogueAudioSource;
     [SerializeField] private AudioSource musicAudioSource;
-    private bool hasSwappedMusicAudioSource;
+    [SerializeField] private Slider enemyHealthBar;//TODO: separate to own script functionality
 
-    private List<GameEventData> gameEventDatas = new List<GameEventData>();
+    [SerializeField] private float comboDuration=3;
+    
+    private bool hasSwappedMusicAudioSource;
+    
     private int gameEventDatasIndex;
     private BaseGameEvent currentGameEvent;
     private GameEventData currentgameGameEventData;
@@ -41,10 +44,21 @@ public class GameManager : MonoBehaviour
 
 
     //TODO: Move around for organising
-    private int eventExerciseDataIndex;
-    private int poseDataIndex;
+    public int eventExerciseDataIndex;
+    public int poseDataIndex;
 
     private bool hasPlayedAudio;
+
+    public int playerAttackIndex;
+    private float enemyHealth;
+    private float enemyCurrentDisplayHealth;
+    private bool hasSetupEnemyFirstTime;
+
+    private float timeStamp;
+    public int comboCount;
+    private float comboCountDamageModifier;
+    //The damage that the player will deal to the enemy
+    private float playerDamage;
 
     private void Awake()
     {
@@ -84,7 +98,86 @@ public class GameManager : MonoBehaviour
         }else if (gameEventDataHolder.gameEvents[gameEventsIndex] is DialogueData dialogueEvent)
         {
             ManageDialogueEvent(dialogueEvent);
+        }else if (gameEventDataHolder.gameEvents[gameEventsIndex] is FightingData fightingData)
+        {
+            ManageFightingEvent(fightingData);    
         }
+    }
+
+    private void ManageFightingEvent(FightingData fightingEvent)
+    {
+        //if the enemy has just appeared
+        if (!hasSetupEnemyFirstTime)
+        {
+            hasSetupEnemyFirstTime = true;
+            //set background image
+            enemyHealth = fightingEvent.enemyHealth;
+            enemyHealthBar.maxValue = enemyHealth;
+            enemyHealthBar.value = enemyHealth;
+            enemyCurrentDisplayHealth = enemyHealth;
+        }
+        
+        //if enemy dies
+        if (enemyHealth<1)
+        {
+            hasSetupEnemyFirstTime = false;
+            gameEventsIndex++;
+            hasPlayedAudio = false;
+            eventExerciseDataIndex = 0;
+            poseDataIndex = 0;
+            playerAttackIndex = 0;
+            return;
+        }
+
+        if (!hasPlayedAudio && eventExerciseDataIndex==0)
+        {
+            hasPlayedAudio = true;
+            dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+        }
+
+        if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas.Count <= poseDataProgress)
+        {
+            poseDataProgress = 0;
+            eventExerciseDataIndex++;
+            timeStamp = Time.time + comboDuration;
+            comboCount++;
+            enemyHealth -= playerDamage;
+
+            if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length<= eventExerciseDataIndex)
+            {
+                playerAttackIndex++;
+                eventExerciseDataIndex = 0;
+                
+                
+                
+                //TODO: handle player damage here
+
+                //We reset the attack index so that it starts the first attack again
+                if (fightingEvent.playerAttackSequence.Length<=playerAttackIndex)
+                {
+                    playerAttackIndex = 0;
+                }
+
+                dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+            }
+        }
+
+        //have a combo timer running, depending on how many combos they get, they get higher damage
+        if (timeStamp<=Time.time)
+        {
+            enemyHealth -= comboCount * comboCountDamageModifier;
+            comboCount = 0;
+        }
+        
+        var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas[poseDataProgress]);
+
+        //if it returns -1 it means the player did not achieve a good pose
+        if (score == -1)
+            return;
+
+        playerDamage += score;
+        totalScore += score;
+        poseDataProgress++;
     }
 
     private void ManagePuzzleEvent(EnvironmentPuzzleData puzzleEvent)
@@ -140,8 +233,14 @@ public class GameManager : MonoBehaviour
     
     private void SlowScoreIncreaseOverTime()
     {
+        //TODO: make it so combo timer is updated here
+        
         currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
 
         scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
+
+        enemyCurrentDisplayHealth = Mathf.Lerp(enemyCurrentDisplayHealth, enemyHealth, scoreUpdateSpeed);
+        
+        enemyHealthBar.value = enemyCurrentDisplayHealth;
     }
 }
