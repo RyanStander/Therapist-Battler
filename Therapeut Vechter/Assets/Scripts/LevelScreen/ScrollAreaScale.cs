@@ -1,22 +1,20 @@
 using UnityEngine;
-
 namespace LevelScreen
 {
     public class ScrollAreaScale : MonoBehaviour
     {
-        private GameObject[] blockPrefabs;
         private int distanceBetweenObjects;
         private int areaWidth;
+        private int objectSpawned;
         void Start()
         {
-            distanceBetweenObjects = GameObject.Find("Spawning").GetComponent<SpawnLevels>().SpawnDistance;
-            blockPrefabs = Resources.LoadAll<GameObject>("Prefabs");
-            for (var i = 0; i < blockPrefabs.Length; i++)
+            distanceBetweenObjects = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().SpawnDistance;
+            objectSpawned = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().ObjectsSpawned;
+            for (var i = 0; i < objectSpawned; i++)
             {
                 areaWidth += distanceBetweenObjects;
             }
-            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(areaWidth,1080);
+            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(areaWidth,Screen.height);
         }
-
     }
 }

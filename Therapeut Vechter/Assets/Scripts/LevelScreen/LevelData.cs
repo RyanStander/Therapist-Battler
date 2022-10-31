@@ -1,11 +1,10 @@
-using System;
 using UnityEngine;
 
 namespace LevelScreen
 {
     [CreateAssetMenu(menuName = "ScriptableObjects/levelObject")]
 
-    public class LevelSelect : ScriptableObject
+    public class LevelData : ScriptableObject
     {
         public string LevelName;
         public int LevelNumber;
@@ -14,10 +13,8 @@ namespace LevelScreen
         public Sprite SpriteIcon;
         [Range(0, 3)]
         public int StarCount;
-        
         public int StarRequirement;
 
         public bool FinishedLevel;
-        // public GameObject LevelPrefab;
     }
 }

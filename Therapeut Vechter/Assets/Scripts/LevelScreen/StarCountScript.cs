@@ -1,8 +1,6 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace LevelScreen
 {
@@ -12,7 +10,6 @@ namespace LevelScreen
         private string starCountString;
         private int maxStarCount;
         public int starsInScene;
-        private bool starCounting;
         private GameObject[] gameObjects;
 
         void Start()
