@@ -1,7 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Globalization;
 using Exercises;
 using GameEvents;
 using TMPro;
@@ -9,61 +5,101 @@ using UnityEngine;
 using UnityEngine.UI;
 using Random = UnityEngine.Random;
 
+/// <summary>
+/// Handles the game events and is used to play the level.
+/// </summary>
 public class GameManager : MonoBehaviour
 {
-    [SerializeField] private GameEventDataHolder gameEventDataHolder;
-    public int gameEventsIndex;
+    #region Serialised Fields
 
-    [SerializeField] private PoseMatchCheck poseMatchCheck;
-    [SerializeField] private TextMeshProUGUI scoreText;
+    [Header("General")] [Tooltip("Holds the level that will be used")] [SerializeField]
+    private GameEventDataHolder gameEventDataHolder;
 
-    [Range(0, 1)] [SerializeField] private float scoreUpdateSpeed = 0.5f;
-    [SerializeField] private float scoreModifier = 100;
+    [Tooltip("script used to check if poses match")] [SerializeField]
+    private PoseMatchCheck poseMatchCheck;
 
-    [Header("Game event objects")] [SerializeField]
-    private Image exerciseImage;
 
-    [SerializeField] private AudioSource dialogueAudioSource;
-    [SerializeField] private AudioSource musicAudioSource;
-    [SerializeField] private AudioSource SFXAudioSource;
-    [SerializeField] private Slider enemyHealthBar;//TODO: separate to own script functionality
+    [Header("UI")] [SerializeField] private TextMeshProUGUI scoreText;
+    [SerializeField] private Image exerciseImage;
+    [SerializeField] private Image backgroundImage;
     [SerializeField] private Slider playerHealthBar;
-    
-    [SerializeField] private float comboDuration=3;
-    
-    private bool hasSwappedMusicAudioSource;
-    
-    private int gameEventDatasIndex;
-    private BaseGameEvent currentGameEvent;
-    private GameEventData currentgameGameEventData;
+    [SerializeField] private Slider enemyHealthBar; //TODO: separate to own script functionality
+    [SerializeField] private Image enemyImage;
 
-    private int poseDataProgress;
+    [Header("Audio Source")] [SerializeField]
+    private AudioSource dialogueAudioSource;
 
+    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource sfxAudioSource;
+
+    [Header("Scoring")] [Range(0, 1)] [SerializeField]
+    private float scoreUpdateSpeed = 0.5f;
+
+    [SerializeField] private float scoreModifier = 100;
+    [SerializeField] private float comboDuration = 3;
+
+    [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
+    private float comboCountDamageModifier; //TODO: if the combo damage can kill an enemy, it should do so immediately
+
+    [Tooltip("The damage that the player will deal to the enemy")] [SerializeField]
+    private float playerDamage;
+
+    #endregion
+
+
+    #region Private Private
+
+    //the score that the player has achieved
     private float totalScore;
+
+    //the last time stamp of a combo
+    private float comboTimeStamp;
+
+    //The total combo count
+    private int comboCount;
+
+    //The score that is currently displayed (the 2 values are lerped together to make a slow increase)
     private float currentDisplayScore;
 
-    private bool levelCleared;
-    private bool exerciseComplete;
+    #region Audio Data
 
+    //used to determine if music has been swapped, should only happen once
+    private bool hasSwappedMusicAudioSource;
 
-    //TODO: Move around for organising
+    //Used to play dialogue
+    private bool hasPlayedDialogueAudio;
+
+    #endregion
+
+    #region Indexies
+
+    //Primary index, used to determine what event will be played
+    private int gameEventsIndex;
+
+    //Used to determine which exercise is to be done
     private int eventExerciseDataIndex;
+
+    //Used to determine how far the progress is in a pose data set
     private int poseDataIndex;
 
-    private bool hasPlayedAudio;
-
+    //used specifically for fighting events to determine which attack the player does.
     private int playerAttackIndex;
+
+    #endregion
+
+    #region Fighting Data
+
     private float playerCurrentDisplayHealth;
-    private float playerHealth=100;
+    private float playerHealth = 100;
     private float enemyHealth;
     private float enemyCurrentDisplayHealth;
     private bool hasSetupEnemyFirstTime;
 
-    private float timeStamp;
-    private int comboCount;
-    private float comboCountDamageModifier;
-    //The damage that the player will deal to the enemy
-    private float playerDamage;
+    #endregion
+
+    #endregion
+
+    #region Runtime
 
     private void Awake()
     {
@@ -78,37 +114,47 @@ public class GameManager : MonoBehaviour
         SlowScoreIncreaseOverTime();
     }
 
+    #endregion
+
+
     private void InitialiseGame()
     {
         scoreText.text = 0.ToString();
 
         playerHealthBar.maxValue = playerHealth;
         playerHealthBar.value = playerHealth;
+
+        enemyImage.gameObject.SetActive(false);
     }
 
     //Manages the functionality of the level
     private void RunLevel()
     {
-        if (gameEventsIndex>=gameEventDataHolder.gameEvents.Length)
+        //Check if it has reached the
+        if (gameEventsIndex >= gameEventDataHolder.gameEvents.Length)
             return;
 
-        if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic&&!hasSwappedMusicAudioSource)
+        //Swaps song
+        if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
+            !hasSwappedMusicAudioSource)
         {
             musicAudioSource.Stop();
             musicAudioSource.clip = gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic;
             musicAudioSource.Play();
             hasSwappedMusicAudioSource = true;
         }
-        
-        if (gameEventDataHolder.gameEvents[gameEventsIndex] is EnvironmentPuzzleData puzzleEvent)
+
+        switch (gameEventDataHolder.gameEvents[gameEventsIndex])
         {
-            ManagePuzzleEvent(puzzleEvent);
-        }else if (gameEventDataHolder.gameEvents[gameEventsIndex] is DialogueData dialogueEvent)
-        {
-            ManageDialogueEvent(dialogueEvent);
-        }else if (gameEventDataHolder.gameEvents[gameEventsIndex] is FightingData fightingData)
-        {
-            ManageFightingEvent(fightingData);    
+            case EnvironmentPuzzleData puzzleEvent:
+                ManagePuzzleEvent(puzzleEvent);
+                break;
+            case DialogueData dialogueEvent:
+                ManageDialogueEvent(dialogueEvent);
+                break;
+            case FightingData fightingData:
+                ManageFightingEvent(fightingData);
+                break;
         }
     }
 
@@ -123,47 +169,58 @@ public class GameManager : MonoBehaviour
             enemyHealthBar.maxValue = enemyHealth;
             enemyHealthBar.value = enemyHealth;
             enemyCurrentDisplayHealth = enemyHealth;
+            if (fightingEvent.enemySprite == null)
+                enemyImage.gameObject.SetActive(false);
+            else
+            {
+                enemyImage.gameObject.SetActive(true);
+                enemyImage.sprite = fightingEvent.enemySprite;
+            }
         }
-        
+
         //if enemy dies
-        if (enemyHealth<1)
+        if (enemyHealth < 1)
         {
             hasSetupEnemyFirstTime = false;
             gameEventsIndex++;
-            hasPlayedAudio = false;
+            hasSwappedMusicAudioSource = false;
+            hasPlayedDialogueAudio = false;
             eventExerciseDataIndex = 0;
             poseDataIndex = 0;
             playerAttackIndex = 0;
             return;
         }
 
-        if (!hasPlayedAudio && eventExerciseDataIndex==0)
+        if (!hasPlayedDialogueAudio && eventExerciseDataIndex == 0)
         {
-            hasPlayedAudio = true;
+            hasPlayedDialogueAudio = true;
             dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
         }
 
-        if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas.Count <= poseDataProgress)
+        if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas
+                .Count <= poseDataIndex)
         {
-            poseDataProgress = 0;
+            poseDataIndex = 0;
             eventExerciseDataIndex++;
-            timeStamp = Time.time + comboDuration;
+            comboTimeStamp = Time.time + comboDuration;
             comboCount++;
             enemyHealth -= playerDamage;
-            if (fightingEvent.enemyAttackedSounds.Length>0)
-                SFXAudioSource.PlayOneShot(fightingEvent.enemyAttackedSounds[Random.Range(0,fightingEvent.enemyAttackedSounds.Length)]);
+            if (fightingEvent.enemyAttackedSounds.Length > 0)
+                sfxAudioSource.PlayOneShot(
+                    fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
 
-            if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length<= eventExerciseDataIndex)
+            if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length <= eventExerciseDataIndex)
             {
                 playerAttackIndex++;
                 eventExerciseDataIndex = 0;
-                
+
                 playerHealth -= fightingEvent.enemyDamage;
-                if (fightingEvent.enemyAttackSounds.Length>0)
-                    SFXAudioSource.PlayOneShot(fightingEvent.enemyAttackSounds[Random.Range(0,fightingEvent.enemyAttackSounds.Length)]);
+                if (fightingEvent.enemyAttackSounds.Length > 0)
+                    sfxAudioSource.PlayOneShot(
+                        fightingEvent.enemyAttackSounds[Random.Range(0, fightingEvent.enemyAttackSounds.Length)]);
 
                 //We reset the attack index so that it starts the first attack again
-                if (fightingEvent.playerAttackSequence.Length<=playerAttackIndex)
+                if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
                 {
                     playerAttackIndex = 0;
                 }
@@ -173,15 +230,17 @@ public class GameManager : MonoBehaviour
         }
 
         //have a combo timer running, depending on how many combos they get, they get higher damage
-        if (timeStamp<=Time.time && comboCount>0)
+        if (comboTimeStamp <= Time.time && comboCount > 0)
         {
             enemyHealth -= comboCount * comboCountDamageModifier;
-            if (fightingEvent.enemyAttackedSounds.Length>0)
-                SFXAudioSource.PlayOneShot(fightingEvent.enemyAttackedSounds[Random.Range(0,fightingEvent.enemyAttackedSounds.Length)]);
+            if (fightingEvent.enemyAttackedSounds.Length > 0)
+                sfxAudioSource.PlayOneShot(
+                    fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
             comboCount = 0;
         }
-        
-        var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas[poseDataProgress]);
+
+        var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
+            .playerAttack[eventExerciseDataIndex].poseDatas[poseDataIndex]);
 
         //if it returns -1 it means the player did not achieve a good pose
         if (score == -1)
@@ -189,70 +248,70 @@ public class GameManager : MonoBehaviour
 
         playerDamage += score;
         totalScore += score;
-        poseDataProgress++;
+        poseDataIndex++;
     }
 
     private void ManagePuzzleEvent(EnvironmentPuzzleData puzzleEvent)
     {
         //if it reaches the end of the pose data list
-        if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataProgress)
+        if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
             eventExerciseDataIndex++;
-            poseDataProgress = 0;
-            hasPlayedAudio = false;
-            
-            if (puzzleEvent.exerciseData.Length == eventExerciseDataIndex)
-            {
-                eventExerciseDataIndex = 0;
-                gameEventsIndex++;
-                return;
-            }
+            poseDataIndex = 0;
+            hasPlayedDialogueAudio = false;
 
+            if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
+            eventExerciseDataIndex = 0;
+            gameEventsIndex++;
+            hasSwappedMusicAudioSource = false;
             return;
         }
 
-        if (poseDataProgress==0 && !hasPlayedAudio)
+        if (poseDataIndex == 0 && !hasPlayedDialogueAudio)
         {
-            hasPlayedAudio = true;
+            hasPlayedDialogueAudio = true;
             dialogueAudioSource.PlayOneShot(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
             exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
         }
 
         var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
-            .poseDatas[poseDataProgress]);
+            .poseDatas[poseDataIndex]);
 
         //if it returns -1 it means the player did not achieve a good pose
         if (score == -1)
             return;
 
         totalScore += score;
-        poseDataProgress++;
+        poseDataIndex++;
     }
 
     private void ManageDialogueEvent(DialogueData dialogueEvent)
     {
-        if (!dialogueAudioSource.isPlaying&& !hasPlayedAudio)
+        switch (dialogueAudioSource.isPlaying)
         {
-            dialogueAudioSource.clip = dialogueEvent.DialogueClip;
-            dialogueAudioSource.Play();
-            hasPlayedAudio = true;
-        }else if (!dialogueAudioSource.isPlaying&&hasPlayedAudio)
-        {
-            hasPlayedAudio = false;
-            gameEventsIndex++; 
+            case false when !hasPlayedDialogueAudio:
+                dialogueAudioSource.clip = dialogueEvent.DialogueClip;
+                dialogueAudioSource.Play();
+                hasPlayedDialogueAudio = true;
+                break;
+            case false when hasPlayedDialogueAudio:
+                hasPlayedDialogueAudio = false;
+                gameEventsIndex++;
+                hasSwappedMusicAudioSource = false;
+                break;
         }
     }
-    
+
     private void SlowScoreIncreaseOverTime()
     {
         //TODO: make it so combo timer is updated here
-        
+
         currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
 
         scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
 
         enemyCurrentDisplayHealth = Mathf.Lerp(enemyCurrentDisplayHealth, enemyHealth, scoreUpdateSpeed);
-        
+
         enemyHealthBar.value = enemyCurrentDisplayHealth;
 
         playerCurrentDisplayHealth = Mathf.Lerp(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
