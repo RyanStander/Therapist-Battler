@@ -52,6 +52,9 @@ public class GameManager : MonoBehaviour
 
     //the score that the player has achieved
     private float totalScore;
+    
+    //the score achieved during a score
+    private float currentExerciseScore;
 
     //the last time stamp of a combo
     private float comboTimeStamp;
@@ -133,6 +136,8 @@ public class GameManager : MonoBehaviour
 
         playerHealthBar.maxValue = playerHealth;
         playerHealthBar.value = playerHealth;
+
+        backgroundImage.sprite = gameEventDataHolder.startingBackground;
     }
 
     //Manages the functionality of the level
@@ -211,6 +216,11 @@ public class GameManager : MonoBehaviour
                 .Count <= poseDataIndex)
         {
             poseDataIndex = 0;
+            
+            //add to score
+            totalScore += currentExerciseScore;
+            currentExerciseScore = 0;
+            
             eventExerciseDataIndex++;
             comboTimeStamp = Time.time + comboDuration;
             comboCount++;
@@ -257,7 +267,7 @@ public class GameManager : MonoBehaviour
             return;
 
         playerDamage += score;
-        totalScore += score;
+        currentExerciseScore += score;
         poseDataIndex++;
     }
 
@@ -277,6 +287,11 @@ public class GameManager : MonoBehaviour
         {
             eventExerciseDataIndex++;
             poseDataIndex = 0;
+            
+            //add to score
+            totalScore += currentExerciseScore;
+            currentExerciseScore = 0;
+            
             hasPlayedDialogueAudio = false;
 
             if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
@@ -299,8 +314,8 @@ public class GameManager : MonoBehaviour
         //if it returns -1 it means the player did not achieve a good pose
         if (score == -1)
             return;
-
-        totalScore += score;
+        
+        currentExerciseScore += score;
         poseDataIndex++;
     }
 
