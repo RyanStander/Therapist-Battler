@@ -444,7 +444,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   starCountText: {fileID: 53607375}
-  starsInScene: 0
+  StarsInScene: 0
 --- !u!114 &53607375
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -888,7 +888,6 @@ GameObject:
   - component: {fileID: 423356110}
   - component: {fileID: 423356111}
   - component: {fileID: 423356113}
-  - component: {fileID: 423356114}
   m_Layer: 5
   m_Name: RoadmapParent
   m_TagString: Untagged
@@ -937,7 +936,7 @@ MonoBehaviour:
   m_MovementType: 2
   m_Elasticity: 0.1
   m_Inertia: 1
-  m_DecelerationRate: 0.135
+  m_DecelerationRate: 0.005
   m_ScrollSensitivity: 20
   m_Viewport: {fileID: 1361696582}
   m_HorizontalScrollbar: {fileID: 0}
@@ -957,20 +956,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 423356109}
   m_CullTransparentMesh: 1
---- !u!114 &423356114
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 423356109}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8f1d721da1daf344cafd2d5221df3c46, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  scrollImageObj: {fileID: 0}
-  test: {fileID: 0}
 --- !u!1 &430186079
 GameObject:
   m_ObjectHideFlags: 0
@@ -2792,8 +2777,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fa223452b99dcc64b842c9934253e9c5, type: 2}
   - {fileID: 11400000, guid: 32ef05174bf92504ba38f5f5a4dc21a8, type: 2}
   - {fileID: 11400000, guid: 3c82887f1cd8d9d4980c289d70cd7753, type: 2}
-  - {fileID: 11400000, guid: fe9efd49b1c017a4883c61e656b6592f, type: 2}
   - {fileID: 11400000, guid: 3c82887f1cd8d9d4980c289d70cd7753, type: 2}
+  - {fileID: 11400000, guid: fe9efd49b1c017a4883c61e656b6592f, type: 2}
   - {fileID: 11400000, guid: 3c82887f1cd8d9d4980c289d70cd7753, type: 2}
   - {fileID: 11400000, guid: 3c82887f1cd8d9d4980c289d70cd7753, type: 2}
   - {fileID: 11400000, guid: 3c82887f1cd8d9d4980c289d70cd7753, type: 2}
@@ -2816,7 +2801,6 @@ MonoBehaviour:
   lineRenderComplete: {fileID: 718308112}
   lineRenderUnComplete: {fileID: 454929773}
   lineRenderGradient: {fileID: 1629765379}
-  levelPrefabPosition: []
 --- !u!1 &1399490685
 GameObject:
   m_ObjectHideFlags: 0

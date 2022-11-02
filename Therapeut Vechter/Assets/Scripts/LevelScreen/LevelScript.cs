@@ -8,10 +8,13 @@ namespace LevelScreen
     {
         //Get Components of Prefab
         private Image levelIcon;
+
         //Stars
         private GameObject starOne;
         private GameObject starTwo;
+
         private GameObject starThree;
+
         //unlocked?
         private GameObject sceneStarCount;
         private bool isUnlockedBool;
@@ -28,10 +31,10 @@ namespace LevelScreen
         public int Stars;
         public int StarsRequired;
         public bool LevelFinished;
-        
+
 
         //get data from SO
-        public void LoadLevelData (LevelData levelData )
+        public void LoadLevelData(LevelData levelData)
         {
             level = levelData;
             Name = level.LevelName;
@@ -56,11 +59,11 @@ namespace LevelScreen
             var proTextNumber = transform.Find("LevelNumber").GetComponent<TextMeshProUGUI>();
             proText.text = Name;
             proTextNumber.text = levelNumber.ToString();
-            
+
             //position
             var levelTransform = transform;
             levelTransform.localPosition = levelTransform.position + new Vector3(0, SpawnHeight, 0);
-            
+
             //stars
             starOne = GameObject.Find("Star 1");
             starTwo = GameObject.Find("Star 2");
@@ -84,12 +87,13 @@ namespace LevelScreen
                 starThree.SetActive(true);
             }
         }
+
         private void Update()
         {
             //is level unlocked?
-            totalStars = sceneStarCount.GetComponent<StarCountScript>().starsInScene;
-            
-            if(totalStars >= StarsRequired && isUnlockedBool ==false)
+            totalStars = sceneStarCount.GetComponent<StarCountScript>().StarsInScene;
+
+            if (totalStars >= StarsRequired && isUnlockedBool == false)
             {
                 lockIcon.SetActive(false);
                 isUnlockedBool = true;

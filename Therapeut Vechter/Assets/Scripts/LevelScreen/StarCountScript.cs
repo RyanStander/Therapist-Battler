@@ -9,17 +9,19 @@ namespace LevelScreen
         [SerializeField] private TMP_Text starCountText;
         private string starCountString;
         private int maxStarCount;
-        public int starsInScene;
+        public int StarsInScene;
         private GameObject[] gameObjects;
 
         void Start()
         {
+            //start counting after all objects have spawned in
             StartCoroutine(WaitAndPrint());
         }
 
         void Update()
         {
-            starCountString = starsInScene.ToString();
+            //change text in the gem to display current amount
+            starCountString = StarsInScene.ToString();
             starCountString += "/" + maxStarCount;
             starCountText.text = starCountString;
         }
@@ -27,6 +29,7 @@ namespace LevelScreen
         // ReSharper disable Unity.PerformanceAnalysis
         private IEnumerator WaitAndPrint()
         {
+            //add 3 stars per level counted and a 1 total stars unlocked per object found with a star tag
             yield return new WaitForSeconds(0.01f);
             foreach (GameObject levelObj in GameObject.FindGameObjectsWithTag("LevelObject"))
             {
@@ -35,7 +38,7 @@ namespace LevelScreen
 
             foreach (GameObject starObj in GameObject.FindGameObjectsWithTag("Star"))
             {
-                starsInScene += 1;
+                StarsInScene += 1;
             }
         }
     }

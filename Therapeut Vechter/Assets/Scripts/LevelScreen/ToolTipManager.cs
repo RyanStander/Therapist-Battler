@@ -6,8 +6,9 @@ namespace LevelScreen
     public class ToolTipManager : MonoBehaviour
     {
         public static ToolTipManager Instance;
-        public TextMeshProUGUI TextComponent;
-        public Canvas parentCanvas;
+        [SerializeField] private TextMeshProUGUI TextComponent;
+        [SerializeField] private Canvas parentCanvas;
+
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -29,7 +30,7 @@ namespace LevelScreen
         void Update()
         {
             //transform.localPosition = Input.mousePosition;
-            
+
             Vector2 movePos;
 
             RectTransformUtility.ScreenPointToLocalPointInRectangle(

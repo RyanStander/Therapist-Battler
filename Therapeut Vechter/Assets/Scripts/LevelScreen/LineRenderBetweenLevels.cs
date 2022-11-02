@@ -15,7 +15,8 @@ namespace LevelScreen
         private int lineGradientInt;
         private bool lineGradientDrawn;
         private bool allLinesDrawn;
-        public Transform[] levelPrefabPosition;
+        private Transform[] levelPrefabPosition;
+
         void Start()
         {
             //set line render width and sorting layer
@@ -67,11 +68,11 @@ namespace LevelScreen
                         lineRenderGradient.SetPosition(0,
                             new Vector3(levelPrefabPosition[lastCompleteInt - 1].transform.localPosition.x,
                                 levelPrefabPosition[lastCompleteInt - 1].transform.localPosition.y, 0));
-                        
+
                         lineRenderGradient.SetPosition(1,
                             new Vector3(levelPrefabPosition[lastCompleteInt].transform.localPosition.x,
                                 levelPrefabPosition[lastCompleteInt].transform.localPosition.y, 0));
-                        
+
                         lineGradientDrawn = true;
                     }
 

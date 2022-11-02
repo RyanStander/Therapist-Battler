@@ -6,22 +6,26 @@ namespace LevelScreen
     {
         [SerializeField] private GameObject targetObject;
         [SerializeField] private GameObject parentObj;
-        public float scrollAreaPosX;
         private float thisAreaPosX;
+        private GameObject scrollObject;
+
+        private void Start()
+        {
+            scrollObject = GameObject.Find("Scrollable area");
+        }
+
+        //set this object in the right spot in hierarchy for correct scene layers
         public void CheckScene()
         {
             targetObject.SetActive(true);
-            targetObject.transform.parent = parentObj.transform.parent;
+            targetObject.transform.SetParent(parentObj.gameObject.transform.parent);
         }
 
+        //send this objects position to ScrollAreaScale(script) to give the position to snap to
         public void CenterInScreen()
         {
-            Debug.Log("working");
-            scrollAreaPosX = GameObject.Find("Scrollable area").transform.localPosition.x;
-            Debug.Log(scrollAreaPosX);
             thisAreaPosX = transform.parent.localPosition.x;
-            Debug.Log(thisAreaPosX);
-            //GameObject.Find("Scrollable area").transform.localPosition.x = thisAreaPosX;
+            scrollObject.GetComponent<ScrollAreaScale>().SetSnapPosition(thisAreaPosX);
         }
     }
 }

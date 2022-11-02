@@ -89,7 +89,7 @@ namespace LevelScreen
         private void Update()
         {
             //is level unlocked?
-            if(sceneStarCount.GetComponent<StarCountScript>().starsInScene >= levelData.StarRequirement && isUnlockedBool == false)
+            if(sceneStarCount.GetComponent<StarCountScript>().StarsInScene >= levelData.StarRequirement && isUnlockedBool == false)
             {
                 GameObject.Find("LockIcon").SetActive(false);
                 isUnlockedBool = true;
