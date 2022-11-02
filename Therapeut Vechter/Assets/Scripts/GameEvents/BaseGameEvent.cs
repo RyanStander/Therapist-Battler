@@ -7,5 +7,6 @@ namespace GameEvents
         [Header("Override")]
         public bool OverrideCurrentlyPlayingMusic;
         public AudioClip OverrideMusic;
+        public Sprite BackgroundSprite;
     }
 }

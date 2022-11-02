@@ -7,6 +7,5 @@ namespace GameEvents
     {
         [Header("Dialogue Specific")]
         public AudioClip DialogueClip;
-        public Sprite BackgroundSprite;
     }
 }

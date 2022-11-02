@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     [Header("UI")] [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image exerciseImage;
     [SerializeField] private Image backgroundImage;
+    [SerializeField] private Image backgroundTransitionImage;
     [SerializeField] private Slider playerHealthBar;
     [SerializeField] private Slider enemyHealthBar; //TODO: separate to own script functionality
     [SerializeField] private Image enemyImage;
@@ -63,6 +64,9 @@ public class GameManager : MonoBehaviour
     
     //Used for when setting up an event
     private bool hasPerformedFirstTimeSetup;
+
+    //Used to display the new background
+    private bool transitionToNewBackground;
 
     #region Audio Data
 
@@ -114,6 +118,8 @@ public class GameManager : MonoBehaviour
         RunLevel();
 
         SlowScoreIncreaseOverTime();
+
+        TransitionBackgrounds();
     }
 
     #endregion
@@ -168,7 +174,12 @@ public class GameManager : MonoBehaviour
             exerciseImage.gameObject.SetActive(true);
             enemyHealthBar.gameObject.SetActive(true);
             hasPerformedFirstTimeSetup = true;
+            
             //set background image
+            if (fightingEvent.BackgroundSprite!=null)
+            StartBackgroundTransition(fightingEvent.BackgroundSprite);
+            
+            
             enemyHealth = fightingEvent.enemyHealth;
             enemyHealthBar.maxValue = enemyHealth;
             enemyHealthBar.value = enemyHealth;
@@ -255,6 +266,8 @@ public class GameManager : MonoBehaviour
         if (!hasPerformedFirstTimeSetup)
         {
             exerciseImage.gameObject.SetActive(true);
+            if (puzzleEvent.BackgroundSprite!=null)
+            StartBackgroundTransition(puzzleEvent.BackgroundSprite);
             hasPerformedFirstTimeSetup = true;
         }
         
@@ -293,6 +306,13 @@ public class GameManager : MonoBehaviour
 
     private void ManageDialogueEvent(DialogueData dialogueEvent)
     {
+        if (!hasPerformedFirstTimeSetup)
+        {
+            if (dialogueEvent.BackgroundSprite!=null)
+                StartBackgroundTransition(dialogueEvent.BackgroundSprite);
+            hasPerformedFirstTimeSetup = true;
+        }
+        
         switch (dialogueAudioSource.isPlaying)
         {
             case false when !hasPlayedDialogueAudio:
@@ -335,4 +355,41 @@ public class GameManager : MonoBehaviour
 
         playerCurrentDisplayHealth = Mathf.Lerp(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
     }
+
+
+    #region Background Transition
+
+    private void StartBackgroundTransition(Sprite newBackground)
+    {
+        transitionToNewBackground = true;
+        backgroundTransitionImage.sprite = backgroundImage.sprite;
+        backgroundTransitionImage.gameObject.SetActive(true);
+        backgroundImage.sprite = newBackground;
+        //reset scale
+        backgroundTransitionImage.transform.localScale = new Vector3(1, 1, 1);
+        
+        //reset color
+        var c = backgroundTransitionImage.color;
+        c.a = 1;
+        backgroundTransitionImage.color = c;
+    }
+
+    private void TransitionBackgrounds()
+    {
+        if (transitionToNewBackground)
+        {
+            backgroundTransitionImage.transform.localScale += new Vector3(0.01f, 0.01f, 0);
+            var c = backgroundTransitionImage.color;
+            c.a -= 0.01f;
+            if (c.a<0.01f)
+            {
+                transitionToNewBackground = false;
+                backgroundTransitionImage.gameObject.SetActive(false);
+            }
+            backgroundTransitionImage.color = c;
+        }
+    }
+
+    #endregion
+
 }
