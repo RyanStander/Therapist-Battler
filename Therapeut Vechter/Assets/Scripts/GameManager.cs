@@ -60,6 +60,9 @@ public class GameManager : MonoBehaviour
 
     //The score that is currently displayed (the 2 values are lerped together to make a slow increase)
     private float currentDisplayScore;
+    
+    //Used for when setting up an event
+    private bool hasPerformedFirstTimeSetup;
 
     #region Audio Data
 
@@ -93,7 +96,6 @@ public class GameManager : MonoBehaviour
     private float playerHealth = 100;
     private float enemyHealth;
     private float enemyCurrentDisplayHealth;
-    private bool hasSetupEnemyFirstTime;
 
     #endregion
 
@@ -119,12 +121,12 @@ public class GameManager : MonoBehaviour
 
     private void InitialiseGame()
     {
+        ResetVariables();
+        
         scoreText.text = 0.ToString();
 
         playerHealthBar.maxValue = playerHealth;
         playerHealthBar.value = playerHealth;
-
-        enemyImage.gameObject.SetActive(false);
     }
 
     //Manages the functionality of the level
@@ -161,9 +163,11 @@ public class GameManager : MonoBehaviour
     private void ManageFightingEvent(FightingData fightingEvent)
     {
         //if the enemy has just appeared
-        if (!hasSetupEnemyFirstTime)
+        if (!hasPerformedFirstTimeSetup)
         {
-            hasSetupEnemyFirstTime = true;
+            exerciseImage.gameObject.SetActive(true);
+            enemyHealthBar.gameObject.SetActive(true);
+            hasPerformedFirstTimeSetup = true;
             //set background image
             enemyHealth = fightingEvent.enemyHealth;
             enemyHealthBar.maxValue = enemyHealth;
@@ -181,13 +185,8 @@ public class GameManager : MonoBehaviour
         //if enemy dies
         if (enemyHealth < 1)
         {
-            hasSetupEnemyFirstTime = false;
+            ResetVariables();
             gameEventsIndex++;
-            hasSwappedMusicAudioSource = false;
-            hasPlayedDialogueAudio = false;
-            eventExerciseDataIndex = 0;
-            poseDataIndex = 0;
-            playerAttackIndex = 0;
             return;
         }
 
@@ -253,6 +252,13 @@ public class GameManager : MonoBehaviour
 
     private void ManagePuzzleEvent(EnvironmentPuzzleData puzzleEvent)
     {
+        if (!hasPerformedFirstTimeSetup)
+        {
+            exerciseImage.gameObject.SetActive(true);
+            hasPerformedFirstTimeSetup = true;
+        }
+        
+        
         //if it reaches the end of the pose data list
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
@@ -261,9 +267,9 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = false;
 
             if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
-            eventExerciseDataIndex = 0;
+            
+            ResetVariables();
             gameEventsIndex++;
-            hasSwappedMusicAudioSource = false;
             return;
         }
 
@@ -295,11 +301,24 @@ public class GameManager : MonoBehaviour
                 hasPlayedDialogueAudio = true;
                 break;
             case false when hasPlayedDialogueAudio:
-                hasPlayedDialogueAudio = false;
+                ResetVariables();
                 gameEventsIndex++;
-                hasSwappedMusicAudioSource = false;
                 break;
         }
+    }
+
+    //Resets the main variables
+    private void ResetVariables()
+    {
+        exerciseImage.gameObject.SetActive(false);
+        enemyHealthBar.gameObject.SetActive(false);
+        enemyImage.gameObject.SetActive(false);
+        hasSwappedMusicAudioSource = false;
+        hasPlayedDialogueAudio = false;
+        hasPerformedFirstTimeSetup = false;
+        eventExerciseDataIndex = 0;
+        poseDataIndex = 0;
+        playerAttackIndex = 0;
     }
 
     private void SlowScoreIncreaseOverTime()
