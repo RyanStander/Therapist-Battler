@@ -1,0 +1,54 @@
+using TMPro;
+using UnityEngine;
+
+namespace LevelScreen
+{
+    public class ToolTipManager : MonoBehaviour
+    {
+        public static ToolTipManager Instance;
+        public TextMeshProUGUI TextComponent;
+        public Canvas parentCanvas;
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
+        }
+
+        void Start()
+        {
+            Cursor.visible = true;
+            gameObject.SetActive(false);
+        }
+
+        void Update()
+        {
+            //transform.localPosition = Input.mousePosition;
+            
+            Vector2 movePos;
+
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                parentCanvas.transform as RectTransform,
+                Input.mousePosition, parentCanvas.worldCamera,
+                out movePos);
+            transform.position = parentCanvas.transform.TransformPoint(movePos);
+        }
+
+        public void SetAndShowTooltip(string message)
+        {
+            gameObject.SetActive(true);
+            TextComponent.text = message;
+        }
+
+        public void HideTooltip()
+        {
+            gameObject.SetActive(false);
+            TextComponent.text = string.Empty;
+        }
+    }
+}
