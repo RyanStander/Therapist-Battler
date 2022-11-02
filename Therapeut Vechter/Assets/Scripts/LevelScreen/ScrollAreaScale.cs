@@ -46,15 +46,14 @@ namespace LevelScreen
                 positionA = Vector3.Lerp(transform.localPosition, positionB, lerpSpeed);
                 transform.localPosition = positionA;
 
-                if (Math.Abs(positionA.x - positionB.x) < 0.1f)
+                if (Math.Abs(positionA.x - positionB.x) < 1)
                 {
                     moveCanvas = false;
                 }
             }
 
             //outer edge levels cause it to not be able to move to new position, this puts a buffer on it for the first and last levels
-            if (transform.localPosition.x >= -960 ||
-                transform.localPosition.x <= -areaWidth + distanceBetweenObjects * 3)
+            if (transform.localPosition.x >= -960 || transform.localPosition.x <= -areaWidth + distanceBetweenObjects * 3)
             {
                 moveCanvas = false;
             }

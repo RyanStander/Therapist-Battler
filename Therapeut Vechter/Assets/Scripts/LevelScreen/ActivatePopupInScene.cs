@@ -15,7 +15,7 @@ namespace LevelScreen
         }
 
         //set this object in the right spot in hierarchy for correct scene layers
-        public void CheckScene()
+        public void ActivatePopUp()
         {
             targetObject.SetActive(true);
             targetObject.transform.SetParent(parentObj.gameObject.transform.parent);
