@@ -176,7 +176,7 @@ public class GameManager : MonoBehaviour
         //if the enemy has just appeared
         if (!hasPerformedFirstTimeSetup)
         {
-            exerciseImage.gameObject.SetActive(true);
+            exerciseImage.gameObject.SetActive(false);
             enemyHealthBar.gameObject.SetActive(true);
             hasPerformedFirstTimeSetup = true;
             
@@ -222,8 +222,11 @@ public class GameManager : MonoBehaviour
             currentExerciseScore = 0;
             
             eventExerciseDataIndex++;
+            
             comboTimeStamp = Time.time + comboDuration;
             comboCount++;
+            EventManager.currentManager.AddEvent(new UpdateComboScore(true,comboDuration,comboCount));
+            
             enemyHealth -= playerDamage;
             if (fightingEvent.enemyAttackedSounds.Length > 0)
                 sfxAudioSource.PlayOneShot(
@@ -257,6 +260,7 @@ public class GameManager : MonoBehaviour
                 sfxAudioSource.PlayOneShot(
                     fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
             comboCount = 0;
+            EventManager.currentManager.AddEvent(new UpdateComboScore(false,0,0));
         }
 
         var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
@@ -354,6 +358,7 @@ public class GameManager : MonoBehaviour
         eventExerciseDataIndex = 0;
         poseDataIndex = 0;
         playerAttackIndex = 0;
+        EventManager.currentManager.AddEvent(new UpdateComboScore(false,0,0));
     }
 
     private void SlowScoreIncreaseOverTime()
@@ -369,6 +374,8 @@ public class GameManager : MonoBehaviour
         enemyHealthBar.value = enemyCurrentDisplayHealth;
 
         playerCurrentDisplayHealth = Mathf.Lerp(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
+
+        playerHealthBar.value = playerCurrentDisplayHealth;
     }
 
 

@@ -6,4 +6,6 @@ using UnityEngine;
 public enum EventType 
 {
     ReceiveDebug,
+    
+    UpdateComboScore,
 }
