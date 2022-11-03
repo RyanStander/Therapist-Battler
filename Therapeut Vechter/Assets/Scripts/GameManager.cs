@@ -18,14 +18,11 @@ public class GameManager : MonoBehaviour
     [Tooltip("script used to check if poses match")] [SerializeField]
     private PoseMatchCheck poseMatchCheck;
 
-
     [Header("UI")] [SerializeField] private TextMeshProUGUI scoreText;
     [SerializeField] private Image exerciseImage;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image backgroundTransitionImage;
     [SerializeField] private Slider playerHealthBar;
-    [SerializeField] private Slider enemyHealthBar; //TODO: separate to own script functionality
-    [SerializeField] private Image enemyImage;
 
     [Header("Audio Source")] [SerializeField]
     private AudioSource dialogueAudioSource;
@@ -52,7 +49,7 @@ public class GameManager : MonoBehaviour
 
     //the score that the player has achieved
     private float totalScore;
-    
+
     //the score achieved during a score
     private float currentExerciseScore;
 
@@ -64,7 +61,7 @@ public class GameManager : MonoBehaviour
 
     //The score that is currently displayed (the 2 values are lerped together to make a slow increase)
     private float currentDisplayScore;
-    
+
     //Used for when setting up an event
     private bool hasPerformedFirstTimeSetup;
 
@@ -102,7 +99,6 @@ public class GameManager : MonoBehaviour
     private float playerCurrentDisplayHealth;
     private float playerHealth = 100;
     private float enemyHealth;
-    private float enemyCurrentDisplayHealth;
 
     #endregion
 
@@ -131,7 +127,7 @@ public class GameManager : MonoBehaviour
     private void InitialiseGame()
     {
         ResetVariables();
-        
+
         scoreText.text = 0.ToString();
 
         playerHealthBar.maxValue = playerHealth;
@@ -177,25 +173,16 @@ public class GameManager : MonoBehaviour
         if (!hasPerformedFirstTimeSetup)
         {
             exerciseImage.gameObject.SetActive(false);
-            enemyHealthBar.gameObject.SetActive(true);
             hasPerformedFirstTimeSetup = true;
-            
+
             //set background image
-            if (fightingEvent.BackgroundSprite!=null)
-            StartBackgroundTransition(fightingEvent.BackgroundSprite);
-            
-            
+            if (fightingEvent.BackgroundSprite != null)
+                StartBackgroundTransition(fightingEvent.BackgroundSprite);
+
+
             enemyHealth = fightingEvent.enemyHealth;
-            enemyHealthBar.maxValue = enemyHealth;
-            enemyHealthBar.value = enemyHealth;
-            enemyCurrentDisplayHealth = enemyHealth;
-            if (fightingEvent.enemySprite == null)
-                enemyImage.gameObject.SetActive(false);
-            else
-            {
-                enemyImage.gameObject.SetActive(true);
-                enemyImage.sprite = fightingEvent.enemySprite;
-            }
+
+            EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,scoreUpdateSpeed));
         }
 
         //if enemy dies
@@ -216,18 +203,20 @@ public class GameManager : MonoBehaviour
                 .Count <= poseDataIndex)
         {
             poseDataIndex = 0;
-            
+
             //add to score
             totalScore += currentExerciseScore;
             currentExerciseScore = 0;
-            
+
             eventExerciseDataIndex++;
-            
+
             comboTimeStamp = Time.time + comboDuration;
             comboCount++;
-            EventManager.currentManager.AddEvent(new UpdateComboScore(true,comboDuration,comboCount));
-            
+            EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
+
             enemyHealth -= playerDamage;
+            EventManager.currentManager.AddEvent(new DamageEnemy(enemyHealth));
+            
             if (fightingEvent.enemyAttackedSounds.Length > 0)
                 sfxAudioSource.PlayOneShot(
                     fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
@@ -256,11 +245,13 @@ public class GameManager : MonoBehaviour
         if (comboTimeStamp <= Time.time && comboCount > 0)
         {
             enemyHealth -= comboCount * comboCountDamageModifier;
+            EventManager.currentManager.AddEvent(new DamageEnemy(enemyHealth));
+            
             if (fightingEvent.enemyAttackedSounds.Length > 0)
                 sfxAudioSource.PlayOneShot(
                     fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
             comboCount = 0;
-            EventManager.currentManager.AddEvent(new UpdateComboScore(false,0,0));
+            EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
         }
 
         var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
@@ -280,26 +271,26 @@ public class GameManager : MonoBehaviour
         if (!hasPerformedFirstTimeSetup)
         {
             exerciseImage.gameObject.SetActive(true);
-            if (puzzleEvent.BackgroundSprite!=null)
-            StartBackgroundTransition(puzzleEvent.BackgroundSprite);
+            if (puzzleEvent.BackgroundSprite != null)
+                StartBackgroundTransition(puzzleEvent.BackgroundSprite);
             hasPerformedFirstTimeSetup = true;
         }
-        
-        
+
+
         //if it reaches the end of the pose data list
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
             eventExerciseDataIndex++;
             poseDataIndex = 0;
-            
+
             //add to score
             totalScore += currentExerciseScore;
             currentExerciseScore = 0;
-            
+
             hasPlayedDialogueAudio = false;
 
             if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
-            
+
             ResetVariables();
             gameEventsIndex++;
             return;
@@ -318,7 +309,7 @@ public class GameManager : MonoBehaviour
         //if it returns -1 it means the player did not achieve a good pose
         if (score == -1)
             return;
-        
+
         currentExerciseScore += score;
         poseDataIndex++;
     }
@@ -327,11 +318,11 @@ public class GameManager : MonoBehaviour
     {
         if (!hasPerformedFirstTimeSetup)
         {
-            if (dialogueEvent.BackgroundSprite!=null)
+            if (dialogueEvent.BackgroundSprite != null)
                 StartBackgroundTransition(dialogueEvent.BackgroundSprite);
             hasPerformedFirstTimeSetup = true;
         }
-        
+
         switch (dialogueAudioSource.isPlaying)
         {
             case false when !hasPlayedDialogueAudio:
@@ -350,15 +341,16 @@ public class GameManager : MonoBehaviour
     private void ResetVariables()
     {
         exerciseImage.gameObject.SetActive(false);
-        enemyHealthBar.gameObject.SetActive(false);
-        enemyImage.gameObject.SetActive(false);
+        
+        EventManager.currentManager.AddEvent(new HideEnemy());
+
         hasSwappedMusicAudioSource = false;
         hasPlayedDialogueAudio = false;
         hasPerformedFirstTimeSetup = false;
         eventExerciseDataIndex = 0;
         poseDataIndex = 0;
         playerAttackIndex = 0;
-        EventManager.currentManager.AddEvent(new UpdateComboScore(false,0,0));
+        EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
 
     private void SlowScoreIncreaseOverTime()
@@ -368,10 +360,6 @@ public class GameManager : MonoBehaviour
         currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
 
         scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
-
-        enemyCurrentDisplayHealth = Mathf.Lerp(enemyCurrentDisplayHealth, enemyHealth, scoreUpdateSpeed);
-
-        enemyHealthBar.value = enemyCurrentDisplayHealth;
 
         playerCurrentDisplayHealth = Mathf.Lerp(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
 
@@ -389,7 +377,7 @@ public class GameManager : MonoBehaviour
         backgroundImage.sprite = newBackground;
         //reset scale
         backgroundTransitionImage.transform.localScale = new Vector3(1, 1, 1);
-        
+
         //reset color
         var c = backgroundTransitionImage.color;
         c.a = 1;
@@ -403,15 +391,15 @@ public class GameManager : MonoBehaviour
             backgroundTransitionImage.transform.localScale += new Vector3(0.01f, 0.01f, 0);
             var c = backgroundTransitionImage.color;
             c.a -= 0.01f;
-            if (c.a<0.01f)
+            if (c.a < 0.01f)
             {
                 transitionToNewBackground = false;
                 backgroundTransitionImage.gameObject.SetActive(false);
             }
+
             backgroundTransitionImage.color = c;
         }
     }
 
     #endregion
-
 }

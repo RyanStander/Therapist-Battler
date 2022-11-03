@@ -8,4 +8,8 @@ public enum EventType
     ReceiveDebug,
     
     UpdateComboScore,
+    
+    SetupEnemy,
+    DamageEnemy,
+    HideEnemy,
 }
