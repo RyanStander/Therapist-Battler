@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d28ca67cbc551946adbe68ca973a459, type: 3}
+  m_Name: WerewolfAttack
+  m_EditorClassIdentifier: 
+  OverrideCurrentlyPlayingMusic: 0
+  OverrideMusic: {fileID: 0}
+  backgroundSprite: {fileID: 21300000, guid: 9ed2e922f538b324991617c2d2b036a8, type: 3}
+  enemySprite: {fileID: 21300000, guid: b3cbd47076be07e4fbadef90ba1cabd8, type: 3}
+  enemyHealth: 200
+  enemyDamage: 10
+  enemyAttackSounds:
+  - {fileID: 8300000, guid: 0edb4af8fbfffe741892d1f93fb48dc4, type: 3}
+  enemyAttackedSounds:
+  - {fileID: 8300000, guid: 6107f0910453b40449c0c509bf4a147f, type: 3}
+  playerAttackSequence:
+  - exerciseName: {fileID: 8300000, guid: 5db562b72b1cedf4ca8e6db0e7fd82fe, type: 3}
+    playerAttack:
+    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+  - exerciseName: {fileID: 8300000, guid: a8c39f2d742f36b4286425a7b3cc7614, type: 3}
+    playerAttack:
+    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
+    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
+    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
+    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
+    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
