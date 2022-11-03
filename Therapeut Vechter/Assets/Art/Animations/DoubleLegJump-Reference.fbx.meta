@@ -1,11 +1,11 @@
 fileFormatVersion: 2
-guid: cf5383dcbd7feff48b70b0fa8758e178
+guid: 19a6349f6ddc1fc4b9b18821b074b20d
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable:
   - first:
-      74: -8553928937738374294
-    second: Squad-User
+      74: 2944433230366123314
+    second: DoubleLegJump-Reference
   externalObjects: {}
   materials:
     materialImportMode: 2
@@ -22,10 +22,10 @@ ModelImporter:
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
-    animationImportWarnings: "\nClip 'Squad-User' has import animation warnings that
-      might lower retargeting quality:\nNote: Activate translation DOF on avatar
-      to improve retargeting quality.\n\t'Spine3' is inbetween humanoid transforms
-      and has rotation animation that will be discarded.\n"
+    animationImportWarnings: "\nClip 'DoubleLegJump-Reference' has import animation
+      warnings that might lower retargeting quality:\nNote: Activate translation
+      DOF on avatar to improve retargeting quality.\n\t'Spine3' is inbetween humanoid
+      transforms and has rotation animation that will be discarded.\n"
     animationRetargetingWarnings: 
     animationDoRetargetingWarnings: 0
     importAnimatedCustomProperties: 0
@@ -39,11 +39,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Squad-User
-      takeName: Squad-User
+      name: DoubleLegJump-Reference
+      takeName: DoubleLegJump-Reference
       internalID: 0
       firstFrame: 0
-      lastFrame: 322
+      lastFrame: 888
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -52,9 +52,9 @@ ModelImporter:
       hasAdditiveReferencePose: 0
       loopTime: 1
       loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
       keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 0
@@ -292,129 +292,129 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Squad-User(Clone)
+    - name: DoubleLegJump-Reference(Clone)
       parentName: 
       position: {x: 0, y: 0, z: 0}
       rotation: {x: 0, y: 0, z: 0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Reference
-      parentName: Squad-User(Clone)
+      parentName: DoubleLegJump-Reference(Clone)
       position: {x: -0, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Hips
       parentName: Reference
-      position: {x: -0, y: 0.97096294, z: 0}
+      position: {x: -0, y: 0.97091025, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightUpLeg
       parentName: Hips
-      position: {x: 0.08578842, y: -0.00005131719, z: 0.00000570191}
+      position: {x: 0.085795745, y: -0.00004826754, z: 0.0000053630597}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightLeg
       parentName: RightUpLeg
-      position: {x: -0, y: -0.4449452, z: 0.000006090439}
+      position: {x: -0, y: -0.4449248, z: 0.0000057958846}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightFoot
       parentName: RightLeg
-      position: {x: -0, y: -0.43487746, z: 0.000010272205}
+      position: {x: -0, y: -0.43485945, z: 0.000009775713}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightToeBase
       parentName: RightFoot
-      position: {x: -0, y: -0.07395107, z: 0.16751446}
+      position: {x: -0, y: -0.073943816, z: 0.16750474}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftUpLeg
       parentName: Hips
-      position: {x: -0.08578842, y: -0.00007479601, z: 0.000008310668}
+      position: {x: -0.085795745, y: -0.00007174571, z: 0.0000079717465}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftLeg
       parentName: LeftUpLeg
-      position: {x: -0, y: -0.4449452, z: 0.000006090439}
+      position: {x: -0, y: -0.4449248, z: 0.0000057958846}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftFoot
       parentName: LeftLeg
-      position: {x: -0, y: -0.43487746, z: 0.000010272205}
+      position: {x: -0, y: -0.43485945, z: 0.000009775713}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftToeBase
       parentName: LeftFoot
-      position: {x: -0, y: -0.07395107, z: 0.16751446}
+      position: {x: -0, y: -0.073943816, z: 0.16750474}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine
       parentName: Hips
-      position: {x: -0, y: 0.10446759, z: -0.011607513}
+      position: {x: -0, y: 0.104470395, z: -0.011607826}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine1
       parentName: Spine
-      position: {x: -0, y: 0.116311364, z: 0}
+      position: {x: -0, y: 0.116308056, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine2
       parentName: Spine1
-      position: {x: -0, y: 0.10618835, z: 0.000025761998}
+      position: {x: -0, y: 0.10618552, z: 0.00002451592}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine3
       parentName: Spine2
-      position: {x: -0, y: 0.10606982, z: 0.00002578804}
+      position: {x: -0, y: 0.10606699, z: 0.000024540703}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftShoulder
       parentName: Spine3
-      position: {x: -0.032247555, y: 0.08321808, z: 0}
+      position: {x: -0.032260202, y: 0.08324454, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftArm
       parentName: LeftShoulder
-      position: {x: -0.15011844, y: 0, z: 0}
+      position: {x: -0.15016136, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftForeArm
       parentName: LeftArm
-      position: {x: -0.3207445, y: 0, z: 0}
+      position: {x: -0.32084832, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: LeftHand
       parentName: LeftForeArm
-      position: {x: -0.26230308, y: 0, z: 0}
+      position: {x: -0.26248705, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightShoulder
       parentName: Spine3
-      position: {x: 0.032247555, y: 0.08321808, z: 0}
+      position: {x: 0.032260202, y: 0.08324454, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightArm
       parentName: RightShoulder
-      position: {x: 0.15011844, y: 0, z: 0}
+      position: {x: 0.15016136, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightForeArm
       parentName: RightArm
-      position: {x: 0.3207445, y: 0, z: 0}
+      position: {x: 0.32084832, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: RightHand
       parentName: RightForeArm
-      position: {x: 0.26230308, y: 0, z: 0}
+      position: {x: 0.26248705, y: 0, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Neck
       parentName: Spine3
-      position: {x: -0, y: 0.14848503, z: 0}
+      position: {x: -0, y: 0.1485309, z: 0}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     - name: Head
       parentName: Neck
-      position: {x: -0, y: 0.09874508, z: -0.000055404224}
+      position: {x: -0, y: 0.09874279, z: -0.000052724386}
       rotation: {x: 0, y: -0, z: -0, w: 1}
       scale: {x: 1, y: 1, z: 1}
     armTwist: 0.5
