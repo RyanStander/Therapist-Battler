@@ -10,6 +10,7 @@ namespace UI
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField] private Image enemyImage;
+        [SerializeField] private Animator enemyImageAnimator;
         [SerializeField] private Slider enemySlider;
         [SerializeField] private Color enemyDamageColor = Color.red;
         [SerializeField] private float colorUpdateSpeed = 1f;
@@ -78,6 +79,8 @@ namespace UI
                 currentHealth = damageEnemy.CurrentHealth;
 
                 playDamageEffect = true;
+                
+                enemyImageAnimator.Play("EnemyImageHitEffect");
 
                 enemyImage.color = enemyDamageColor;
             }
@@ -116,7 +119,6 @@ namespace UI
             var c = Color.Lerp(enemyColor, defaultColor, colorUpdateSpeed);
 
             enemyImage.color = c;
-
 
             if (Math.Abs(enemyColor.r - defaultColor.r) < 0.01f && Math.Abs(enemyColor.g - defaultColor.g) < 0.01f &&
                 Math.Abs(enemyColor.b - defaultColor.b) < 0.01f)
