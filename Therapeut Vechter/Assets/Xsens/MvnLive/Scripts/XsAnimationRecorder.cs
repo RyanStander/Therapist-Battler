@@ -26,7 +26,7 @@ namespace xsens
         private AnimationCurve[] curves;
 
         private bool recording = false;
-        private bool paused = false;
+        //private bool paused = false;
         private bool saveProptOpen = false;
 
         private XsLiveAnimator xsensAnimator;   //allows us to get the actorId so that we can arrange the GUI buttons for all 4 actors if needed
