@@ -128,6 +128,48 @@ This is where we will show examples of how the project can be used, screenshots,
 
 _For more examples, please refer to the [Documentation](https://example.com)_
 
+### Creating Levels
+One of the main points this project was designed for was making the creation of levels rely on no extra scripting. Below you will find a step guide on how to create a level.
+
+#### Creating Exercises - Pose Data Sets
+_The first step would be making the exercise in Xsens, this explenation will be added at a later point_
+
+##### Character Setup
+After creating a recording of an exercise the next step is setting up a character in Unity for creating PoseDataSet. The following are requirements for setting up a Pose Data:
+* A humanoid rigged model with an animator attached.
+* The ModelBodyPoints component attached and each of its fields filled in with the respective body part in the rig.
+* The ModelBodyPointsSaver script which will allow you to save all the data necessary for creating exercises. Make sure to add the ModelBodyPoints component to its field.
+* Make sure that the animator has a controller with at least 1 animation in it, this will be necessary later.
+Once all of this is setup, it should look something like this in the inspector:
+ <img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/ModelBodyPointsSetup.png" alt="Model Body Points Setup" >
+
+##### Creating PoseDataSet
+The next step is for creating an exercise, this will be all done through the ModelBodyPointsSaver that you made in the previous step. Below is a list of all of the fields and their function:
+* Model Body Points - A reference to the ModelBodyPoints component, this is used for getting the rotation data
+* Pose Data Set To Save To - A reference to the PoseDataSet where each PoseData will be saved to, if you do not have one, you can use the saver to create it which will be explained how at a later point.
+* Add To Pose Data Set - When checked it will add the PoseData to the PoseDataSet, this means it will be placed at the bottom of the list of PoseDatas.
+* Save Path - This describes where the asset will be saved to, it is recommended to start the save path at "Assets/ScriptableObjects/Exercises/Poses/" and then add an extra path to the folder for each different exercise such as "Squat/" for example, make sure the folder is created, it does not create one if it cannot find it to avoid other user errors.
+* Pose Set Save Name - This is what the PoseDataSet will be named when you create it, this is only relevant if the PoseDataSet does not already exist i.e. you have not yet created one.
+* Pose Save Name - The name of the pose of the current exercise point. Imagine this like checkpoints in an exercise, you would want to create them at very vital parts of an exercise such as for a squat you'd want a standing pose, a squatting down pose, and then another standing pose. So, for the squatting down you would call it "Squat-Down".
+* BUTTON Create Holder For Pose - Pressing this button assuming other fields are correctly filled in, will create a holder and assign it to PoseDataSetToSaveTo field.
+* BUTTON Save Model Body Points - pressing this button assuming other fields are correctly filled in and set up, will create a pose, making sure a pose is correctly saved will be described below.
+
+Here is an example of a fully set up Model Body Points Saver:
+ <img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/FullySetupModelBodyPointsSaver.png" alt="Fully set up model body points saver" >
+
+1. If you have all the other parts set up, you should be ready for the next part, which is creating a pose set, you will need a few windows open: 
+    * Scene
+    * Animation
+    * Inspector
+2. Make sure you have the character with the model body points saver selected.
+3. Select the animation you want to use to create the exercise.
+4. Move the slider to the point you want, you can see where you are by looking in the scene at the character. If you did this wrong the character wont move when previewing the animation.
+5. Once happy with the character pose, press the Save Model Body Points button and it will save it to the selected location
+6. Repeat until you make a full clip of an exercise, you don't need too many, try to keep it only to vital parts of a movement where limbs might be to their maximum extensions.
+
+Here is an example of the scene setup and choosing a specific pose
+ <img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SquatAnimationCreation.png" alt="Squatting down point for creating pose" >
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
