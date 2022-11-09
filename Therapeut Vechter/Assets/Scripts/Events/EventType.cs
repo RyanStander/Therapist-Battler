@@ -6,4 +6,10 @@ using UnityEngine;
 public enum EventType 
 {
     ReceiveDebug,
+    
+    UpdateComboScore,
+    
+    SetupEnemy,
+    DamageEnemy,
+    HideEnemy,
 }
