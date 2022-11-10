@@ -6,7 +6,7 @@ namespace GameEvents
     [CreateAssetMenu(menuName = "Game Events/Fight Event")]
     public class FightingData : BaseGameEvent
     {
-        public Sprite backgroundSprite;
+        [Header("Enemy Stats")]
         public Sprite enemySprite;
         public float enemyHealth=100;
         public float enemyDamage=10;
