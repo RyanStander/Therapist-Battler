@@ -155,6 +155,7 @@ The next step is for creating an exercise, this will be all done through the Mod
 * BUTTON Save Model Body Points - pressing this button assuming other fields are correctly filled in and set up, will create a pose, making sure a pose is correctly saved will be described below.
 
 Here is an example of a fully set up Model Body Points Saver:
+
  <img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/FullySetupModelBodyPointsSaver.png" alt="Fully set up model body points saver" >
 
 1. If you have all the other parts set up, you should be ready for the next part, which is creating a pose set, you will need a few windows open: 
@@ -168,7 +169,68 @@ Here is an example of a fully set up Model Body Points Saver:
 6. Repeat until you make a full clip of an exercise, you don't need too many, try to keep it only to vital parts of a movement where limbs might be to their maximum extensions.
 
 Here is an example of the scene setup and choosing a specific pose
+
  <img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SquatAnimationCreation.png" alt="Squatting down point for creating pose" >
+
+#### Creating Game Events
+
+Game events are sections of a level, there are 3 different game events, namely:
+* Dialogue Events: Used when purely voice overs are necessary, used to describe an environment, generally if you want to explain something without needing an exercise
+* Puzzle Events: Used when there is a certain action that needs to be performed to progress further in the level, can be multiple exercises or one, each one having its own voice line. These are useful if you want to have some type of event happen such as moving an object out of the players way with an exercise.
+* Fighting Events: Used when the player encounters an enemy. This contains a set of exercises that the player must continously complete and it cycles until the enemy has been killed. 
+
+##### How To Make A Game Event
+_Creating a game event is the same as any other scriptable object, an explenation is below in case:_
+1. Navigate to the project window in unity
+2. Find a folder you would like to create it in
+3. In an open spot, right click to open the menu
+4. Navigate to Create> Scriptable Objects > Game Events > [Game Event of choice]
+5. Select it and give it a name
+
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/CreatingGameEvents.png" alt="Creating Game Events" >
+
+_Below will be an explenation of each the fields of each event_
+
+##### General Fields
+There are a few fields that is present on all kinds of events, namely:
+* Override Currently playing music - A toggle when active it will override the music currently playing.
+* Override Music - The music that will override the currently active song, only used when the toggle is active.
+* Background Sprite - can be left empty, but when it has an image it will change the background scene, useful if the player reaches a new location.
+
+
+##### Dialogue Event
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/DialogueEvent.png" alt="Dialogue Event Example" >
+
+* Dialogue Clip - The voice line played, once it finishes it moves on to the next event.
+ 
+##### Puzzle Event
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/PuzzleEvent.png" alt="Puzzle Event Example" >
+
+* Exercise Data - This is an array that contains a few fields, each of these is for performing a certain exercise. They contain the following:
+  * Exercise to perform - This is a pose data set that you made in the previous section, so whatever you put here will be the exercise that the player performs
+  * Voice line to play - This will be said to inform the player of what they have to do.
+  * Sprite To Show - This will be put on an image, it could be an exercise or it could be a character, what exactly it is has yet to be decided on.
+
+##### Fighting Event
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/FightingEvent.png" alt="Fighting event example" >
+
+* Enemy Sprite - The sprite that is displayed for the enemy in combat
+* Enemy Health - How much health the enemy has.
+* Enemy Damage - The amount of damage the enemy does to the player.
+* Enemy Attack Sounds - The sounds the enemy makes when attacking.
+* Enemy Attacked Sounds - The sounds the enemy makes when he is attacked.
+* Player Attack Sequence - This is the list that will keep repeating exercsises. It has the following fields:
+  * Exercise Name - This is an audio clip that will tell the player what exercise they must perofmr
+  * Player Attack - This is a list of the attacks, the more in this list the more the player has to perform before completing a sequence.
+
+#### Creating a level
+_You've made it to the end, congratulations!_
+This one's rather simple, the same path as creation a Game Event, find the Game Event Holder in that section and create it. Once created and named approapriately, you have the following fields to fill:
+
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/LevelExample.png" alt="Level Example" >
+
+* Starting Background - The background that is loaded on launch
+* Game Events - this is where you put all the events you made, the 0th in the list is played first and the rest in order.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
