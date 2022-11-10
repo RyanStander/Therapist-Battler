@@ -48,22 +48,28 @@ namespace LevelScreen
 
         private void Start()
         {
+            PositionAndImage();
+            ActivateStars();
+            ChangeText();
+        }
+
+        private void Update()
+        {
+            //is level unlocked?
+            totalStars = sceneStarCount.GetComponent<StarCountScript>().StarsInScene;
+
+            if (totalStars >= StarsRequired && isUnlockedBool == false)
+            {
+                lockIcon.SetActive(false);
+                isUnlockedBool = true;
+            }
+        }
+
+        private void ActivateStars()
+        {
             //Star amount getting
             sceneStarCount = GameObject.Find("StarAmount");
             lockIcon = transform.Find("LockIcon").gameObject;
-            //sprite image
-            levelIcon = GetComponent<Image>();
-            levelIcon.sprite = levelSprite;
-            //text
-            var proText = transform.Find("LevelName").GetComponent<TextMeshProUGUI>();
-            var proTextNumber = transform.Find("LevelNumber").GetComponent<TextMeshProUGUI>();
-            proText.text = Name;
-            proTextNumber.text = levelNumber.ToString();
-
-            //position
-            var levelTransform = transform;
-            levelTransform.localPosition = levelTransform.position + new Vector3(0, SpawnHeight, 0);
-
             //stars
             starOne = GameObject.Find("Star 1");
             starTwo = GameObject.Find("Star 2");
@@ -88,16 +94,23 @@ namespace LevelScreen
             }
         }
 
-        private void Update()
+        private void ChangeText()
         {
-            //is level unlocked?
-            totalStars = sceneStarCount.GetComponent<StarCountScript>().StarsInScene;
+            //text
+            var proText = transform.Find("LevelName").GetComponent<TextMeshProUGUI>();
+            var proTextNumber = transform.Find("LevelNumber").GetComponent<TextMeshProUGUI>();
+            proText.text = Name;
+            proTextNumber.text = levelNumber.ToString();
+        }
 
-            if (totalStars >= StarsRequired && isUnlockedBool == false)
-            {
-                lockIcon.SetActive(false);
-                isUnlockedBool = true;
-            }
+        private void PositionAndImage()
+        {
+            //sprite image
+            levelIcon = GetComponent<Image>();
+            levelIcon.sprite = levelSprite;
+            //position
+            var levelTransform = transform;
+            levelTransform.localPosition = levelTransform.position + new Vector3(0, SpawnHeight, 0);
         }
     }
 }
