@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace LevelScreen
 {
-    [CreateAssetMenu(menuName = "ScriptableObjects/levelObject")]
+    [CreateAssetMenu(menuName = "Scriptable Objects/levelObject")]
     public class LevelData : ScriptableObject
     {
         public string LevelName;

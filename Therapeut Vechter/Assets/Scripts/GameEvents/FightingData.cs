@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameEvents
 {
-    [CreateAssetMenu(menuName = "Game Events/Fight Event")]
+    [CreateAssetMenu(menuName = "Scriptable Objects/Game Events/Fight Event")]
     public class FightingData : BaseGameEvent
     {
         [Header("Enemy Stats")]

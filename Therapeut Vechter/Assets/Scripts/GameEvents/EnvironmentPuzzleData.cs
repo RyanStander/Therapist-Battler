@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace GameEvents
 {
-    [CreateAssetMenu(menuName = "Game Events/Puzzle Event")]
+    [CreateAssetMenu(menuName = "Scriptable Objects/Game Events/Puzzle Event")]
     public class EnvironmentPuzzleData : BaseGameEvent
     {
         [Header("Puzzle Specific")]
