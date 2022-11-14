@@ -37,7 +37,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float comboDuration = 3;
 
     [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
-    private float comboCountDamageModifier; //TODO: if the combo damage can kill an enemy, it should do so immediately
+    private float comboCountDamageModifier=20;
 
     [Tooltip("The damage that the player will deal to the enemy")] [SerializeField]
     private float playerDamage;
@@ -241,10 +241,12 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        var comboDamage = comboCount * comboCountDamageModifier;
+        
         //have a combo timer running, depending on how many combos they get, they get higher damage
-        if (comboTimeStamp <= Time.time && comboCount > 0)
+        if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage>enemyHealth)
         {
-            enemyHealth -= comboCount * comboCountDamageModifier;
+            enemyHealth -= comboDamage;
             EventManager.currentManager.AddEvent(new DamageEnemy(enemyHealth));
             
             if (fightingEvent.enemyAttackedSounds.Length > 0)
