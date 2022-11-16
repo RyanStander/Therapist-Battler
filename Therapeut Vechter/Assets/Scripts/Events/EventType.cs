@@ -10,6 +10,9 @@ public enum EventType
     UpdateComboScore,
     
     SetupEnemy,
+    DamageEnemyVisuals,
     DamageEnemy,
     HideEnemy,
+    
+    CreatePlayerNormalAttack,
 }

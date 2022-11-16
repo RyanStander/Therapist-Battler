@@ -1,3 +1,4 @@
+using System;
 using Exercises;
 using GameEvents;
 using TMPro;
@@ -38,8 +39,7 @@ public class GameManager : MonoBehaviour
 
     [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
     private float comboCountDamageModifier=20;
-
-    [Tooltip("The damage that the player will deal to the enemy")] [SerializeField]
+    
     private float playerDamage;
 
     #endregion
@@ -105,6 +105,16 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Runtime
+
+    private void OnEnable()
+    {
+        EventManager.currentManager.Subscribe(EventType.DamageEnemy,OnEnemyTakeDamage);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.currentManager.Subscribe(EventType.DamageEnemy,OnEnemyTakeDamage);
+    }
 
     private void Awake()
     {
@@ -213,10 +223,10 @@ public class GameManager : MonoBehaviour
             comboTimeStamp = Time.time + comboDuration;
             comboCount++;
             EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
-
-            enemyHealth -= playerDamage;
-            EventManager.currentManager.AddEvent(new DamageEnemy(enemyHealth));
             
+            EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(playerDamage));
+            playerDamage = 0;
+
             if (fightingEvent.enemyAttackedSounds.Length > 0)
                 sfxAudioSource.PlayOneShot(
                     fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
@@ -247,7 +257,7 @@ public class GameManager : MonoBehaviour
         if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage>enemyHealth)
         {
             enemyHealth -= comboDamage;
-            EventManager.currentManager.AddEvent(new DamageEnemy(enemyHealth));
+            EventManager.currentManager.AddEvent(new DamageEnemyVisuals(enemyHealth));
             
             if (fightingEvent.enemyAttackedSounds.Length > 0)
                 sfxAudioSource.PlayOneShot(
@@ -388,19 +398,34 @@ public class GameManager : MonoBehaviour
 
     private void TransitionBackgrounds()
     {
-        if (transitionToNewBackground)
+        if (!transitionToNewBackground) return;
+        backgroundTransitionImage.transform.localScale += new Vector3(0.01f, 0.01f, 0);
+        var c = backgroundTransitionImage.color;
+        c.a -= 0.01f;
+        if (c.a < 0.01f)
         {
-            backgroundTransitionImage.transform.localScale += new Vector3(0.01f, 0.01f, 0);
-            var c = backgroundTransitionImage.color;
-            c.a -= 0.01f;
-            if (c.a < 0.01f)
-            {
-                transitionToNewBackground = false;
-                backgroundTransitionImage.gameObject.SetActive(false);
-            }
-
-            backgroundTransitionImage.color = c;
+            transitionToNewBackground = false;
+            backgroundTransitionImage.gameObject.SetActive(false);
         }
+
+        backgroundTransitionImage.color = c;
+    }
+
+    #endregion
+
+    #region On Events
+
+    private void OnEnemyTakeDamage(EventData eventData)
+    {
+        if (eventData is DamageEnemy damageEnemy)
+        {
+            enemyHealth -= damageEnemy.EnemyDamage;
+        }
+        else
+        {
+            Debug.Log("EventData of type DamageEnemy was not of type DamageEnemy.");
+        }
+        
     }
 
     #endregion

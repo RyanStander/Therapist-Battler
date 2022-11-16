@@ -62,12 +62,39 @@ public class HideEnemy : EventData
 /// <summary>
 /// Gives the enemy damage effects
 /// </summary>
+public class DamageEnemyVisuals : EventData
+{
+    public readonly float DamageToTake;
+    public DamageEnemyVisuals(float damageToTake) : base(EventType.DamageEnemyVisuals)
+    {
+        DamageToTake = damageToTake;
+    }
+}
+
 public class DamageEnemy : EventData
 {
-    public readonly float CurrentHealth;
-    public DamageEnemy(float currentHealth) : base(EventType.DamageEnemy)
+    public readonly float EnemyDamage;
+
+    public DamageEnemy(float enemyDamage) : base(EventType.DamageEnemy)
     {
-        CurrentHealth = currentHealth;
+        EnemyDamage = enemyDamage;
+    }
+}
+
+#endregion
+
+#region Effects
+
+/// <summary>
+/// Creates an attack effect for the player
+/// </summary>
+public class CreatePlayerNormalAttack : EventData
+{
+    public readonly float Damage;
+
+    public CreatePlayerNormalAttack(float damage): base(EventType.CreatePlayerNormalAttack)
+    {
+        Damage = damage;
     }
 }
 

@@ -26,14 +26,14 @@ namespace UI
         private void OnEnable()
         {
             EventManager.currentManager.Subscribe(EventType.SetupEnemy, OnSetupEnemy);
-            EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnDamageEnemy);
+            EventManager.currentManager.Subscribe(EventType.DamageEnemyVisuals, OnDamageEnemy);
             EventManager.currentManager.Subscribe(EventType.HideEnemy, OnHideEnemy);
         }
 
         private void OnDisable()
         {
             EventManager.currentManager.Unsubscribe(EventType.SetupEnemy, OnSetupEnemy);
-            EventManager.currentManager.Unsubscribe(EventType.DamageEnemy, OnDamageEnemy);
+            EventManager.currentManager.Unsubscribe(EventType.DamageEnemyVisuals, OnDamageEnemy);
             EventManager.currentManager.Unsubscribe(EventType.HideEnemy, OnHideEnemy);
         }
 
@@ -74,9 +74,9 @@ namespace UI
 
         private void OnDamageEnemy(EventData eventData)
         {
-            if (eventData is DamageEnemy damageEnemy)
+            if (eventData is DamageEnemyVisuals damageEnemy)
             {
-                currentHealth = damageEnemy.CurrentHealth;
+                currentHealth -= damageEnemy.DamageToTake;
 
                 playDamageEffect = true;
                 
