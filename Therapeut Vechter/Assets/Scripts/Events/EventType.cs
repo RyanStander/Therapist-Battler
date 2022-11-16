@@ -9,10 +9,17 @@ public enum EventType
     
     UpdateComboScore,
     
+    //Enemy
     SetupEnemy,
     DamageEnemyVisuals,
     DamageEnemy,
     HideEnemy,
     
     CreatePlayerNormalAttack,
+    
+    //Audio
+    PlayDialogueAudio,
+    DialogueAudioStatusUpdate,
+    PlaySfxAudio,
+    PlayMusicAudio,
 }

@@ -99,3 +99,43 @@ public class CreatePlayerNormalAttack : EventData
 }
 
 #endregion
+
+#region Audio
+
+public class PlayDialogueAudio : EventData
+{
+    public readonly AudioClip AudioClipToPlay;
+    public PlayDialogueAudio(AudioClip audioClipToPlay) : base(EventType.PlayDialogueAudio)
+    {
+        AudioClipToPlay = audioClipToPlay;
+    }
+}
+
+public class DialogueAudioStatusUpdate : EventData
+{
+    public readonly bool IsPlayingDialogue;
+    public DialogueAudioStatusUpdate(bool isPlayingDialogue) : base(EventType.DialogueAudioStatusUpdate)
+    {
+        IsPlayingDialogue = isPlayingDialogue;
+    }
+}
+
+public class PlaySfxAudio : EventData
+{
+    public readonly AudioClip AudioClipToPlay;
+    public PlaySfxAudio(AudioClip audioClipToPlay) : base(EventType.PlaySfxAudio)
+    {
+        AudioClipToPlay = audioClipToPlay;
+    }
+}
+
+public class PlayMusicAudio : EventData
+{
+    public readonly AudioClip AudioClipToPlay;
+    public PlayMusicAudio(AudioClip audioClipToPlay) : base(EventType.PlayMusicAudio)
+    {
+        AudioClipToPlay = audioClipToPlay;
+    }
+}
+
+#endregion
