@@ -1,5 +1,6 @@
 using System;
 using FMOD.Studio;
+using FMODUnity;
 using UnityEngine;
 
 namespace Audio
@@ -31,14 +32,14 @@ namespace Audio
 
         private void FixedUpdate()
         {
-            if(!isPlayingDialogueAudio)
+            if (!isPlayingDialogueAudio)
                 return;
 
             dialogueAudioEventInstance.getPlaybackState(out var state);
             if (state != PLAYBACK_STATE.STOPPING) return;
-            
+
             isPlayingDialogueAudio = false;
-            EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio)); 
+            EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
             dialogueAudioEventInstance.release();
         }
 
@@ -50,7 +51,12 @@ namespace Audio
         {
             if (eventData is PlayDialogueAudio playDialogueAudio)
             {
-                dialogueAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
+                RuntimeManager.StudioSystem.getEvent(playDialogueAudio.EventSoundPath.Path, out var eventDescription);
+                if (!eventDescription.isValid())
+                    return;
+                
+                dialogueAudioEventInstance = RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
+
                 dialogueAudioEventInstance.start();
                 isPlayingDialogueAudio = true;
                 EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
@@ -61,8 +67,12 @@ namespace Audio
         {
             if (eventData is PlaySfxAudio sfxAudio)
             {
+                RuntimeManager.StudioSystem.getEvent(sfxAudio.EventSoundPath.Path, out var eventDescription);
+                if (!eventDescription.isValid())
+                    return;
                 
-                sfxAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(sfxAudio.EventSoundPath);
+                sfxAudioEventInstance = RuntimeManager.CreateInstance(sfxAudio.EventSoundPath);
+                
                 sfxAudioEventInstance.start();
                 sfxAudioEventInstance.release();
             }
@@ -72,7 +82,12 @@ namespace Audio
         {
             if (eventData is PlayMusicAudio musicAudio)
             {
-                musicAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
+                RuntimeManager.StudioSystem.getEvent(musicAudio.EventSoundPath.Path, out var eventDescription);
+                if (!eventDescription.isValid())
+                    return;
+                
+                musicAudioEventInstance = RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
+
                 musicAudioEventInstance.start();
                 musicAudioEventInstance.release();
             }
