@@ -35,11 +35,11 @@ namespace Audio
                 return;
 
             dialogueAudioEventInstance.getPlaybackState(out var state);
-            if (state != PLAYBACK_STATE.STOPPED) return;
+            if (state != PLAYBACK_STATE.STOPPING) return;
             
             isPlayingDialogueAudio = false;
-            EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
-                //dialogueAudioEventInstance.release();
+            EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio)); 
+            dialogueAudioEventInstance.release();
         }
 
         #endregion
