@@ -22,7 +22,7 @@ namespace LevelScreen
         {
             for (var i = 0; i < levelData.Length; i++)
             {
-                var newLevel  = Instantiate(levelPrefab, new Vector3(150+ i*SpawnDistance,0,0),Quaternion.identity,transform);
+                var newLevel  = Instantiate(levelPrefab, new Vector3(275+ i*SpawnDistance,0,0),Quaternion.identity,transform);
                 newLevel.GetComponent<LevelScript>().LoadLevelData(levelData[i]);
                 ObjectsSpawned += 1;
             }

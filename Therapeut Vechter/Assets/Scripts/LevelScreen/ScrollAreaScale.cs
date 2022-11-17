@@ -9,6 +9,7 @@ namespace LevelScreen
         private int distanceBetweenObjects;
         private int areaWidth;
         private int objectSpawned;
+        private bool distanceCreated;
 
         //snapping to pop up
         private Vector3 positionA;
@@ -19,13 +20,6 @@ namespace LevelScreen
         void Start()
         {
             distanceBetweenObjects = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().SpawnDistance;
-            objectSpawned = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().ObjectsSpawned;
-            for (var i = 0; i < objectSpawned; i++)
-            {
-                areaWidth += distanceBetweenObjects;
-            }
-
-            gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(areaWidth, Screen.height);
         }
 
         // snapping scroll to selected pop up
@@ -39,6 +33,7 @@ namespace LevelScreen
 
         private void Update()
         {
+            GenerateDistance();
             //make the map slide to the snap point
             //Debug.Log(moveCanvas);
             if (moveCanvas)
@@ -53,9 +48,27 @@ namespace LevelScreen
             }
 
             //outer edge levels cause it to not be able to move to new position, this puts a buffer on it for the first and last levels
-            if (transform.localPosition.x >= -960 || transform.localPosition.x <= -areaWidth + distanceBetweenObjects * 3)
+            if (transform.localPosition.x >= -960 ||
+                transform.localPosition.x <= -areaWidth + distanceBetweenObjects * 3)
             {
                 moveCanvas = false;
+            }
+        }
+
+        private void GenerateDistance()
+        {
+            if (distanceCreated == false)
+            {
+                objectSpawned = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().ObjectsSpawned;
+                for (var i = 0; i < objectSpawned; i++)
+                {
+                    areaWidth += distanceBetweenObjects;
+                    if (i <= 6)
+                    {
+                        distanceCreated = true;
+                        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(areaWidth, Screen.height);
+                    }
+                }
             }
         }
     }

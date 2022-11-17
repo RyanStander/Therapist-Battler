@@ -7,7 +7,7 @@ namespace LevelScreen
     public class LevelScript : MonoBehaviour
     {
         //Get Components of Prefab
-        private Image levelIcon;
+        [SerializeField]private Image levelIcon;
 
         //Stars
         private GameObject starOne;
@@ -20,6 +20,11 @@ namespace LevelScreen
         private bool isUnlockedBool;
         private GameObject lockIcon;
         private int totalStars;
+        //background
+        private Sprite backgroundImage;
+        [SerializeField] private RectTransform backgroundRectTransform;
+        [SerializeField] private Image backgroundTransform;
+        private int backgroundWidth;
 
 
         //Saved data from SO
@@ -44,6 +49,7 @@ namespace LevelScreen
             Stars = level.StarCount;
             StarsRequired = level.StarRequirement;
             LevelFinished = level.FinishedLevel;
+            backgroundImage = level.LevelBackgroundImage;
         }
 
         private void Start()
@@ -51,6 +57,7 @@ namespace LevelScreen
             PositionAndImage();
             ActivateStars();
             ChangeText();
+            PositionBackground();
         }
 
         private void Update()
@@ -106,11 +113,18 @@ namespace LevelScreen
         private void PositionAndImage()
         {
             //sprite image
-            levelIcon = GetComponent<Image>();
             levelIcon.sprite = levelSprite;
             //position
             var levelTransform = transform;
             levelTransform.localPosition = levelTransform.position + new Vector3(0, SpawnHeight, 0);
+        }
+        //put the background image of the levels at middle height of screen
+        private void PositionBackground()
+        {
+            backgroundTransform.GetComponent<Image>().sprite = backgroundImage;
+            backgroundWidth = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().SpawnDistance;
+            backgroundRectTransform.sizeDelta = new Vector2(backgroundWidth,Screen.height);
+            backgroundRectTransform.position = new Vector3(backgroundRectTransform.position.x, 1, backgroundRectTransform.position.z);
         }
     }
 }
