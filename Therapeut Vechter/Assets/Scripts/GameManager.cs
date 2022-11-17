@@ -24,12 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image backgroundTransitionImage;
     [SerializeField] private Slider playerHealthBar;
-
-    [Header("Audio Source")]
-
-    [SerializeField] private AudioSource musicAudioSource;
-    [SerializeField] private AudioSource sfxAudioSource;
-
+    
     [Header("Scoring")] [Range(0, 1)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
 
@@ -69,13 +64,13 @@ public class GameManager : MonoBehaviour
 
     #region Audio Data
 
-    [SerializeField]private bool isPlayingDialogueAudio;
+    private bool isPlayingDialogueAudio;
     
     //used to determine if music has been swapped, should only happen once
     private bool hasSwappedMusicAudioSource;
 
     //Used to play dialogue
-    [SerializeField]private bool hasPlayedDialogueAudio;
+    private bool hasPlayedDialogueAudio;
 
     #endregion
 
@@ -159,9 +154,8 @@ public class GameManager : MonoBehaviour
         if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
             !hasSwappedMusicAudioSource)
         {
-            musicAudioSource.Stop();
-            musicAudioSource.clip = gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic;
-            musicAudioSource.Play();
+            EventManager.currentManager.AddEvent(new PlayMusicAudio(gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic));
+
             hasSwappedMusicAudioSource = true;
         }
 
@@ -208,8 +202,8 @@ public class GameManager : MonoBehaviour
         if (!hasPlayedDialogueAudio && eventExerciseDataIndex == 0)
         {
             hasPlayedDialogueAudio = true;
-            //TODO: Check this comment
-            //dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+            
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
         }
 
         if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas
@@ -229,10 +223,8 @@ public class GameManager : MonoBehaviour
             
             EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(playerDamage));
             playerDamage = 0;
-
-            if (fightingEvent.enemyAttackedSounds.Length > 0)
-                sfxAudioSource.PlayOneShot(
-                    fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
+            
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
 
             if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length <= eventExerciseDataIndex)
             {
@@ -240,20 +232,16 @@ public class GameManager : MonoBehaviour
                 eventExerciseDataIndex = 0;
 
                 playerHealth -= fightingEvent.enemyDamage;
-                /*if (fightingEvent.enemyAttackSounds.Length > 0)
-                    sfxAudioSource.PlayOneShot(
-                        fightingEvent.enemyAttackSounds[Random.Range(0, fightingEvent.enemyAttackSounds.Length)]);*/
-                
-                
+
+                    EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyAttackSound));
 
                 //We reset the attack index so that it starts the first attack again
                 if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
                 {
                     playerAttackIndex = 0;
                 }
-
-                //TODO: Check this
-                //dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+                
+                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
             }
         }
 
@@ -265,9 +253,8 @@ public class GameManager : MonoBehaviour
             enemyHealth -= comboDamage;
             EventManager.currentManager.AddEvent(new DamageEnemyVisuals(enemyHealth));
             
-            if (fightingEvent.enemyAttackedSounds.Length > 0)
-                sfxAudioSource.PlayOneShot(
-                    fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
+                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
+            
             comboCount = 0;
             EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
         }
@@ -317,8 +304,8 @@ public class GameManager : MonoBehaviour
         if (poseDataIndex == 0 && !hasPlayedDialogueAudio)
         {
             hasPlayedDialogueAudio = true;
-            //TODO: check this
-            //dialogueAudioSource.PlayOneShot(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+            
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
             exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
         }
 
@@ -346,7 +333,6 @@ public class GameManager : MonoBehaviour
         {
             case false when !hasPlayedDialogueAudio:
                 EventManager.currentManager.AddEvent(new PlayDialogueAudio(dialogueEvent.EventPath));
-                //TODO: change how has played dialogue audio works
                 hasPlayedDialogueAudio = true;
                 isPlayingDialogueAudio = true;
                 break;

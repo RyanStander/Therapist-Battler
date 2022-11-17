@@ -7,9 +7,11 @@ namespace Audio
     public class AudioManager : MonoBehaviour
     {
         private EventInstance dialogueAudioEventInstance;
+        private EventInstance musicAudioEventInstance;
+        private EventInstance sfxAudioEventInstance;
 
 
-        [SerializeField]private bool isPlayingDialogueAudio=true;
+        private bool isPlayingDialogueAudio;
 
         #region Runtime
 
@@ -33,12 +35,11 @@ namespace Audio
                 return;
 
             dialogueAudioEventInstance.getPlaybackState(out var state);
-            if (state != PLAYBACK_STATE.STOPPED) return;
+            if (state != PLAYBACK_STATE.STOPPING) return;
             
-            Debug.Log("Stopped");
             isPlayingDialogueAudio = false;
-            EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
-            //dialogueAudioEventInstance.release();
+            EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio)); 
+            dialogueAudioEventInstance.release();
         }
 
         #endregion
@@ -49,8 +50,6 @@ namespace Audio
         {
             if (eventData is PlayDialogueAudio playDialogueAudio)
             {
-                Debug.Log("Hello");
-                //Send event to state that the dialogueAudio is in use
                 dialogueAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
                 dialogueAudioEventInstance.start();
                 isPlayingDialogueAudio = true;
@@ -60,10 +59,23 @@ namespace Audio
 
         private void OnPlaySfxAudio(EventData eventData)
         {
+            if (eventData is PlaySfxAudio sfxAudio)
+            {
+                
+                sfxAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(sfxAudio.EventSoundPath);
+                sfxAudioEventInstance.start();
+                sfxAudioEventInstance.release();
+            }
         }
 
         private void OnPlayMusicAudio(EventData eventData)
         {
+            if (eventData is PlayMusicAudio musicAudio)
+            {
+                musicAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
+                musicAudioEventInstance.start();
+                musicAudioEventInstance.release();
+            }
         }
 
         #endregion

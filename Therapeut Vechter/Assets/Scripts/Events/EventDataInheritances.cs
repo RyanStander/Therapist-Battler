@@ -123,19 +123,19 @@ public class DialogueAudioStatusUpdate : EventData
 
 public class PlaySfxAudio : EventData
 {
-    public readonly AudioClip AudioClipToPlay;
-    public PlaySfxAudio(AudioClip audioClipToPlay) : base(EventType.PlaySfxAudio)
+    public readonly EventReference EventSoundPath;
+    public PlaySfxAudio(EventReference eventSoundPath) : base(EventType.PlaySfxAudio)
     {
-        AudioClipToPlay = audioClipToPlay;
+        EventSoundPath = eventSoundPath;
     }
 }
 
 public class PlayMusicAudio : EventData
 {
-    public readonly AudioClip AudioClipToPlay;
-    public PlayMusicAudio(AudioClip audioClipToPlay) : base(EventType.PlayMusicAudio)
+    public readonly EventReference EventSoundPath;
+    public PlayMusicAudio(EventReference eventSoundPath) : base(EventType.PlayMusicAudio)
     {
-        AudioClipToPlay = audioClipToPlay;
+        EventSoundPath = eventSoundPath;
     }
 }
 
