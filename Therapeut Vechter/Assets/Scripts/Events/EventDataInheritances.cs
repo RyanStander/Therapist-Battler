@@ -1,5 +1,6 @@
 ﻿//Event that informs subscribers of a debug log
 
+using FMODUnity;
 using UnityEngine;
 
 public class SendDebugLog : EventData
@@ -62,12 +63,79 @@ public class HideEnemy : EventData
 /// <summary>
 /// Gives the enemy damage effects
 /// </summary>
+public class DamageEnemyVisuals : EventData
+{
+    public readonly float DamageToTake;
+    public DamageEnemyVisuals(float damageToTake) : base(EventType.DamageEnemyVisuals)
+    {
+        DamageToTake = damageToTake;
+    }
+}
+
 public class DamageEnemy : EventData
 {
-    public readonly float CurrentHealth;
-    public DamageEnemy(float currentHealth) : base(EventType.DamageEnemy)
+    public readonly float EnemyDamage;
+
+    public DamageEnemy(float enemyDamage) : base(EventType.DamageEnemy)
     {
-        CurrentHealth = currentHealth;
+        EnemyDamage = enemyDamage;
+    }
+}
+
+#endregion
+
+#region Effects
+
+/// <summary>
+/// Creates an attack effect for the player
+/// </summary>
+public class CreatePlayerNormalAttack : EventData
+{
+    public readonly float Damage;
+
+    public CreatePlayerNormalAttack(float damage): base(EventType.CreatePlayerNormalAttack)
+    {
+        Damage = damage;
+    }
+}
+
+#endregion
+
+#region Audio
+
+public class PlayDialogueAudio : EventData
+{
+    public readonly EventReference EventSoundPath;
+    public PlayDialogueAudio(EventReference eventSoundPath) : base(EventType.PlayDialogueAudio)
+    {
+        EventSoundPath = eventSoundPath;
+    }
+}
+
+public class DialogueAudioStatusUpdate : EventData
+{
+    public readonly bool IsPlayingDialogue;
+    public DialogueAudioStatusUpdate(bool isPlayingDialogue) : base(EventType.DialogueAudioStatusUpdate)
+    {
+        IsPlayingDialogue = isPlayingDialogue;
+    }
+}
+
+public class PlaySfxAudio : EventData
+{
+    public readonly EventReference EventSoundPath;
+    public PlaySfxAudio(EventReference eventSoundPath) : base(EventType.PlaySfxAudio)
+    {
+        EventSoundPath = eventSoundPath;
+    }
+}
+
+public class PlayMusicAudio : EventData
+{
+    public readonly EventReference EventSoundPath;
+    public PlayMusicAudio(EventReference eventSoundPath) : base(EventType.PlayMusicAudio)
+    {
+        EventSoundPath = eventSoundPath;
     }
 }
 

@@ -1,3 +1,4 @@
+using System;
 using Exercises;
 using GameEvents;
 using TMPro;
@@ -23,13 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image backgroundTransitionImage;
     [SerializeField] private Slider playerHealthBar;
-
-    [Header("Audio Source")] [SerializeField]
-    private AudioSource dialogueAudioSource;
-
-    [SerializeField] private AudioSource musicAudioSource;
-    [SerializeField] private AudioSource sfxAudioSource;
-
+    
     [Header("Scoring")] [Range(0, 1)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
 
@@ -37,9 +32,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float comboDuration = 3;
 
     [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
-    private float comboCountDamageModifier; //TODO: if the combo damage can kill an enemy, it should do so immediately
-
-    [Tooltip("The damage that the player will deal to the enemy")] [SerializeField]
+    private float comboCountDamageModifier=20;
+    
     private float playerDamage;
 
     #endregion
@@ -70,6 +64,8 @@ public class GameManager : MonoBehaviour
 
     #region Audio Data
 
+    private bool isPlayingDialogueAudio;
+    
     //used to determine if music has been swapped, should only happen once
     private bool hasSwappedMusicAudioSource;
 
@@ -105,6 +101,17 @@ public class GameManager : MonoBehaviour
     #endregion
 
     #region Runtime
+
+    private void OnEnable()
+    {
+        EventManager.currentManager.Subscribe(EventType.DamageEnemy,OnEnemyTakeDamage);
+        EventManager.currentManager.Subscribe(EventType.DialogueAudioStatusUpdate,OnDialogueAudioStatusUpdate);
+    }
+
+    private void OnDisable()
+    {
+        EventManager.currentManager.Subscribe(EventType.DamageEnemy,OnEnemyTakeDamage);
+    }
 
     private void Awake()
     {
@@ -147,9 +154,8 @@ public class GameManager : MonoBehaviour
         if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
             !hasSwappedMusicAudioSource)
         {
-            musicAudioSource.Stop();
-            musicAudioSource.clip = gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic;
-            musicAudioSource.Play();
+            EventManager.currentManager.AddEvent(new PlayMusicAudio(gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic));
+
             hasSwappedMusicAudioSource = true;
         }
 
@@ -196,7 +202,8 @@ public class GameManager : MonoBehaviour
         if (!hasPlayedDialogueAudio && eventExerciseDataIndex == 0)
         {
             hasPlayedDialogueAudio = true;
-            dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+            
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
         }
 
         if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas
@@ -213,13 +220,11 @@ public class GameManager : MonoBehaviour
             comboTimeStamp = Time.time + comboDuration;
             comboCount++;
             EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
-
-            enemyHealth -= playerDamage;
-            EventManager.currentManager.AddEvent(new DamageEnemy(enemyHealth));
             
-            if (fightingEvent.enemyAttackedSounds.Length > 0)
-                sfxAudioSource.PlayOneShot(
-                    fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
+            EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(playerDamage));
+            playerDamage = 0;
+            
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
 
             if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length <= eventExerciseDataIndex)
             {
@@ -227,29 +232,29 @@ public class GameManager : MonoBehaviour
                 eventExerciseDataIndex = 0;
 
                 playerHealth -= fightingEvent.enemyDamage;
-                if (fightingEvent.enemyAttackSounds.Length > 0)
-                    sfxAudioSource.PlayOneShot(
-                        fightingEvent.enemyAttackSounds[Random.Range(0, fightingEvent.enemyAttackSounds.Length)]);
+
+                    EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyAttackSound));
 
                 //We reset the attack index so that it starts the first attack again
                 if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
                 {
                     playerAttackIndex = 0;
                 }
-
-                dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+                
+                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
             }
         }
 
+        var comboDamage = comboCount * comboCountDamageModifier;
+        
         //have a combo timer running, depending on how many combos they get, they get higher damage
-        if (comboTimeStamp <= Time.time && comboCount > 0)
+        if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage>enemyHealth)
         {
-            enemyHealth -= comboCount * comboCountDamageModifier;
-            EventManager.currentManager.AddEvent(new DamageEnemy(enemyHealth));
+            enemyHealth -= comboDamage;
+            EventManager.currentManager.AddEvent(new DamageEnemyVisuals(enemyHealth));
             
-            if (fightingEvent.enemyAttackedSounds.Length > 0)
-                sfxAudioSource.PlayOneShot(
-                    fightingEvent.enemyAttackedSounds[Random.Range(0, fightingEvent.enemyAttackedSounds.Length)]);
+                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
+            
             comboCount = 0;
             EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
         }
@@ -299,7 +304,8 @@ public class GameManager : MonoBehaviour
         if (poseDataIndex == 0 && !hasPlayedDialogueAudio)
         {
             hasPlayedDialogueAudio = true;
-            dialogueAudioSource.PlayOneShot(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+            
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
             exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
         }
 
@@ -323,12 +329,12 @@ public class GameManager : MonoBehaviour
             hasPerformedFirstTimeSetup = true;
         }
 
-        switch (dialogueAudioSource.isPlaying)
+        switch (isPlayingDialogueAudio)
         {
             case false when !hasPlayedDialogueAudio:
-                dialogueAudioSource.clip = dialogueEvent.DialogueClip;
-                dialogueAudioSource.Play();
+                EventManager.currentManager.AddEvent(new PlayDialogueAudio(dialogueEvent.EventPath));
                 hasPlayedDialogueAudio = true;
+                isPlayingDialogueAudio = true;
                 break;
             case false when hasPlayedDialogueAudio:
                 ResetVariables();
@@ -386,18 +392,41 @@ public class GameManager : MonoBehaviour
 
     private void TransitionBackgrounds()
     {
-        if (transitionToNewBackground)
+        if (!transitionToNewBackground) return;
+        backgroundTransitionImage.transform.localScale += new Vector3(0.01f, 0.01f, 0);
+        var c = backgroundTransitionImage.color;
+        c.a -= 0.01f;
+        if (c.a < 0.01f)
         {
-            backgroundTransitionImage.transform.localScale += new Vector3(0.01f, 0.01f, 0);
-            var c = backgroundTransitionImage.color;
-            c.a -= 0.01f;
-            if (c.a < 0.01f)
-            {
-                transitionToNewBackground = false;
-                backgroundTransitionImage.gameObject.SetActive(false);
-            }
+            transitionToNewBackground = false;
+            backgroundTransitionImage.gameObject.SetActive(false);
+        }
 
-            backgroundTransitionImage.color = c;
+        backgroundTransitionImage.color = c;
+    }
+
+    #endregion
+
+    #region On Events
+
+    private void OnEnemyTakeDamage(EventData eventData)
+    {
+        if (eventData is DamageEnemy damageEnemy)
+        {
+            enemyHealth -= damageEnemy.EnemyDamage;
+        }
+        else
+        {
+            Debug.Log("EventData of type DamageEnemy was not of type DamageEnemy.");
+        }
+        
+    }
+
+    private void OnDialogueAudioStatusUpdate(EventData eventData)
+    {
+        if (eventData is DialogueAudioStatusUpdate audioStatusUpdate)
+        {
+            isPlayingDialogueAudio = audioStatusUpdate.IsPlayingDialogue;
         }
     }
 
