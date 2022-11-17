@@ -69,13 +69,13 @@ public class GameManager : MonoBehaviour
 
     #region Audio Data
 
-    [SerializeField]private bool isPlayingDialogueAudio;
+    private bool isPlayingDialogueAudio;
     
     //used to determine if music has been swapped, should only happen once
     private bool hasSwappedMusicAudioSource;
 
     //Used to play dialogue
-    [SerializeField]private bool hasPlayedDialogueAudio;
+    private bool hasPlayedDialogueAudio;
 
     #endregion
 
@@ -346,7 +346,6 @@ public class GameManager : MonoBehaviour
         {
             case false when !hasPlayedDialogueAudio:
                 EventManager.currentManager.AddEvent(new PlayDialogueAudio(dialogueEvent.EventPath));
-                //TODO: change how has played dialogue audio works
                 hasPlayedDialogueAudio = true;
                 isPlayingDialogueAudio = true;
                 break;

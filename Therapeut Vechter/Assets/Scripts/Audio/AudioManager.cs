@@ -7,9 +7,11 @@ namespace Audio
     public class AudioManager : MonoBehaviour
     {
         private EventInstance dialogueAudioEventInstance;
+        private EventInstance musicAudioEventInstance;
+        private EventInstance sfxAudioEventInstance;
 
 
-        [SerializeField]private bool isPlayingDialogueAudio=true;
+        private bool isPlayingDialogueAudio;
 
         #region Runtime
 
@@ -35,10 +37,9 @@ namespace Audio
             dialogueAudioEventInstance.getPlaybackState(out var state);
             if (state != PLAYBACK_STATE.STOPPED) return;
             
-            Debug.Log("Stopped");
             isPlayingDialogueAudio = false;
             EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
-            //dialogueAudioEventInstance.release();
+                //dialogueAudioEventInstance.release();
         }
 
         #endregion
@@ -49,13 +50,13 @@ namespace Audio
         {
             if (eventData is PlayDialogueAudio playDialogueAudio)
             {
-                Debug.Log("Hello");
-                //Send event to state that the dialogueAudio is in use
                 dialogueAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
                 dialogueAudioEventInstance.start();
                 isPlayingDialogueAudio = true;
                 EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
             }
+
+            //Send event to state that the dialogueAudio is in use
         }
 
         private void OnPlaySfxAudio(EventData eventData)
