@@ -25,8 +25,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image backgroundTransitionImage;
     [SerializeField] private Slider playerHealthBar;
 
-    [Header("Audio Source")] [SerializeField]
-    private AudioSource dialogueAudioSource;
+    [Header("Audio Source")]
 
     [SerializeField] private AudioSource musicAudioSource;
     [SerializeField] private AudioSource sfxAudioSource;
@@ -70,11 +69,13 @@ public class GameManager : MonoBehaviour
 
     #region Audio Data
 
+    [SerializeField]private bool isPlayingDialogueAudio;
+    
     //used to determine if music has been swapped, should only happen once
     private bool hasSwappedMusicAudioSource;
 
     //Used to play dialogue
-    private bool hasPlayedDialogueAudio;
+    [SerializeField]private bool hasPlayedDialogueAudio;
 
     #endregion
 
@@ -109,6 +110,7 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.currentManager.Subscribe(EventType.DamageEnemy,OnEnemyTakeDamage);
+        EventManager.currentManager.Subscribe(EventType.DialogueAudioStatusUpdate,OnDialogueAudioStatusUpdate);
     }
 
     private void OnDisable()
@@ -206,7 +208,8 @@ public class GameManager : MonoBehaviour
         if (!hasPlayedDialogueAudio && eventExerciseDataIndex == 0)
         {
             hasPlayedDialogueAudio = true;
-            dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+            //TODO: Check this comment
+            //dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
         }
 
         if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas
@@ -237,9 +240,11 @@ public class GameManager : MonoBehaviour
                 eventExerciseDataIndex = 0;
 
                 playerHealth -= fightingEvent.enemyDamage;
-                if (fightingEvent.enemyAttackSounds.Length > 0)
+                /*if (fightingEvent.enemyAttackSounds.Length > 0)
                     sfxAudioSource.PlayOneShot(
-                        fightingEvent.enemyAttackSounds[Random.Range(0, fightingEvent.enemyAttackSounds.Length)]);
+                        fightingEvent.enemyAttackSounds[Random.Range(0, fightingEvent.enemyAttackSounds.Length)]);*/
+                
+                
 
                 //We reset the attack index so that it starts the first attack again
                 if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
@@ -247,7 +252,8 @@ public class GameManager : MonoBehaviour
                     playerAttackIndex = 0;
                 }
 
-                dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+                //TODO: Check this
+                //dialogueAudioSource.PlayOneShot(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
             }
         }
 
@@ -311,7 +317,8 @@ public class GameManager : MonoBehaviour
         if (poseDataIndex == 0 && !hasPlayedDialogueAudio)
         {
             hasPlayedDialogueAudio = true;
-            dialogueAudioSource.PlayOneShot(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+            //TODO: check this
+            //dialogueAudioSource.PlayOneShot(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
             exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
         }
 
@@ -335,12 +342,13 @@ public class GameManager : MonoBehaviour
             hasPerformedFirstTimeSetup = true;
         }
 
-        switch (dialogueAudioSource.isPlaying)
+        switch (isPlayingDialogueAudio)
         {
             case false when !hasPlayedDialogueAudio:
-                dialogueAudioSource.clip = dialogueEvent.DialogueClip;
-                dialogueAudioSource.Play();
+                EventManager.currentManager.AddEvent(new PlayDialogueAudio(dialogueEvent.EventPath));
+                //TODO: change how has played dialogue audio works
                 hasPlayedDialogueAudio = true;
+                isPlayingDialogueAudio = true;
                 break;
             case false when hasPlayedDialogueAudio:
                 ResetVariables();
@@ -426,6 +434,14 @@ public class GameManager : MonoBehaviour
             Debug.Log("EventData of type DamageEnemy was not of type DamageEnemy.");
         }
         
+    }
+
+    private void OnDialogueAudioStatusUpdate(EventData eventData)
+    {
+        if (eventData is DialogueAudioStatusUpdate audioStatusUpdate)
+        {
+            isPlayingDialogueAudio = audioStatusUpdate.IsPlayingDialogue;
+        }
     }
 
     #endregion
