@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 namespace GameEvents
@@ -6,6 +7,7 @@ namespace GameEvents
     public class DialogueData : BaseGameEvent
     {
         [Header("Dialogue Specific")]
-        public AudioClip DialogueClip;
+        [Tooltip("The path is based in the events path of fmod")]
+        public EventReference EventPath;
     }
 }

@@ -1,40 +1,44 @@
 using System;
+using FMOD.Studio;
 using UnityEngine;
 
 namespace Audio
 {
     public class AudioManager : MonoBehaviour
     {
-        [SerializeField] private AudioSource dialogueAudioSource;
-        [SerializeField] private AudioSource sfxAudioSource;
-        [SerializeField] private AudioSource musicAudioSource;
+        private EventInstance dialogueAudioEventInstance;
 
-        private bool isPlayDialogueAudio = false;
+
+        [SerializeField]private bool isPlayingDialogueAudio=true;
 
         #region Runtime
 
         private void OnEnable()
         {
-            EventManager.currentManager.Subscribe(EventType.PlayDialogueAudio,OnPlayDialogueAudio);
-            EventManager.currentManager.Subscribe(EventType.PlaySfxAudio,OnPlaySfxAudio);
-            EventManager.currentManager.Subscribe(EventType.PlayMusicAudio,OnPlayMusicAudio);
+            EventManager.currentManager.Subscribe(EventType.PlayDialogueAudio, OnPlayDialogueAudio);
+            EventManager.currentManager.Subscribe(EventType.PlaySfxAudio, OnPlaySfxAudio);
+            EventManager.currentManager.Subscribe(EventType.PlayMusicAudio, OnPlayMusicAudio);
         }
 
         private void OnDisable()
         {
-            EventManager.currentManager.Unsubscribe(EventType.PlayDialogueAudio,OnPlayDialogueAudio);
-            EventManager.currentManager.Unsubscribe(EventType.PlaySfxAudio,OnPlaySfxAudio);
-            EventManager.currentManager.Unsubscribe(EventType.PlayMusicAudio,OnPlayMusicAudio);
+            EventManager.currentManager.Unsubscribe(EventType.PlayDialogueAudio, OnPlayDialogueAudio);
+            EventManager.currentManager.Unsubscribe(EventType.PlaySfxAudio, OnPlaySfxAudio);
+            EventManager.currentManager.Unsubscribe(EventType.PlayMusicAudio, OnPlayMusicAudio);
         }
 
         private void FixedUpdate()
         {
-            if (!isPlayDialogueAudio)
+            if(!isPlayingDialogueAudio)
                 return;
-            if (dialogueAudioSource.isPlaying)
-                return;
+
+            dialogueAudioEventInstance.getPlaybackState(out var state);
+            if (state != PLAYBACK_STATE.STOPPED) return;
             
-            
+            Debug.Log("Stopped");
+            isPlayingDialogueAudio = false;
+            EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
+            //dialogueAudioEventInstance.release();
         }
 
         #endregion
@@ -43,7 +47,15 @@ namespace Audio
 
         private void OnPlayDialogueAudio(EventData eventData)
         {
-            //Send event to state that the dialogueAudio is in use
+            if (eventData is PlayDialogueAudio playDialogueAudio)
+            {
+                Debug.Log("Hello");
+                //Send event to state that the dialogueAudio is in use
+                dialogueAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
+                dialogueAudioEventInstance.start();
+                isPlayingDialogueAudio = true;
+                EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
+            }
         }
 
         private void OnPlaySfxAudio(EventData eventData)

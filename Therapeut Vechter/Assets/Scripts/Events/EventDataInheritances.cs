@@ -1,5 +1,6 @@
 ﻿//Event that informs subscribers of a debug log
 
+using FMODUnity;
 using UnityEngine;
 
 public class SendDebugLog : EventData
@@ -104,10 +105,10 @@ public class CreatePlayerNormalAttack : EventData
 
 public class PlayDialogueAudio : EventData
 {
-    public readonly AudioClip AudioClipToPlay;
-    public PlayDialogueAudio(AudioClip audioClipToPlay) : base(EventType.PlayDialogueAudio)
+    public readonly EventReference EventSoundPath;
+    public PlayDialogueAudio(EventReference eventSoundPath) : base(EventType.PlayDialogueAudio)
     {
-        AudioClipToPlay = audioClipToPlay;
+        EventSoundPath = eventSoundPath;
     }
 }
 
