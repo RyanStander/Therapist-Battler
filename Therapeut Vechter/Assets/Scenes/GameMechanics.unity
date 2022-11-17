@@ -772,7 +772,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494806754}
-  m_LocalRotation: {x: -1.45712e-26, y: 1, z: -1.9561392e-21, w: -0.0000074489585}
+  m_LocalRotation: {x: 1.45712e-26, y: 1, z: 1.9561392e-21, w: -0.0000074489585}
   m_LocalPosition: {x: 0.00003913338, y: 1.0971533, z: 2.587727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1281,11 +1281,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelBodyPoints: {fileID: 635659033}
-  poseDataSetToSaveTo: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
+  poseDataSetToSaveTo: {fileID: 11400000, guid: 4b035e1abf118d04b919a1a236f00aa1, type: 2}
   addPoseToPoseDataSet: 1
-  savePath: Assets/ScriptableObjects/Exercises/Poses/SplitLegSquat/
-  poseSetSaveName: SplitLegSquat
-  poseSaveName: SplitLegSquat-SquatRightLegForward
+  savePath: Assets/ScriptableObjects/Exercises/Poses/Plank/
+  poseSetSaveName: Plank
+  poseSaveName: PlankLegDown
 --- !u!1 &650970106
 GameObject:
   m_ObjectHideFlags: 0
@@ -2310,7 +2310,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: fc1a33372ab756143a6fd0df147e5a9b, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.25
+  m_Volume: 0.1
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -2553,7 +2553,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269809871}
-  m_LocalRotation: {x: -1.45712e-26, y: 1, z: -1.9561392e-21, w: -0.0000074489585}
+  m_LocalRotation: {x: 1.45712e-26, y: 1, z: 1.9561392e-21, w: -0.0000074489585}
   m_LocalPosition: {x: 0.00003913338, y: 1.0971533, z: 2.587727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2828,7 +2828,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc9b1bfbf21049458ead2f736053e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEventDataHolder: {fileID: 11400000, guid: 7676630176788e841b279209c36a51bf, type: 2}
+  gameEventDataHolder: {fileID: 11400000, guid: 1130b5e0013681c48ae93e90b62ec59b, type: 2}
   poseMatchCheck: {fileID: 1354624409}
   scoreText: {fileID: 531890031}
   exerciseImage: {fileID: 1688849054}
@@ -3294,6 +3294,30 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 4582445369106221247, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.30173
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582445369106221247, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.30173
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582445369106221247, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.30173
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582445369106221247, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.061056957
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582445369106221247, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.091063835
+      objectReference: {fileID: 0}
+    - target: {fileID: 4582445369106221247, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.007570756
+      objectReference: {fileID: 0}
     - target: {fileID: 4634916593903224854, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Layer
       value: 6
@@ -3497,6 +3521,30 @@ PrefabInstance:
     - target: {fileID: 8808012040989635375, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Layer
       value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949488371598586326, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.30173
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949488371598586326, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.30173
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949488371598586326, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.30173
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949488371598586326, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.061058242
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949488371598586326, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.09106292
+      objectReference: {fileID: 0}
+    - target: {fileID: 8949488371598586326, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.007570625
       objectReference: {fileID: 0}
     - target: {fileID: 9099307838649727708, guid: 6f479aafa84e303478aa3f385fafb522, type: 3}
       propertyPath: m_Layer
