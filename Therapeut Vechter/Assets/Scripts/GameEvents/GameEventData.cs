@@ -1,4 +1,5 @@
 using Exercises;
+using FMODUnity;
 using UnityEngine;
 
 namespace GameEvents
@@ -7,7 +8,7 @@ namespace GameEvents
     public class GameEventData
     {
         public PoseDataSet ExerciseToPerform;
-        public AudioClip VoiceLineToPlay;
+        public EventReference VoiceLineToPlay;
         public Sprite SpriteToShow;
     }
 }

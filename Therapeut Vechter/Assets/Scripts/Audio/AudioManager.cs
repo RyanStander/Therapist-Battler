@@ -55,16 +55,27 @@ namespace Audio
                 isPlayingDialogueAudio = true;
                 EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
             }
-
-            //Send event to state that the dialogueAudio is in use
         }
 
         private void OnPlaySfxAudio(EventData eventData)
         {
+            if (eventData is PlaySfxAudio sfxAudio)
+            {
+                
+                sfxAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(sfxAudio.EventSoundPath);
+                sfxAudioEventInstance.start();
+                sfxAudioEventInstance.release();
+            }
         }
 
         private void OnPlayMusicAudio(EventData eventData)
         {
+            if (eventData is PlayMusicAudio musicAudio)
+            {
+                musicAudioEventInstance = FMODUnity.RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
+                musicAudioEventInstance.start();
+                musicAudioEventInstance.release();
+            }
         }
 
         #endregion
