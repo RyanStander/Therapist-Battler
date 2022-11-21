@@ -3,16 +3,6 @@
 using FMODUnity;
 using UnityEngine;
 
-public class SendDebugLog : EventData
-{
-    public readonly string Debuglog;
-
-    public SendDebugLog(string givenLog) : base(EventType.ReceiveDebug)
-    {
-        Debuglog = givenLog;
-    }
-}
-
 /// <summary>
 /// Updates the displayed combo score ui
 /// </summary>

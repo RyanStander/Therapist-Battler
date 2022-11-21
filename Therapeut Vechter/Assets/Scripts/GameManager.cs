@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image backgroundTransitionImage;
     [SerializeField] private Slider playerHealthBar;
-    
+
     [Header("Scoring")] [Range(0, 1)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
 
@@ -32,8 +32,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private float comboDuration = 3;
 
     [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
-    private float comboCountDamageModifier=20;
-    
+    private float comboCountDamageModifier = 20;
+
     private float playerDamage;
 
     #endregion
@@ -65,7 +65,7 @@ public class GameManager : MonoBehaviour
     #region Audio Data
 
     private bool isPlayingDialogueAudio;
-    
+
     //used to determine if music has been swapped, should only happen once
     private bool hasSwappedMusicAudioSource;
 
@@ -107,13 +107,13 @@ public class GameManager : MonoBehaviour
 
     private void OnEnable()
     {
-        EventManager.currentManager.Subscribe(EventType.DamageEnemy,OnEnemyTakeDamage);
-        EventManager.currentManager.Subscribe(EventType.DialogueAudioStatusUpdate,OnDialogueAudioStatusUpdate);
+        EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnEnemyTakeDamage);
+        EventManager.currentManager.Subscribe(EventType.DialogueAudioStatusUpdate, OnDialogueAudioStatusUpdate);
     }
 
     private void OnDisable()
     {
-        EventManager.currentManager.Subscribe(EventType.DamageEnemy,OnEnemyTakeDamage);
+        EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnEnemyTakeDamage);
     }
 
     private void Awake()
@@ -157,7 +157,8 @@ public class GameManager : MonoBehaviour
         if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
             !hasSwappedMusicAudioSource)
         {
-            EventManager.currentManager.AddEvent(new PlayMusicAudio(gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic));
+            EventManager.currentManager.AddEvent(
+                new PlayMusicAudio(gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic));
 
             hasSwappedMusicAudioSource = true;
         }
@@ -191,9 +192,10 @@ public class GameManager : MonoBehaviour
 
             enemyHealth = fightingEvent.enemyHealth;
 
-            EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,scoreUpdateSpeed));
+            EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,
+                scoreUpdateSpeed));
         }
-
+        
         //if enemy dies
         if (enemyHealth < 1)
         {
@@ -202,68 +204,73 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-        if (!hasPlayedDialogueAudio && eventExerciseDataIndex == 0)
+        if (!hasPlayedDialogueAudio)
         {
             hasPlayedDialogueAudio = true;
-            
-            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+
+            EventManager.currentManager.AddEvent(
+                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
         }
 
-        if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas
-                .Count <= poseDataIndex)
+        //if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas.Count <= poseDataIndex)
+        if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count <= poseDataIndex)
         {
+            exercisePerformIndex++;
+            
+            hasPlayedDialogueAudio = false;
             poseDataIndex = 0;
 
             //add to score
             totalScore += currentExerciseScore;
             currentExerciseScore = 0;
 
-            eventExerciseDataIndex++;
-
             comboTimeStamp = Time.time + comboDuration;
             comboCount++;
             EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
-            
+
             EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(playerDamage));
             playerDamage = 0;
-            
+
             EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
 
-            if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length <= eventExerciseDataIndex)
+            //if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length <= eventExerciseDataIndex)
+            if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
             {
                 playerAttackIndex++;
-                eventExerciseDataIndex = 0;
+                
+                exercisePerformIndex = 0;
 
                 playerHealth -= fightingEvent.enemyDamage;
 
-                    EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyAttackSound));
+                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyAttackSound));
 
                 //We reset the attack index so that it starts the first attack again
                 if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
                 {
                     playerAttackIndex = 0;
                 }
-                
-                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+
+                EventManager.currentManager.AddEvent(
+                    new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
             }
         }
 
         var comboDamage = comboCount * comboCountDamageModifier;
-        
+
         //have a combo timer running, depending on how many combos they get, they get higher damage
-        if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage>enemyHealth)
+        if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage > enemyHealth)
         {
             enemyHealth -= comboDamage;
-            EventManager.currentManager.AddEvent(new DamageEnemyVisuals(enemyHealth));
-            
-                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
-            
+            EventManager.currentManager.AddEvent(new DamageEnemyVisuals(comboDamage));
+
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
+
             comboCount = 0;
             EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
         }
 
         var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
-            .playerAttack[eventExerciseDataIndex].poseDatas[poseDataIndex]);
+            .playerAttack.poseDatas[poseDataIndex]);
 
         //if it returns -1 it means the player did not achieve a good pose
         if (score == -1)
@@ -288,11 +295,12 @@ public class GameManager : MonoBehaviour
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
             exercisePerformIndex++;
-            if (exercisePerformIndex>=puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
+            if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
                 exercisePerformIndex = 0;
                 eventExerciseDataIndex++;
             }
+
             poseDataIndex = 0;
 
             //add to score
@@ -311,11 +319,12 @@ public class GameManager : MonoBehaviour
         if (poseDataIndex == 0 && !hasPlayedDialogueAudio)
         {
             hasPlayedDialogueAudio = true;
-            
-            EventManager.currentManager.AddEvent(new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
+
+            EventManager.currentManager.AddEvent(
+                new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
 
             //If there is no image chosen, the exercise will not display
-            if (puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow==true)
+            if (puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow == true)
             {
                 exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
                 exerciseImage.gameObject.SetActive(true);
@@ -324,10 +333,10 @@ public class GameManager : MonoBehaviour
             {
                 exerciseImage.gameObject.SetActive(false);
             }
-       
         }
 
-        var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas[poseDataIndex]);
+        var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
+            .poseDatas[poseDataIndex]);
 
         //if it returns -1 it means the player did not achieve a good pose
         if (score == -1)
@@ -364,7 +373,7 @@ public class GameManager : MonoBehaviour
     private void ResetVariables()
     {
         exerciseImage.gameObject.SetActive(false);
-        
+
         EventManager.currentManager.AddEvent(new HideEnemy());
 
         hasSwappedMusicAudioSource = false;
@@ -373,6 +382,7 @@ public class GameManager : MonoBehaviour
         eventExerciseDataIndex = 0;
         poseDataIndex = 0;
         playerAttackIndex = 0;
+        exercisePerformIndex = 0;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
 
@@ -436,7 +446,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.Log("EventData of type DamageEnemy was not of type DamageEnemy.");
         }
-        
     }
 
     private void OnDialogueAudioStatusUpdate(EventData eventData)

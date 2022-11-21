@@ -17,10 +17,5 @@ namespace GameEvents
         public PlayerAttackSequence[] playerAttackSequence;//Using jagged arrays as they are not size restricted
     }
 
-    [System.Serializable]
-    public class PlayerAttackSequence
-    {
-        public EventReference exerciseName;
-        public PoseDataSet[] playerAttack;
-    }
+
 }
