@@ -772,7 +772,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 494806754}
-  m_LocalRotation: {x: 1.45712e-26, y: 1, z: 1.9561392e-21, w: -0.0000074489585}
+  m_LocalRotation: {x: -1.45712e-26, y: 1, z: -1.9561392e-21, w: -0.0000074489585}
   m_LocalPosition: {x: 0.00003913338, y: 1.0971533, z: 2.587727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -1296,6 +1296,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650970108}
   - component: {fileID: 650970107}
+  - component: {fileID: 650970109}
   m_Layer: 0
   m_Name: Directional Light
   m_TagString: Untagged
@@ -1380,6 +1381,26 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 40.133, y: -174.067, z: -124.923}
+--- !u!114 &650970109
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650970106}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 474bcb49853aa07438625e644c072ee6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Version: 1
+  m_UsePipelineSettings: 1
+  m_AdditionalLightsShadowResolutionTier: 2
+  m_LightLayerMask: 1
+  m_CustomShadowLayers: 0
+  m_ShadowLayerMask: 1
+  m_LightCookieSize: {x: 1, y: 1}
+  m_LightCookieOffset: {x: 0, y: 0}
 --- !u!1 &671912200
 GameObject:
   m_ObjectHideFlags: 0
@@ -2553,7 +2574,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269809871}
-  m_LocalRotation: {x: 1.45712e-26, y: 1, z: 1.9561392e-21, w: -0.0000074489585}
+  m_LocalRotation: {x: -1.45712e-26, y: 1, z: -1.9561392e-21, w: -0.0000074489585}
   m_LocalPosition: {x: 0.00003913338, y: 1.0971533, z: 2.587727}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -2828,21 +2849,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1fc9b1bfbf21049458ead2f736053e4b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEventDataHolder: {fileID: 11400000, guid: 1130b5e0013681c48ae93e90b62ec59b, type: 2}
+  gameEventDataHolder: {fileID: 11400000, guid: 6f0b7251b2a437d4199522827c3e27ae, type: 2}
   poseMatchCheck: {fileID: 1354624409}
   scoreText: {fileID: 531890031}
   exerciseImage: {fileID: 1688849054}
   backgroundImage: {fileID: 1243361130}
   backgroundTransitionImage: {fileID: 581402358}
   playerHealthBar: {fileID: 857386964}
-  dialogueAudioSource: {fileID: 942721654}
-  musicAudioSource: {fileID: 1187055218}
-  sfxAudioSource: {fileID: 1406316336}
   scoreUpdateSpeed: 0.5
   scoreModifier: 100
   comboDuration: 5
   comboCountDamageModifier: 0
-  playerDamage: 0
 --- !u!4 &1354624408
 Transform:
   m_ObjectHideFlags: 0
