@@ -275,7 +275,6 @@ public class GameManager : MonoBehaviour
     {
         if (!hasPerformedFirstTimeSetup)
         {
-            exerciseImage.gameObject.SetActive(true);
             if (puzzleEvent.BackgroundSprite != null)
                 StartBackgroundTransition(puzzleEvent.BackgroundSprite);
             hasPerformedFirstTimeSetup = true;
@@ -306,7 +305,18 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = true;
             
             EventManager.currentManager.AddEvent(new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
-            exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
+
+            //If there is no image chosen, the exercise will not display
+            if (puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow==true)
+            {
+                exerciseImage.sprite = puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow;
+                exerciseImage.gameObject.SetActive(true);
+            }
+            else
+            {
+                exerciseImage.gameObject.SetActive(false);
+            }
+       
         }
 
         var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
