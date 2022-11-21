@@ -39,7 +39,7 @@ public class GameManager : MonoBehaviour
     #endregion
 
 
-    #region Private Private
+    #region Private Fields
 
     //the score that the player has achieved
     private float totalScore;
@@ -87,6 +87,9 @@ public class GameManager : MonoBehaviour
 
     //used specifically for fighting events to determine which attack the player does.
     private int playerAttackIndex;
+
+    //used to identify how far the current posedata index is
+    private int exercisePerformIndex;
 
     #endregion
 
@@ -284,7 +287,12 @@ public class GameManager : MonoBehaviour
         //if it reaches the end of the pose data list
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
-            eventExerciseDataIndex++;
+            exercisePerformIndex++;
+            if (exercisePerformIndex>=puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
+            {
+                exercisePerformIndex = 0;
+                eventExerciseDataIndex++;
+            }
             poseDataIndex = 0;
 
             //add to score
@@ -319,8 +327,7 @@ public class GameManager : MonoBehaviour
        
         }
 
-        var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
-            .poseDatas[poseDataIndex]);
+        var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas[poseDataIndex]);
 
         //if it returns -1 it means the player did not achieve a good pose
         if (score == -1)
