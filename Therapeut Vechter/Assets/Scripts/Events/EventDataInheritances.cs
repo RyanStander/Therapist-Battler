@@ -3,16 +3,6 @@
 using FMODUnity;
 using UnityEngine;
 
-public class SendDebugLog : EventData
-{
-    public readonly string Debuglog;
-
-    public SendDebugLog(string givenLog) : base(EventType.ReceiveDebug)
-    {
-        Debuglog = givenLog;
-    }
-}
-
 /// <summary>
 /// Updates the displayed combo score ui
 /// </summary>
@@ -27,6 +17,32 @@ public class UpdateComboScore : EventData
         EnableCombo = enableCombo;
         ComboTimer = comboTimer;
         ComboCount = comboCount;
+    }
+}
+
+/// <summary>
+/// Setup the displayed score ui
+/// </summary>
+public class SetupTotalScore : EventData
+{
+    public readonly float MaxScore;
+
+    public SetupTotalScore(float maxScore): base(EventType.SetupTotalScore)
+    {
+        MaxScore = maxScore;
+    }
+}
+
+/// <summary>
+/// Updates the displayed score ui
+/// </summary>
+public class UpdateTotalScore : EventData
+{
+    public readonly float Score;
+
+    public UpdateTotalScore(float score): base(EventType.UpdateTotalScore)
+    {
+        Score = score;
     }
 }
 
@@ -87,13 +103,26 @@ public class DamageEnemy : EventData
 #region Effects
 
 /// <summary>
-/// Creates an attack effect for the player
+/// Creates an attack effect for the player 
 /// </summary>
 public class CreatePlayerNormalAttack : EventData
 {
     public readonly float Damage;
 
     public CreatePlayerNormalAttack(float damage): base(EventType.CreatePlayerNormalAttack)
+    {
+        Damage = damage;
+    }
+}
+
+/// <summary>
+/// Creates an attack effect for the player combo
+/// </summary>
+public class CreatePlayerComboAttack : EventData
+{
+    public readonly float Damage;
+
+    public CreatePlayerComboAttack(float damage) : base(EventType.CreatePlayerComboAttack)
     {
         Damage = damage;
     }

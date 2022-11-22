@@ -8,6 +8,8 @@ public enum EventType
     ReceiveDebug,
     
     UpdateComboScore,
+    UpdateTotalScore,
+    SetupTotalScore,
     
     //Enemy
     SetupEnemy,
@@ -16,6 +18,7 @@ public enum EventType
     HideEnemy,
     
     CreatePlayerNormalAttack,
+    CreatePlayerComboAttack,
     
     //Audio
     PlayDialogueAudio,
