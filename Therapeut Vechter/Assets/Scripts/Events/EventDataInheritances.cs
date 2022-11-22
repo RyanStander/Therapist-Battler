@@ -20,6 +20,32 @@ public class UpdateComboScore : EventData
     }
 }
 
+/// <summary>
+/// Setup the displayed score ui
+/// </summary>
+public class SetupTotalScore : EventData
+{
+    public readonly float MaxScore;
+
+    public SetupTotalScore(float maxScore): base(EventType.SetupTotalScore)
+    {
+        MaxScore = maxScore;
+    }
+}
+
+/// <summary>
+/// Updates the displayed score ui
+/// </summary>
+public class UpdateTotalScore : EventData
+{
+    public readonly float Score;
+
+    public UpdateTotalScore(float score): base(EventType.UpdateTotalScore)
+    {
+        Score = score;
+    }
+}
+
 
  #region EnemyManager
 

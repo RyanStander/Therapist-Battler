@@ -153,6 +153,8 @@ public class GameManager : MonoBehaviour
         playerHealthBar.value = playerHealth;
 
         backgroundImage.sprite = gameEventDataHolder.startingBackground;
+        
+        EventManager.currentManager.AddEvent(new SetupTotalScore(100));
     }
 
     //Manages the functionality of the level
@@ -230,6 +232,7 @@ public class GameManager : MonoBehaviour
 
             //add to score
             totalScore += currentExerciseScore;
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentExerciseScore));
             currentExerciseScore = 0;
 
             comboTimeStamp = Time.time + comboDuration;
@@ -311,6 +314,7 @@ public class GameManager : MonoBehaviour
 
             //add to score
             totalScore += currentExerciseScore;
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentExerciseScore));
             currentExerciseScore = 0;
 
             hasPlayedDialogueAudio = false;
@@ -351,6 +355,7 @@ public class GameManager : MonoBehaviour
             return;
 
         currentExerciseScore += score;
+        EventManager.currentManager.AddEvent(new UpdateTotalScore(score));
         poseDataIndex++;
     }
 
@@ -412,8 +417,6 @@ public class GameManager : MonoBehaviour
 
     private void SlowScoreIncreaseOverTime()
     {
-        //TODO: make it so combo timer is updated here
-
         currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
 
         scoreText.text = Mathf.Floor(currentDisplayScore).ToString();

@@ -1603,6 +1603,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7895697536464111515, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
   m_PrefabInstance: {fileID: 7895697537256095462}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &818788734 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7895697536464111512, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
+  m_PrefabInstance: {fileID: 7895697537256095462}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 67db9e8f0e2ae9c40bc1e2b64352a6b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &857386964 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7895697536433377586, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
@@ -2528,6 +2539,30 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: -1
   OverrideMaxDistance: -1
+--- !u!1 &1417755769 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7895697538136818335, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
+  m_PrefabInstance: {fileID: 7895697537256095462}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1417755772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1417755769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bc05152c87a66c04ea095d296b3327d8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  scoreSlider: {fileID: 818788734}
+  scoreUpdateSpeed: 0.1
+  topStarImage: {fileID: 181222727}
+  middleStarImage: {fileID: 1023570773}
+  bottomStarImage: {fileID: 350881641}
+  obtainedStarSprite: {fileID: 21300000, guid: 3c93175ee075aa74c9c3df30fa32dc14, type: 3}
+  unobtainedStarSprite: {fileID: 21300000, guid: c29d7bf128bf09b46839c54b8e97e2fa, type: 3}
 --- !u!4 &1420239044 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: c35d1425b5afc3243b87daebfa34af04, type: 3}
@@ -4236,6 +4271,10 @@ PrefabInstance:
     - target: {fileID: 7895697537179567631, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7895697537181450632, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7895697537391938373, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_AnchorMax.x
