@@ -166,6 +166,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{0a32ce40-1a1f-4ee3-9d71-65a4ddefa9b0}">
+		<property name="volume">
+			<value>-5.5</value>
+		</property>
 		<property name="name">
 			<value>Sea</value>
 		</property>
@@ -232,6 +235,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{7e99745d-615e-4cc3-a2fd-4068f197f507}">
+		<property name="volume">
+			<value>-7.5</value>
+		</property>
 		<property name="name">
 			<value>Seagulls</value>
 		</property>
@@ -294,7 +300,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{139be050-06c1-4baa-8d52-62fc08323c26}">
 		<property name="volume">
-			<value>-10.5</value>
+			<value>1</value>
 		</property>
 		<property name="name">
 			<value>People</value>
@@ -487,6 +493,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{408e23bf-ab70-4dde-979f-052ca11fdab0}">
+		<property name="volume">
+			<value>-12</value>
+		</property>
 		<property name="name">
 			<value>Events</value>
 		</property>
@@ -526,19 +535,31 @@
 			<destination>{25452575-195d-4e0a-895b-dd66dc313d75}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{3db84e58-78cf-4913-93c5-d73453b1fa5e}" />
+	<object class="MixerBusPanner" id="{3db84e58-78cf-4913-93c5-d73453b1fa5e}">
+		<property name="stereoPan">
+			<value>-20</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{4cf16117-3f99-4971-b4df-7d971f16e11a}">
 		<relationship name="effects">
 			<destination>{05087f03-5097-411f-9f99-dfb9c1b8e1ae}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{9b537bc4-6705-4463-b153-2933b52debb2}" />
+	<object class="MixerBusPanner" id="{9b537bc4-6705-4463-b153-2933b52debb2}">
+		<property name="stereoPan">
+			<value>-8</value>
+		</property>
+	</object>
 	<object class="MixerBusEffectChain" id="{feab0545-c169-466d-abbf-b06c1f2a3c97}">
 		<relationship name="effects">
 			<destination>{09be50f9-42cf-46ae-8cc0-f2eef92dadd2}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{747ef6e0-7b7c-4a13-87aa-b00196853fa1}" />
+	<object class="MixerBusPanner" id="{747ef6e0-7b7c-4a13-87aa-b00196853fa1}">
+		<property name="stereoPan">
+			<value>20</value>
+		</property>
+	</object>
 	<object class="FadeCurve" id="{f82e5300-2594-4811-a4a7-c1e25bf942f9}">
 		<relationship name="startPoint">
 			<destination>{08bdbdb1-3aa3-4058-af87-24c9c8a533d9}</destination>
