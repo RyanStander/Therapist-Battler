@@ -57,7 +57,7 @@ namespace UI
                 if (setupEnemy.EnemySprite!=null)
                 {
                     enemyImage.sprite = setupEnemy.EnemySprite;
-                    enemyImage.gameObject.SetActive(true);
+                    enemyImage.gameObject.SetActive(false);
                     enemyBackgroundImage.gameObject.SetActive(false);
                 }
                 
@@ -68,6 +68,8 @@ namespace UI
                 healthUpdateSpeed = setupEnemy.EnemyHealthUpdateSpeed;
                 
                 enemySlider.gameObject.SetActive(true);
+                enemyBackgroundImage.gameObject.SetActive(true);
+                enemyImage.gameObject.SetActive(true);
             }
             else
                 Debug.LogError(
