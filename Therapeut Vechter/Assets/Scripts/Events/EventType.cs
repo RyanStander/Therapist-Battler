@@ -16,6 +16,7 @@ public enum EventType
     HideEnemy,
     
     CreatePlayerNormalAttack,
+    CreatePlayerComboAttack,
     
     //Audio
     PlayDialogueAudio,

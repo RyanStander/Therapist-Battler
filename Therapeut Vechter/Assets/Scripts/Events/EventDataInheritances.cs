@@ -77,13 +77,26 @@ public class DamageEnemy : EventData
 #region Effects
 
 /// <summary>
-/// Creates an attack effect for the player
+/// Creates an attack effect for the player 
 /// </summary>
 public class CreatePlayerNormalAttack : EventData
 {
     public readonly float Damage;
 
     public CreatePlayerNormalAttack(float damage): base(EventType.CreatePlayerNormalAttack)
+    {
+        Damage = damage;
+    }
+}
+
+/// <summary>
+/// Creates an attack effect for the player combo
+/// </summary>
+public class CreatePlayerComboAttack : EventData
+{
+    public readonly float Damage;
+
+    public CreatePlayerComboAttack(float damage) : base(EventType.CreatePlayerComboAttack)
     {
         Damage = damage;
     }

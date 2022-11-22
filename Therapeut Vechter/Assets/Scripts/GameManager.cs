@@ -267,10 +267,7 @@ public class GameManager : MonoBehaviour
         //have a combo timer running, depending on how many combos they get, they get higher damage
         if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage > enemyHealth)
         {
-            enemyHealth -= comboDamage;
-            EventManager.currentManager.AddEvent(new DamageEnemyVisuals(comboDamage));
-
-            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
+            EventManager.currentManager.AddEvent(new CreatePlayerComboAttack(comboDamage));
 
             comboCount = 0;
             EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
