@@ -11,14 +11,7 @@ namespace LevelScreen
 
         private void Awake()
         {
-            if (Instance != null && Instance != this)
-            {
-                Destroy(gameObject);
-            }
-            else
-            {
-                Instance = this;
-            }
+            CheckObjectInScene();
         }
 
         void Start()
@@ -50,6 +43,18 @@ namespace LevelScreen
         {
             gameObject.SetActive(false);
             TextComponent.text = string.Empty;
+        }
+
+        private void CheckObjectInScene()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+            }
+            else
+            {
+                Instance = this;
+            }
         }
     }
 }
