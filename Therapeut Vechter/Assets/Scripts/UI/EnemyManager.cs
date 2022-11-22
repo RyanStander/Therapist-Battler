@@ -10,6 +10,7 @@ namespace UI
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField] private Image enemyImage;
+        [SerializeField] private Image enemyBackgroundImage;
         [SerializeField] private Animator enemyImageAnimator;
         [SerializeField] private Slider enemySlider;
         [SerializeField] private Color enemyDamageColor = Color.red;
@@ -57,6 +58,7 @@ namespace UI
                 {
                     enemyImage.sprite = setupEnemy.EnemySprite;
                     enemyImage.gameObject.SetActive(true);
+                    enemyBackgroundImage.gameObject.SetActive(false);
                 }
                 
                 currentDisplayHealth = setupEnemy.EnemyHealth;
@@ -95,6 +97,7 @@ namespace UI
             {
                 enemyImage.gameObject.SetActive(false);
                 enemySlider.gameObject.SetActive(false);
+                enemyBackgroundImage.gameObject.SetActive(false);
             }
             else
                 Debug.LogError(
