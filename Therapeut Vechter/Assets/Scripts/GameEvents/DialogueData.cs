@@ -1,12 +1,13 @@
+using FMODUnity;
 using UnityEngine;
 
 namespace GameEvents
 {
-    [CreateAssetMenu(menuName = "Game Events/Dialogue Event")]
+    [CreateAssetMenu(menuName = "Scriptable Objects/Game Events/Dialogue Event")]
     public class DialogueData : BaseGameEvent
     {
         [Header("Dialogue Specific")]
-        public AudioClip DialogueClip;
-        public Sprite BackgroundSprite;
+        [Tooltip("The path is based in the events path of fmod")]
+        public EventReference EventPath;
     }
 }

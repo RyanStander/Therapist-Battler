@@ -173,15 +173,15 @@ namespace xsens
                     }
                 }
             }
-            catch (Exception e)
+            /*catch (Exception e)
             {
-                Debug.Log(e);
-                Debug.Log("[xsens] XsStreamReader terminated");
-                Console.WriteLine("[xsens] XsStreamReader terminated.");
-            }
+                //Debug.Log(e);
+                //Debug.Log("[xsens] XsStreamReader terminated");
+                //Console.WriteLine("[xsens] XsStreamReader terminated.");
+            }*/
             finally
             {
-                udpClient.Close();
+                udpClient?.Close();
                 udpClient = null;
             }
         }

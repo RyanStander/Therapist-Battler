@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 namespace GameEvents
@@ -6,6 +7,7 @@ namespace GameEvents
     {
         [Header("Override")]
         public bool OverrideCurrentlyPlayingMusic;
-        public AudioClip OverrideMusic;
+        public EventReference OverrideMusic;
+        public Sprite BackgroundSprite;
     }
 }

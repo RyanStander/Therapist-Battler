@@ -6,4 +6,20 @@ using UnityEngine;
 public enum EventType 
 {
     ReceiveDebug,
+    
+    UpdateComboScore,
+    
+    //Enemy
+    SetupEnemy,
+    DamageEnemyVisuals,
+    DamageEnemy,
+    HideEnemy,
+    
+    CreatePlayerNormalAttack,
+    
+    //Audio
+    PlayDialogueAudio,
+    DialogueAudioStatusUpdate,
+    PlaySfxAudio,
+    PlayMusicAudio,
 }
