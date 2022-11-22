@@ -1,5 +1,6 @@
 using System;
 using Exercises;
+using FMODUnity;
 using GameEvents;
 using TMPro;
 using UnityEngine;
@@ -101,6 +102,14 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Feedback timer
+
+    [SerializeField] private float timeUntilRepeatExerciseName = 10;
+
+    private float exerciseRepeatTimeStamp;
+
+    #endregion
+
     #endregion
 
     #region Runtime
@@ -195,7 +204,7 @@ public class GameManager : MonoBehaviour
             EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,
                 scoreUpdateSpeed));
         }
-        
+
         //if enemy dies
         if (enemyHealth < 1)
         {
@@ -212,11 +221,10 @@ public class GameManager : MonoBehaviour
                 new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
         }
 
-        //if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack[eventExerciseDataIndex].poseDatas.Count <= poseDataIndex)
         if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count <= poseDataIndex)
         {
             exercisePerformIndex++;
-            
+
             hasPlayedDialogueAudio = false;
             poseDataIndex = 0;
 
@@ -233,11 +241,10 @@ public class GameManager : MonoBehaviour
 
             EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
 
-            //if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.Length <= eventExerciseDataIndex)
             if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
             {
                 playerAttackIndex++;
-                
+
                 exercisePerformIndex = 0;
 
                 playerHealth -= fightingEvent.enemyDamage;
@@ -269,6 +276,8 @@ public class GameManager : MonoBehaviour
             EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
         }
 
+        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+        
         var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
             .playerAttack.poseDatas[poseDataIndex]);
 
@@ -335,6 +344,8 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+        
         var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
             .poseDatas[poseDataIndex]);
 
@@ -369,6 +380,21 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region Extra Functions
+
+    private void RepeatExerciseNameAfterTime(EventReference eventReference)
+    {
+        //Set a timestamp to repeat the exercise if it is 0
+        if (exerciseRepeatTimeStamp < 0.001f)
+            exerciseRepeatTimeStamp = Time.time + timeUntilRepeatExerciseName;
+
+        if (!(exerciseRepeatTimeStamp < Time.time)) return;
+        EventManager.currentManager.AddEvent(new PlayDialogueAudio(eventReference));
+        exerciseRepeatTimeStamp = 0;
+    }
+
+    #endregion
+
     //Resets the main variables
     private void ResetVariables()
     {
@@ -383,6 +409,7 @@ public class GameManager : MonoBehaviour
         poseDataIndex = 0;
         playerAttackIndex = 0;
         exercisePerformIndex = 0;
+        exerciseRepeatTimeStamp = 0;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
 
