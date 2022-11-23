@@ -108,6 +108,8 @@ public class GameManager : MonoBehaviour
 
     private float exerciseRepeatTimeStamp;
 
+    private bool exerciseTimerIsRunning;
+
     #endregion
 
     #endregion
@@ -234,6 +236,7 @@ public class GameManager : MonoBehaviour
             totalScore += currentExerciseScore;
             EventManager.currentManager.AddEvent(new UpdateTotalScore(currentExerciseScore));
             currentExerciseScore = 0;
+            exerciseTimerIsRunning = false;
 
             comboTimeStamp = Time.time + comboDuration;
             comboCount++;
@@ -317,6 +320,7 @@ public class GameManager : MonoBehaviour
             EventManager.currentManager.AddEvent(new UpdateTotalScore(currentExerciseScore));
             currentExerciseScore = 0;
 
+            exerciseTimerIsRunning = false;
             hasPlayedDialogueAudio = false;
 
             if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
@@ -387,12 +391,17 @@ public class GameManager : MonoBehaviour
     private void RepeatExerciseNameAfterTime(EventReference eventReference)
     {
         //Set a timestamp to repeat the exercise if it is 0
-        if (exerciseRepeatTimeStamp < 0.001f)
+        if (!exerciseTimerIsRunning)
+        {
+            exerciseTimerIsRunning = true;
             exerciseRepeatTimeStamp = Time.time + timeUntilRepeatExerciseName;
+        }
+
 
         if (!(exerciseRepeatTimeStamp < Time.time)) return;
+        
         EventManager.currentManager.AddEvent(new PlayDialogueAudio(eventReference));
-        exerciseRepeatTimeStamp = 0;
+        exerciseTimerIsRunning = false;
     }
 
     #endregion
@@ -411,7 +420,7 @@ public class GameManager : MonoBehaviour
         poseDataIndex = 0;
         playerAttackIndex = 0;
         exercisePerformIndex = 0;
-        exerciseRepeatTimeStamp = 0;
+        exerciseTimerIsRunning = false;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
 
