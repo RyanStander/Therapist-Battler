@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Exercises;
 using FMODUnity;
 using GameEvents;
@@ -99,6 +100,7 @@ public class GameManager : MonoBehaviour
     private float playerCurrentDisplayHealth;
     private float playerHealth = 100;
     private float enemyHealth;
+    private bool isDead;
 
     #endregion
 
@@ -155,8 +157,8 @@ public class GameManager : MonoBehaviour
         playerHealthBar.value = playerHealth;
 
         backgroundImage.sprite = gameEventDataHolder.startingBackground;
-        
-        EventManager.currentManager.AddEvent(new SetupTotalScore(100));
+
+        SetupLevelScore();
     }
 
     //Manages the functionality of the level
@@ -217,6 +219,11 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        if (isDead)
+        {
+            return;
+        }
+
         if (!hasPlayedDialogueAudio)
         {
             hasPlayedDialogueAudio = true;
@@ -232,9 +239,15 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = false;
             poseDataIndex = 0;
 
+            var currentScoreCalculation =
+                (currentExerciseScore /
+                 fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count) *
+                fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.scoreValue;
+            
             //add to score
-            totalScore += currentExerciseScore;
-            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentExerciseScore));
+            totalScore += currentScoreCalculation;
+
+            //EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
             currentExerciseScore = 0;
             exerciseTimerIsRunning = false;
 
@@ -242,8 +255,7 @@ public class GameManager : MonoBehaviour
             comboCount++;
             EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
 
-            EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(playerDamage));
-            playerDamage = 0;
+            EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(currentScoreCalculation));
 
             EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
 
@@ -275,12 +287,16 @@ public class GameManager : MonoBehaviour
         {
             EventManager.currentManager.AddEvent(new CreatePlayerComboAttack(comboDamage));
 
+            totalScore += comboDamage;
+
             comboCount = 0;
             EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
+
+            isDead = true;
         }
 
         RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
-        
+
         var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
             .playerAttack.poseDatas[poseDataIndex]);
 
@@ -288,7 +304,6 @@ public class GameManager : MonoBehaviour
         if (score == -1)
             return;
 
-        playerDamage += score;
         currentExerciseScore += score;
         poseDataIndex++;
     }
@@ -306,6 +321,19 @@ public class GameManager : MonoBehaviour
         //if it reaches the end of the pose data list
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
+            var currentScoreCalculation =
+                (currentExerciseScore /
+                 puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count) *
+                puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.scoreValue;
+            //add to score
+            totalScore += currentScoreCalculation;
+
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
+            currentExerciseScore = 0;
+
+            exerciseTimerIsRunning = false;
+            hasPlayedDialogueAudio = false;
+            
             exercisePerformIndex++;
             if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
@@ -314,14 +342,6 @@ public class GameManager : MonoBehaviour
             }
 
             poseDataIndex = 0;
-
-            //add to score
-            totalScore += currentExerciseScore;
-            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentExerciseScore));
-            currentExerciseScore = 0;
-
-            exerciseTimerIsRunning = false;
-            hasPlayedDialogueAudio = false;
 
             if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
 
@@ -350,7 +370,7 @@ public class GameManager : MonoBehaviour
         }
 
         RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
-        
+
         var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
             .poseDatas[poseDataIndex]);
 
@@ -388,6 +408,30 @@ public class GameManager : MonoBehaviour
 
     #region Extra Functions
 
+    private void SetupLevelScore()
+    {
+        float maxScore = 0;
+        foreach (var gameEvent in gameEventDataHolder.gameEvents)
+        {
+            switch (gameEvent)
+            {
+                case EnvironmentPuzzleData environmentPuzzleData:
+                {
+                    maxScore += environmentPuzzleData.exerciseData.Sum(exerciseData =>
+                        exerciseData.ExerciseToPerform.scoreValue * exerciseData.timesToPerform);
+                    break;
+                }
+                case FightingData fightingData:
+                {
+                    maxScore += fightingData.enemyHealth;
+                    break;
+                }
+            }
+        }
+
+        EventManager.currentManager.AddEvent(new SetupTotalScore(maxScore));
+    }
+
     private void RepeatExerciseNameAfterTime(EventReference eventReference)
     {
         //Set a timestamp to repeat the exercise if it is 0
@@ -399,7 +443,7 @@ public class GameManager : MonoBehaviour
 
 
         if (!(exerciseRepeatTimeStamp < Time.time)) return;
-        
+
         EventManager.currentManager.AddEvent(new PlayDialogueAudio(eventReference));
         exerciseTimerIsRunning = false;
     }
@@ -421,6 +465,7 @@ public class GameManager : MonoBehaviour
         playerAttackIndex = 0;
         exercisePerformIndex = 0;
         exerciseTimerIsRunning = false;
+        isDead = false;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
 

@@ -21,6 +21,7 @@ namespace Effects
             if (timeStamp >= Time.time) return;
             EventManager.currentManager.AddEvent(new DamageEnemy(damageToTake));
             EventManager.currentManager.AddEvent(new DamageEnemyVisuals(damageToTake));
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(damageToTake));
             Destroy(gameObject);
         }
 
