@@ -11,6 +11,7 @@ namespace LevelScreen
         public int SpawnDistance;
         public int ObjectsSpawned;
         private Transform[] objList;
+        private int startDistanceX = 275;
         
         //get the last 2 objects of the spawned in levels
         private int lastIndexInt;
@@ -22,7 +23,7 @@ namespace LevelScreen
         {
             for (var i = 0; i < levelData.Length; i++)
             {
-                var newLevel  = Instantiate(levelPrefab, new Vector3(275+ i*SpawnDistance,0,0),Quaternion.identity,transform);
+                var newLevel  = Instantiate(levelPrefab, new Vector3(startDistanceX+ i*SpawnDistance,0,0),Quaternion.identity,transform);
                 newLevel.GetComponent<LevelScript>().LoadLevelData(levelData[i]);
                 ObjectsSpawned += 1;
             }
