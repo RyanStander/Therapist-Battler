@@ -116,6 +116,18 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Handling End of Game
+
+    [Tooltip("In Seconds")] [SerializeField]
+    private float endGameDelay;
+
+    private float endGameDelayTimestamp;
+    private bool endGameTimerIsRunning;
+
+    #endregion
+
+    private float maxScore;
+
     #region Runtime
 
     private void OnEnable()
@@ -164,9 +176,40 @@ public class GameManager : MonoBehaviour
     //Manages the functionality of the level
     private void RunLevel()
     {
-        //Check if it has reached the
-        if (gameEventsIndex >= gameEventDataHolder.gameEvents.Length)
+        if (endGameTimerIsRunning && endGameDelayTimestamp <= Time.time)
+        {
+            var starsAchieved = 0;
+            //Call event to show end game screen;
+            //full stars
+            if (currentDisplayScore > maxScore * 0.9f)
+            {
+                starsAchieved = 3;
+            }
+            //two stars
+            else if (currentDisplayScore > maxScore * 2 / 3)
+            {
+                starsAchieved = 2;
+            }
+            //one star
+            else if (currentDisplayScore > maxScore * 1 / 3)
+            {
+                starsAchieved = 1;
+            }
+
+            EventManager.currentManager.AddEvent(new EndLevel(totalScore, starsAchieved));
+        }
+
+        //Check if it has reached the list or player has died
+        if (gameEventsIndex >= gameEventDataHolder.gameEvents.Length || playerHealth <= 0)
+        {
+            if (endGameTimerIsRunning) return;
+            //Start game end
+            endGameDelayTimestamp = Time.time + endGameDelay;
+            endGameTimerIsRunning = true;
+
             return;
+        }
+
 
         //Swaps song
         if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
@@ -243,11 +286,10 @@ public class GameManager : MonoBehaviour
                 (currentExerciseScore /
                  fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count) *
                 fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.scoreValue;
-            
+
             //add to score
             totalScore += currentScoreCalculation;
-
-            //EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
+            
             currentExerciseScore = 0;
             exerciseTimerIsRunning = false;
 
@@ -280,19 +322,20 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        var comboDamage = comboCount * comboCountDamageModifier;
+        var comboDamage = Mathf.Pow(this.comboCountDamageModifier, comboCount);
 
         //have a combo timer running, depending on how many combos they get, they get higher damage
         if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage > enemyHealth)
         {
+            if (comboDamage>enemyHealth)
+                isDead = true;
+
             EventManager.currentManager.AddEvent(new CreatePlayerComboAttack(comboDamage));
 
             totalScore += comboDamage;
 
             comboCount = 0;
             EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
-
-            isDead = true;
         }
 
         RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
@@ -333,7 +376,7 @@ public class GameManager : MonoBehaviour
 
             exerciseTimerIsRunning = false;
             hasPlayedDialogueAudio = false;
-            
+
             exercisePerformIndex++;
             if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
@@ -410,7 +453,6 @@ public class GameManager : MonoBehaviour
 
     private void SetupLevelScore()
     {
-        float maxScore = 0;
         foreach (var gameEvent in gameEventDataHolder.gameEvents)
         {
             switch (gameEvent)
