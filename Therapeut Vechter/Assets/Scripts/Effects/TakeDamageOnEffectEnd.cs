@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using FMODUnity;
+using UnityEngine;
 using UnityEngine.VFX;
 
 namespace Effects
@@ -7,6 +8,7 @@ namespace Effects
     {
         private EffectData effectData;
         private float damageToTake;
+        private EventReference enemyHurtSound;
 
         private float timeStamp;
 
@@ -22,12 +24,14 @@ namespace Effects
             EventManager.currentManager.AddEvent(new DamageEnemy(damageToTake));
             EventManager.currentManager.AddEvent(new DamageEnemyVisuals(damageToTake));
             EventManager.currentManager.AddEvent(new UpdateTotalScore(damageToTake));
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(enemyHurtSound));
             Destroy(gameObject);
         }
 
-        public void SetEffectDamage(float damage)
+        public void SetEffectData(float damage, EventReference eventReference)
         {
             damageToTake = damage;
+            enemyHurtSound = eventReference;
         }
     }
 }

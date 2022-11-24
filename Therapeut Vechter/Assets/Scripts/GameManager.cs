@@ -297,9 +297,7 @@ public class GameManager : MonoBehaviour
             comboCount++;
             EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
 
-            EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(currentScoreCalculation));
-
-            EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyHurtSound));
+            EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(currentScoreCalculation,fightingEvent.enemyHurtSound));
 
             if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
             {
@@ -330,7 +328,7 @@ public class GameManager : MonoBehaviour
             if (comboDamage>enemyHealth)
                 isDead = true;
 
-            EventManager.currentManager.AddEvent(new CreatePlayerComboAttack(comboDamage));
+            EventManager.currentManager.AddEvent(new CreatePlayerComboAttack(comboDamage,fightingEvent.enemyHurtSound));
 
             totalScore += comboDamage;
 

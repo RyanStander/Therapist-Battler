@@ -121,10 +121,12 @@ public class DamageEnemy : EventData
 public class CreatePlayerNormalAttack : EventData
 {
     public readonly float Damage;
+    public readonly EventReference EnemyHurtSFX;
 
-    public CreatePlayerNormalAttack(float damage) : base(EventType.CreatePlayerNormalAttack)
+    public CreatePlayerNormalAttack(float damage, EventReference enemyHurtSfx) : base(EventType.CreatePlayerNormalAttack)
     {
         Damage = damage;
+        EnemyHurtSFX = enemyHurtSfx;
     }
 }
 
@@ -134,10 +136,12 @@ public class CreatePlayerNormalAttack : EventData
 public class CreatePlayerComboAttack : EventData
 {
     public readonly float Damage;
+    public readonly EventReference EnemyHurtSFX;
 
-    public CreatePlayerComboAttack(float damage) : base(EventType.CreatePlayerComboAttack)
+    public CreatePlayerComboAttack(float damage, EventReference enemyHurtSfx) : base(EventType.CreatePlayerComboAttack)
     {
         Damage = damage;
+        EnemyHurtSFX = enemyHurtSfx;
     }
 }
 
