@@ -76,7 +76,6 @@ namespace UI
         {
             if (eventData is UpdateTotalScore updateTotalScore)
             {
-                Debug.Log("setting score to: " + updateTotalScore.Score);
                 currentScore += updateTotalScore.Score;
             }
         }
@@ -85,8 +84,6 @@ namespace UI
         {
             if (eventData is SetupTotalScore setupTotalScore)
             {
-                Debug.Log("setting score to: " + setupTotalScore.MaxScore);
-                
                 maxScore = setupTotalScore.MaxScore;
                 scoreSlider.value = 0;
                 scoreSlider.maxValue = maxScore;

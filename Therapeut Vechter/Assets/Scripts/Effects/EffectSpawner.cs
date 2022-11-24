@@ -25,7 +25,7 @@ namespace Effects
             {
                 var normalAttack = Instantiate(playerNormalAttackEffect, transform);
                 var damageEffect = normalAttack.AddComponent<TakeDamageOnEffectEnd>();
-                damageEffect.SetEffectDamage(createPlayerNormalAttack.Damage);
+                damageEffect.SetEffectData(createPlayerNormalAttack.Damage,createPlayerNormalAttack.EnemyHurtSFX);
             }
             else
             {
@@ -40,7 +40,7 @@ namespace Effects
             {
                 var comboAttack = Instantiate(playerComboAttackEffect, transform);
                 var damageEffect = comboAttack.AddComponent<TakeDamageOnEffectEnd>();
-                damageEffect.SetEffectDamage(createPlayerComboAttack.Damage);
+                damageEffect.SetEffectData(createPlayerComboAttack.Damage,createPlayerComboAttack.EnemyHurtSFX);
             }
             else
             {
