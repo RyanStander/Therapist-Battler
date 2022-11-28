@@ -1,5 +1,7 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 namespace LevelScreen
@@ -8,6 +10,9 @@ namespace LevelScreen
     {
         //Get Components of Prefab
         [SerializeField]private Image levelIcon;
+
+        
+        [SerializeField] private Button playButton;
 
         //Stars
         private GameObject starOne;
@@ -28,26 +33,19 @@ namespace LevelScreen
 
 
         //Saved data from SO
-        public LevelData level;
-        public string Name;
-        public int levelNumber;
-        public int SpawnHeight;
-        public Sprite levelSprite;
-        public int Stars;
-        public int StarsRequired;
         public bool LevelFinished;
+        public string Name;
+        
+        private LevelData level;
 
+
+        private bool hasCountedStar;
 
         //get data from SO
         public void LoadLevelData(LevelData levelData)
         {
             level = levelData;
             Name = level.LevelName;
-            levelNumber = level.LevelNumber;
-            SpawnHeight = level.HeightValue;
-            levelSprite = level.SpriteIcon;
-            Stars = level.StarCount;
-            StarsRequired = level.StarRequirement;
             LevelFinished = level.FinishedLevel;
             backgroundImage = level.LevelBackgroundImage;
         }
@@ -58,18 +56,23 @@ namespace LevelScreen
             ActivateStars();
             ChangeText();
             PositionBackground();
+            SetButtonAction();
+            StartCoroutine(CountStars(0.05f));
         }
 
-        private void Update()
+        private IEnumerator CountStars(float waitTime)
         {
+            yield return new WaitForSeconds(waitTime);
             //is level unlocked?
             totalStars = sceneStarCount.GetComponent<StarCountScript>().StarsInScene;
 
-            if (totalStars >= StarsRequired && isUnlockedBool == false)
+            if (totalStars >= level.StarRequirement && isUnlockedBool == false)
             {
                 lockIcon.SetActive(false);
                 isUnlockedBool = true;
             }
+
+            hasCountedStar = true;
         }
 
         private void ActivateStars()
@@ -85,17 +88,17 @@ namespace LevelScreen
             starTwo.SetActive(false);
             starThree.SetActive(false);
             //stars activation
-            if (Stars >= 1)
+            if (level.StarCount >= 1)
             {
                 starOne.SetActive(true);
             }
 
-            if (Stars >= 2)
+            if (level.StarCount >= 2)
             {
                 starTwo.SetActive(true);
             }
 
-            if (Stars == 3)
+            if (level.StarCount == 3)
             {
                 starThree.SetActive(true);
             }
@@ -107,16 +110,16 @@ namespace LevelScreen
             var proText = transform.Find("LevelName").GetComponent<TextMeshProUGUI>();
             var proTextNumber = transform.Find("LevelNumber").GetComponent<TextMeshProUGUI>();
             proText.text = Name;
-            proTextNumber.text = levelNumber.ToString();
+            proTextNumber.text = level.LevelNumber.ToString();
         }
 
         private void PositionAndImage()
         {
             //sprite image
-            levelIcon.sprite = levelSprite;
+            levelIcon.sprite = level.SpriteIcon;
             //position
             var levelTransform = transform;
-            levelTransform.localPosition = levelTransform.position + new Vector3(0, SpawnHeight, 0);
+            levelTransform.localPosition = levelTransform.position + new Vector3(0, level.HeightValue, 0);
         }
         //put the background image of the levels at middle height of screen
         private void PositionBackground()
@@ -125,6 +128,17 @@ namespace LevelScreen
             backgroundWidth = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().SpawnDistance;
             backgroundRectTransform.sizeDelta = new Vector2(backgroundWidth,Screen.height);
             backgroundRectTransform.position = new Vector3(backgroundRectTransform.position.x, 1, backgroundRectTransform.position.z);
+        }
+
+        private void SetButtonAction()
+        {
+            playButton.onClick.AddListener(LoadSceneWithSpecifiedLevel);
+        }
+
+        private void LoadSceneWithSpecifiedLevel()
+        {
+            GameData.Instance.currentLevel = level.GameEventDataHolderLevel;
+            SceneManager.LoadScene(1);
         }
     }
 }
