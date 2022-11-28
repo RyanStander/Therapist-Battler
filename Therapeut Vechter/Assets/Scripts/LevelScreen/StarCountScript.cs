@@ -7,7 +7,6 @@ namespace LevelScreen
     public class StarCountScript : MonoBehaviour
     {
         [SerializeField] private TMP_Text starCountText;
-        private string starCountString;
         private int maxStarCount;
         public int StarsInScene;
         private GameObject[] gameObjects;
@@ -21,9 +20,7 @@ namespace LevelScreen
         void Update()
         {
             //change text in the gem to display current amount
-            starCountString = StarsInScene.ToString();
-            starCountString += "/" + maxStarCount;
-            starCountText.text = starCountString;
+            starCountText.text = StarsInScene + "/" + maxStarCount;
         }
 
         // ReSharper disable Unity.PerformanceAnalysis

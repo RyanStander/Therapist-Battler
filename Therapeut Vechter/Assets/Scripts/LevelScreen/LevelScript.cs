@@ -7,7 +7,7 @@ namespace LevelScreen
     public class LevelScript : MonoBehaviour
     {
         //Get Components of Prefab
-        private Image levelIcon;
+        [SerializeField]private Image levelIcon;
 
         //Stars
         private GameObject starOne;
@@ -20,6 +20,11 @@ namespace LevelScreen
         private bool isUnlockedBool;
         private GameObject lockIcon;
         private int totalStars;
+        //background
+        private Sprite backgroundImage;
+        [SerializeField] private RectTransform backgroundRectTransform;
+        [SerializeField] private Image backgroundTransform;
+        private int backgroundWidth;
 
 
         //Saved data from SO
@@ -44,26 +49,34 @@ namespace LevelScreen
             Stars = level.StarCount;
             StarsRequired = level.StarRequirement;
             LevelFinished = level.FinishedLevel;
+            backgroundImage = level.LevelBackgroundImage;
         }
 
         private void Start()
         {
+            PositionAndImage();
+            ActivateStars();
+            ChangeText();
+            PositionBackground();
+        }
+
+        private void Update()
+        {
+            //is level unlocked?
+            totalStars = sceneStarCount.GetComponent<StarCountScript>().StarsInScene;
+
+            if (totalStars >= StarsRequired && isUnlockedBool == false)
+            {
+                lockIcon.SetActive(false);
+                isUnlockedBool = true;
+            }
+        }
+
+        private void ActivateStars()
+        {
             //Star amount getting
             sceneStarCount = GameObject.Find("StarAmount");
             lockIcon = transform.Find("LockIcon").gameObject;
-            //sprite image
-            levelIcon = GetComponent<Image>();
-            levelIcon.sprite = levelSprite;
-            //text
-            var proText = transform.Find("LevelName").GetComponent<TextMeshProUGUI>();
-            var proTextNumber = transform.Find("LevelNumber").GetComponent<TextMeshProUGUI>();
-            proText.text = Name;
-            proTextNumber.text = levelNumber.ToString();
-
-            //position
-            var levelTransform = transform;
-            levelTransform.localPosition = levelTransform.position + new Vector3(0, SpawnHeight, 0);
-
             //stars
             starOne = GameObject.Find("Star 1");
             starTwo = GameObject.Find("Star 2");
@@ -88,16 +101,30 @@ namespace LevelScreen
             }
         }
 
-        private void Update()
+        private void ChangeText()
         {
-            //is level unlocked?
-            totalStars = sceneStarCount.GetComponent<StarCountScript>().StarsInScene;
+            //text
+            var proText = transform.Find("LevelName").GetComponent<TextMeshProUGUI>();
+            var proTextNumber = transform.Find("LevelNumber").GetComponent<TextMeshProUGUI>();
+            proText.text = Name;
+            proTextNumber.text = levelNumber.ToString();
+        }
 
-            if (totalStars >= StarsRequired && isUnlockedBool == false)
-            {
-                lockIcon.SetActive(false);
-                isUnlockedBool = true;
-            }
+        private void PositionAndImage()
+        {
+            //sprite image
+            levelIcon.sprite = levelSprite;
+            //position
+            var levelTransform = transform;
+            levelTransform.localPosition = levelTransform.position + new Vector3(0, SpawnHeight, 0);
+        }
+        //put the background image of the levels at middle height of screen
+        private void PositionBackground()
+        {
+            backgroundTransform.GetComponent<Image>().sprite = backgroundImage;
+            backgroundWidth = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().SpawnDistance;
+            backgroundRectTransform.sizeDelta = new Vector2(backgroundWidth,Screen.height);
+            backgroundRectTransform.position = new Vector3(backgroundRectTransform.position.x, 1, backgroundRectTransform.position.z);
         }
     }
 }

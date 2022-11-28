@@ -127,10 +127,12 @@ namespace Exercises
 
             #endregion
 
-            return (scoring / (poseData.leftUpperLegScoreValue + poseData.leftLowerLegScoreValue +
-                               poseData.leftFootScoreValue + poseData.rightUpperLegScoreValue +
-                               poseData.rightLowerLegScoreValue + poseData.rightFootScoreValue +
-                               poseData.pelvisScoreValue + poseData.sternumScoreValue)) * poseData.scoreModifier;
+            var bodyPartScoring = poseData.leftUpperLegScoreValue + poseData.leftLowerLegScoreValue +
+                                  poseData.leftFootScoreValue + poseData.rightUpperLegScoreValue +
+                                  poseData.rightLowerLegScoreValue + poseData.rightFootScoreValue +
+                                  poseData.pelvisScoreValue + poseData.sternumScoreValue;
+            
+            return (scoring /8);
         }
     }
 }

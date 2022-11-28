@@ -6,25 +6,32 @@ namespace LevelScreen
 {
     public class GameObjectSpawn : MonoBehaviour
     {
-        public GameObject LevelPrefab;
-        public LevelData[] LevelData;
+        [SerializeField]private GameObject levelPrefab;
+        [SerializeField]private LevelData[] levelData;
         public int SpawnDistance;
         public int ObjectsSpawned;
         private Transform[] objList;
+        private int startDistanceX = 275;
+        
         //get the last 2 objects of the spawned in levels
         private int lastIndexInt;
-        public GameObject lastArrayObj;
+        private GameObject lastArrayObj;
         private int secondLastIndexInt;
-        public GameObject secondLastArrayObj;
+        private GameObject secondLastArrayObj;
 
         private void Start()
         {
-            for (var i = 0; i < LevelData.Length; i++)
+            for (var i = 0; i < levelData.Length; i++)
             {
-                var newLevel  = Instantiate(LevelPrefab, new Vector3(150+ i*SpawnDistance,0,0),Quaternion.identity,transform);
-                newLevel.GetComponent<LevelScript>().LoadLevelData(LevelData[i]);
+                var newLevel  = Instantiate(levelPrefab, new Vector3(startDistanceX+ i*SpawnDistance,0,0),Quaternion.identity,transform);
+                newLevel.GetComponent<LevelScript>().LoadLevelData(levelData[i]);
                 ObjectsSpawned += 1;
             }
+            TurnLastImages();
+        }
+
+        private void TurnLastImages()
+        {
             //linking the last levels spawned in to a public gameobject
             objList = transform.Cast<Transform>().ToArray();
             lastIndexInt =  objList.Length - 1;
