@@ -26,7 +26,6 @@ namespace Effects
         {
             if (timeUntilDamage<=Time.time && !hadDoneDamage)
             {
-                Debug.Log("Damage at : "+ timeUntilDamage + " | "+Time.time);
                 EventManager.currentManager.AddEvent(new DamageEnemy(damageToTake));
                 EventManager.currentManager.AddEvent(new DamageEnemyVisuals(damageToTake));
                 EventManager.currentManager.AddEvent(new UpdateTotalScore(damageToTake));
@@ -38,7 +37,6 @@ namespace Effects
             
             
             if (effectLifetimeTimeStamp >= Time.time) return;
-            Debug.Log("destroy at : "+ effectLifetimeTimeStamp + " | "+Time.time);
             Destroy(gameObject);
         }
 
