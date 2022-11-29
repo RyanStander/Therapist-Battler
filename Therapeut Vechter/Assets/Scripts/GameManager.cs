@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Exercises;
 using FMODUnity;
@@ -6,7 +5,6 @@ using GameEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles the game events and is used to play the level.
@@ -161,7 +159,9 @@ public class GameManager : MonoBehaviour
 
     private void InitialiseGame()
     {
-        gameEventDataHolder = GameData.Instance.currentLevel;
+        if (GameData.Instance!=null&& GameData.Instance.currentLevel!=null)
+            gameEventDataHolder = GameData.Instance.currentLevel;
+        
         
         ResetVariables();
 
@@ -335,7 +335,6 @@ public class GameManager : MonoBehaviour
             totalScore += comboDamage;
 
             comboCount = 0;
-            EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
         }
 
         RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
