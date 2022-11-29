@@ -274,7 +274,9 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = true;
 
             EventManager.currentManager.AddEvent(
-                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+                exercisePerformIndex == 0
+                    ? new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
+                    : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
         }
 
         if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count <= poseDataIndex)
@@ -397,7 +399,9 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = true;
 
             EventManager.currentManager.AddEvent(
-                new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
+                exercisePerformIndex == 0
+                    ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay)
+                    : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
 
             //If there is no image chosen, the exercise will not display
             if (puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow == true)
