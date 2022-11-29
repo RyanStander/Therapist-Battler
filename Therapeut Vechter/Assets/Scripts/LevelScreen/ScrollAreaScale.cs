@@ -1,10 +1,13 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 namespace LevelScreen
 {
     public class ScrollAreaScale : MonoBehaviour
     {
+        [SerializeField] private GameObjectSpawn gameObjectSpawn;
+
         //create size x-axis for scroll area
         private int distanceBetweenObjects;
         private int areaWidth;
@@ -15,61 +18,63 @@ namespace LevelScreen
         private Vector3 positionA;
         private Vector3 positionB;
         private bool moveCanvas;
-        private float lerpSpeed = 0.1f;
+        private const float LerpSpeed = 0.1f;
 
-        void Start()
+        private void OnValidate()
         {
-            distanceBetweenObjects = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().SpawnDistance;
+            if (gameObjectSpawn == null)
+            {
+                gameObjectSpawn = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>();
+            }
+        }
+
+        private void Start()
+        {
+            distanceBetweenObjects = gameObjectSpawn.SpawnDistance;
         }
 
         // snapping scroll to selected pop up
         public void SetSnapPosition(float areaPosX)
         {
-            //gameObject.GetComponent<RectTransform>().localPosition = new Vector3(-areaPosX,0,0);
             positionB = new Vector3(-areaPosX, 0, 0);
             positionA = new Vector3(transform.localPosition.x, 0, 0);
             moveCanvas = true;
+            StartCoroutine(StopSnapAfterTime(0.5f));
         }
 
         private void Update()
         {
             GenerateDistance();
             //make the map slide to the snap point
-            //Debug.Log(moveCanvas);
-            if (moveCanvas)
-            {
-                positionA = Vector3.Lerp(transform.localPosition, positionB, lerpSpeed);
-                transform.localPosition = positionA;
-
-                if (Math.Abs(positionA.x - positionB.x) < 1)
-                {
-                    moveCanvas = false;
-                }
-            }
-
-            //outer edge levels cause it to not be able to move to new position, this puts a buffer on it for the first and last levels
-            if (transform.localPosition.x >= -960 ||
-                transform.localPosition.x <= -areaWidth + distanceBetweenObjects * 3)
-            {
-                moveCanvas = false;
-            }
+            if (!moveCanvas) 
+                return;
+            //positionA = Vector3.Lerp(transform.localPosition, positionB, LerpSpeed);
+            var xPos = Mathf.Lerp(transform.localPosition.x, positionB.x, LerpSpeed);
+            positionA.x = xPos;
+            transform.localPosition = positionA;
         }
 
         private void GenerateDistance()
         {
-            if (distanceCreated == false)
+            if (distanceCreated)
+                return;
+
+            objectSpawned = gameObjectSpawn.ObjectsSpawned;
+            for (var i = 0; i < objectSpawned; i++)
             {
-                objectSpawned = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().ObjectsSpawned;
-                for (var i = 0; i < objectSpawned; i++)
-                {
-                    areaWidth += distanceBetweenObjects;
-                    if (i <= 6)
-                    {
-                        distanceCreated = true;
-                        gameObject.GetComponent<RectTransform>().sizeDelta = new Vector2(areaWidth, Screen.height);
-                    }
-                }
+                areaWidth += distanceBetweenObjects;
             }
+
+            distanceCreated = true;
+            var a = gameObject.GetComponent<RectTransform>();
+            a.sizeDelta = new Vector2(areaWidth, a.sizeDelta.y);
+        }
+
+        private IEnumerator StopSnapAfterTime(float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+
+            moveCanvas = false;
         }
     }
 }

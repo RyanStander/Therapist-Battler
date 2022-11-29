@@ -161,6 +161,8 @@ public class GameManager : MonoBehaviour
 
     private void InitialiseGame()
     {
+        gameEventDataHolder = GameData.Instance.currentLevel;
+        
         ResetVariables();
 
         scoreText.text = 0.ToString();
