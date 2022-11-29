@@ -15,6 +15,6 @@ namespace LevelScreen
         [Range(0, 3)] public int StarCount;
         public int StarRequirement;
         public bool FinishedLevel;
-        public Sprite LevelBackgroundImage;
+        public Texture LevelBackgroundImage;
     }
 }

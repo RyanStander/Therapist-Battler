@@ -9,46 +9,45 @@ namespace LevelScreen
     public class LevelScript : MonoBehaviour
     {
         //Get Components of Prefab
-        [SerializeField]private Image levelIcon;
+        [SerializeField] private Image levelIcon;
 
-        
         [SerializeField] private Button playButton;
+
+        [SerializeField] private RectTransform maskRectTransform;
+        [SerializeField] private RawImage backgroundRawImage;
+        [SerializeField] private Canvas maskCanvas;
+
+        [Header("Level Load Stats")] [Tooltip("How fast the mask moves to its position")] [SerializeField]
+        private float positionChangeScalar = 0.001f;
+
+        [SerializeField] [Tooltip("How fast the mask moves as an extra modifier when its close to the point")]
+        private float positionChangeSpeed = 0.01f;
+
+        [SerializeField] private float imageScaleSpeed = 0.00015f;
+
+        [SerializeField] private float maskWidthIncreaseSpeed = 18;
 
         //Stars
         private GameObject starOne;
         private GameObject starTwo;
-
         private GameObject starThree;
 
         //unlocked?
         private GameObject sceneStarCount;
         private bool isUnlockedBool;
         private GameObject lockIcon;
-        private int totalStars;
-        //background
-        private Sprite backgroundImage;
-        [SerializeField] private RectTransform backgroundRectTransform;
-        [SerializeField] private Image backgroundTransform;
-        private int backgroundWidth;
 
+        private int totalStars;
 
         //Saved data from SO
-        public bool LevelFinished;
-        public string Name;
-        
+        [HideInInspector] public bool LevelFinished;
+        [HideInInspector] public string Name;
+
         private LevelData level;
 
+        private bool startLoadEffect;
 
-        private bool hasCountedStar;
-
-        //get data from SO
-        public void LoadLevelData(LevelData levelData)
-        {
-            level = levelData;
-            Name = level.LevelName;
-            LevelFinished = level.FinishedLevel;
-            backgroundImage = level.LevelBackgroundImage;
-        }
+        #region Runtime
 
         private void Start()
         {
@@ -60,19 +59,41 @@ namespace LevelScreen
             StartCoroutine(CountStars(0.05f));
         }
 
+        private void Update()
+        {
+            LoadEffect();
+        }
+
+        #endregion
+
+        //get data from SO
+        public void LoadLevelData(LevelData levelData)
+        {
+            level = levelData;
+            Name = level.LevelName;
+            LevelFinished = level.FinishedLevel;
+        }
+        
+        private void PositionAndImage()
+        {
+            //sprite image
+            levelIcon.sprite = level.SpriteIcon;
+            //position
+            var levelTransform = transform;
+            levelTransform.localPosition = levelTransform.position + new Vector3(0, level.HeightValue, 0);
+        }
+
+        #region Stars
+
         private IEnumerator CountStars(float waitTime)
         {
             yield return new WaitForSeconds(waitTime);
             //is level unlocked?
             totalStars = sceneStarCount.GetComponent<StarCountScript>().StarsInScene;
 
-            if (totalStars >= level.StarRequirement && isUnlockedBool == false)
-            {
-                lockIcon.SetActive(false);
-                isUnlockedBool = true;
-            }
-
-            hasCountedStar = true;
+            if (totalStars < level.StarRequirement || isUnlockedBool) yield break;
+            lockIcon.SetActive(false);
+            isUnlockedBool = true;
         }
 
         private void ActivateStars()
@@ -104,6 +125,8 @@ namespace LevelScreen
             }
         }
 
+        #endregion
+
         private void ChangeText()
         {
             //text
@@ -113,22 +136,7 @@ namespace LevelScreen
             proTextNumber.text = level.LevelNumber.ToString();
         }
 
-        private void PositionAndImage()
-        {
-            //sprite image
-            levelIcon.sprite = level.SpriteIcon;
-            //position
-            var levelTransform = transform;
-            levelTransform.localPosition = levelTransform.position + new Vector3(0, level.HeightValue, 0);
-        }
-        //put the background image of the levels at middle height of screen
-        private void PositionBackground()
-        {
-            backgroundTransform.GetComponent<Image>().sprite = backgroundImage;
-            backgroundWidth = GameObject.Find("LevelSpawner").GetComponent<GameObjectSpawn>().SpawnDistance;
-            backgroundRectTransform.sizeDelta = new Vector2(backgroundWidth,Screen.height);
-            backgroundRectTransform.position = new Vector3(backgroundRectTransform.position.x, 1, backgroundRectTransform.position.z);
-        }
+        #region Play functionality
 
         private void SetButtonAction()
         {
@@ -137,8 +145,54 @@ namespace LevelScreen
 
         private void LoadSceneWithSpecifiedLevel()
         {
+            maskCanvas.sortingOrder = -2;
+            startLoadEffect = true;
+            StartCoroutine(StartSceneLoad(2.5f));
+        }
+
+        private void LoadEffect()
+        {
+            if (!startLoadEffect)
+                return;
+
+            var rawImageTransform = backgroundRawImage.transform;
+            var maskPosition = maskRectTransform.position;
+
+            //Increase scale slightly
+            rawImageTransform.localScale *= 1 + imageScaleSpeed;
+
+            //Increase width slightly
+            maskRectTransform.sizeDelta += new Vector2(maskWidthIncreaseSpeed, 0);
+
+            //move towards center
+            if (maskRectTransform.position.x < 0)
+            {
+                maskPosition += new Vector3(-maskPosition.x * positionChangeScalar + positionChangeSpeed, 0, 0);
+                maskRectTransform.position = maskPosition;
+            }
+            else
+            {
+                maskPosition -= new Vector3(maskPosition.x * positionChangeScalar + positionChangeSpeed, 0, 0);
+                maskRectTransform.position = maskPosition;
+            }
+        }
+
+        //put the background image of the levels at middle height of screen
+        private void PositionBackground()
+        {
+            backgroundRawImage.texture = level.LevelBackgroundImage;
+            maskRectTransform.position =
+                new Vector3(maskRectTransform.position.x, 1, maskRectTransform.position.z);
+        }
+
+        private IEnumerator StartSceneLoad(float waitTime)
+        {
+            yield return new WaitForSeconds(waitTime);
+
             GameData.Instance.currentLevel = level.GameEventDataHolderLevel;
             SceneManager.LoadScene(1);
         }
+
+        #endregion
     }
 }
