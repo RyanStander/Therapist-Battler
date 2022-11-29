@@ -136,7 +136,7 @@ GameObject:
   - component: {fileID: 41745674}
   - component: {fileID: 41745673}
   - component: {fileID: 41745678}
-  - component: {fileID: 41745677}
+  - component: {fileID: 41745679}
   m_Layer: 5
   m_Name: Menu
   m_TagString: Untagged
@@ -229,33 +229,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
---- !u!114 &41745677
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 41745672}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ba2dda34a945a144e9ec3bba3b71c19d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  audioMixer:
-  - {fileID: 24100000, guid: 779dcf04fef52cd42bff7c57694c19f6, type: 2}
-  - {fileID: 24100000, guid: 34b4b843df7764e4baa21b69c1721faa, type: 2}
-  - {fileID: 24100000, guid: 54781c9b1a013104892ba4e0ce73be4d, type: 2}
-  - {fileID: 24100000, guid: 63d9dd15077a9ea4e809d499a6a13325, type: 2}
-  - {fileID: 24100000, guid: 0055a637deff32e43ace3bfb64cd1232, type: 2}
-  volumeName:
-  - MasterVolumeSlider
-  - MusicVolumeSlider
-  - AmbienceVolumeSlider
-  - DialogVolumeSlider
-  - SFXVolumeSlider
-  menuObjectZero: {fileID: 1950214695}
-  menuObjectOne: {fileID: 1280741579}
-  menuObjectTwo: {fileID: 1361696581}
 --- !u!114 &41745678
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -268,6 +241,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5020e2c8dfaab0a429c81cf9da4b25bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &41745679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 41745672}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ea783fdd3a34301a35db3ad05120a9d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menuParentGameObject: {fileID: 1950214695}
+  settingParentGameObject: {fileID: 1280741579}
+  roadmapUIGameObject: {fileID: 1361696581}
 --- !u!1 &44962439
 GameObject:
   m_ObjectHideFlags: 0
@@ -1895,7 +1883,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41745677}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
         m_MethodName: volumeSfx
         m_Mode: 0
@@ -4197,7 +4185,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41745677}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
         m_MethodName: VolumeAmbience
         m_Mode: 0
@@ -5634,7 +5622,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41745677}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
         m_MethodName: SetVolume
         m_Mode: 0
@@ -5739,7 +5727,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41745677}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
         m_MethodName: VolumeMusic
         m_Mode: 0
@@ -6244,7 +6232,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 41745677}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
         m_MethodName: VolumeDialog
         m_Mode: 0
