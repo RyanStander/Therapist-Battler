@@ -45,7 +45,7 @@ namespace Audio
 
         #endregion
 
-        #region MyRegion
+        #region OnEvents
 
         private void OnPlayDialogueAudio(EventData eventData)
         {
@@ -72,7 +72,7 @@ namespace Audio
                     return;
                 
                 sfxAudioEventInstance = RuntimeManager.CreateInstance(sfxAudio.EventSoundPath);
-                
+
                 sfxAudioEventInstance.start();
                 sfxAudioEventInstance.release();
             }
