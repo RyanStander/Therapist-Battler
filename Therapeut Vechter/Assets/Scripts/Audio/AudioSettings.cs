@@ -20,9 +20,6 @@ namespace Audio
         private FMOD.Studio.Bus vo;
         private FMOD.Studio.Bus ambience;
 
-        private float masterVolume = 1f;
-        private float musicVolume, sfxVolume, voVolume, ambienceVolume = 0.5f;
-
         private void Awake()
         {
             master = RuntimeManager.GetBus(busPath + masterPath);
@@ -32,38 +29,29 @@ namespace Audio
             ambience = RuntimeManager.GetBus(busPath + ambiencePath);
         }
 
-        private void FixedUpdate()
-        {
-            master.setVolume(masterVolume);
-            music.setVolume(musicVolume);
-            sfx.setVolume(sfxVolume);
-            vo.setVolume(voVolume);
-            ambience.setVolume(ambienceVolume);
-        }
-
         public void SetMasterVolume(float newVolume)
         {
-            masterVolume = newVolume;
+            master.setVolume(newVolume);
         }
 
         public void SetMusicVolume(float newVolume)
         {
-            musicVolume = newVolume;
+            music.setVolume(newVolume);
         }
 
         public void SetSfxVolume(float newVolume)
         {
-            sfxVolume = newVolume;
+            sfx.setVolume(newVolume);
         }
 
         public void SetVoPath(float newVolume)
         {
-            voVolume = newVolume;
+            vo.setVolume(newVolume);
         }
 
         public void SetAmbiencePath(float newVolume)
         {
-            ambienceVolume = newVolume;
+            ambience.setVolume(newVolume);
         }
     }
 }

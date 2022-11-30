@@ -1193,7 +1193,6 @@ GameObject:
   m_Component:
   - component: {fileID: 328361496}
   - component: {fileID: 328361498}
-  - component: {fileID: 328361499}
   m_Layer: 0
   m_Name: Music
   m_TagString: Untagged
@@ -1246,20 +1245,6 @@ MonoBehaviour:
   OverrideAttenuation: 0
   OverrideMinDistance: 1
   OverrideMaxDistance: 20
---- !u!114 &328361499
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328361495}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ea6ff9c30558c9849ac1197611075488, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  busPath: Master Bus
-  busVolume: 0
 --- !u!1 &365090691
 GameObject:
   m_ObjectHideFlags: 0
@@ -1953,16 +1938,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 1428772221}
   m_HandleRect: {fileID: 1070987950}
   m_Direction: 0
-  m_MinValue: 0.0001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
-        m_MethodName: volumeSfx
+      - m_Target: {fileID: 1112806406}
+        m_TargetAssemblyTypeName: Audio.AudioSettings, Assembly-CSharp
+        m_MethodName: SetSfxVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3447,6 +3432,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1112806405}
+  - component: {fileID: 1112806406}
   m_Layer: 0
   m_Name: Audio
   m_TagString: Untagged
@@ -3470,6 +3456,23 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1112806406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1112806404}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9c773379691848dc866fc27b437e56bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  masterPath: Master
+  musicPath: Master/Music
+  sfxPath: Master/SFX
+  voPath: Master/VO
+  ambiencePath: Master/Ambient
 --- !u!1 &1128718924
 GameObject:
   m_ObjectHideFlags: 0
@@ -4287,16 +4290,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 682987427}
   m_HandleRect: {fileID: 1837668062}
   m_Direction: 0
-  m_MinValue: 0.0001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
-        m_MethodName: VolumeAmbience
+      - m_Target: {fileID: 1112806406}
+        m_TargetAssemblyTypeName: Audio.AudioSettings, Assembly-CSharp
+        m_MethodName: SetAmbiencePath
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5724,16 +5727,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 1128718925}
   m_HandleRect: {fileID: 1155100266}
   m_Direction: 0
-  m_MinValue: 0.0001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
-        m_MethodName: SetVolume
+      - m_Target: {fileID: 1112806406}
+        m_TargetAssemblyTypeName: Audio.AudioSettings, Assembly-CSharp
+        m_MethodName: SetMasterVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5829,16 +5832,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 1015198092}
   m_HandleRect: {fileID: 1380508901}
   m_Direction: 0
-  m_MinValue: 0.0001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
-        m_MethodName: VolumeMusic
+      - m_Target: {fileID: 1112806406}
+        m_TargetAssemblyTypeName: Audio.AudioSettings, Assembly-CSharp
+        m_MethodName: SetMusicVolume
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6334,16 +6337,16 @@ MonoBehaviour:
   m_FillRect: {fileID: 1271486144}
   m_HandleRect: {fileID: 1333281150}
   m_Direction: 0
-  m_MinValue: 0.0001
+  m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ChangeAudio, Assembly-CSharp
-        m_MethodName: VolumeDialog
+      - m_Target: {fileID: 1112806406}
+        m_TargetAssemblyTypeName: Audio.AudioSettings, Assembly-CSharp
+        m_MethodName: SetVoPath
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
