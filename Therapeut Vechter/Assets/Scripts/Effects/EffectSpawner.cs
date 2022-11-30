@@ -40,7 +40,7 @@ namespace Effects
             {
                 var comboAttack = Instantiate(playerComboAttackEffect, transform);
                 var damageEffect = comboAttack.AddComponent<TakeDamageOnEffectEnd>();
-                damageEffect.SetEffectData(createPlayerComboAttack.Damage,createPlayerComboAttack.EnemyHurtSFX);
+                damageEffect.SetEffectData(createPlayerComboAttack.Damage,createPlayerComboAttack.EnemyHurtSFX,false);
             }
             else
             {
