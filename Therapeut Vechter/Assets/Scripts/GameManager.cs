@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Exercises;
 using FMODUnity;
@@ -6,7 +5,6 @@ using GameEvents;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = UnityEngine.Random;
 
 /// <summary>
 /// Handles the game events and is used to play the level.
@@ -161,6 +159,10 @@ public class GameManager : MonoBehaviour
 
     private void InitialiseGame()
     {
+        if (GameData.Instance!=null&& GameData.Instance.currentLevel!=null)
+            gameEventDataHolder = GameData.Instance.currentLevel;
+        
+        
         ResetVariables();
 
         scoreText.text = 0.ToString();
@@ -272,7 +274,9 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = true;
 
             EventManager.currentManager.AddEvent(
-                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+                exercisePerformIndex == 0
+                    ? new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
+                    : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
         }
 
         if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count <= poseDataIndex)
@@ -333,7 +337,6 @@ public class GameManager : MonoBehaviour
             totalScore += comboDamage;
 
             comboCount = 0;
-            EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
         }
 
         RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
@@ -396,7 +399,9 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = true;
 
             EventManager.currentManager.AddEvent(
-                new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
+                exercisePerformIndex == 0
+                    ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay)
+                    : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
 
             //If there is no image chosen, the exercise will not display
             if (puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow == true)

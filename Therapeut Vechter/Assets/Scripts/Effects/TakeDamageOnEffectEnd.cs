@@ -9,7 +9,8 @@ namespace Effects
         private DamageEffectData effectData;
         private float damageToTake;
         private EventReference enemyHurtSound;
-
+        private bool isNormalAttack;
+        
         private float effectLifetimeTimeStamp;
         private float timeUntilDamage;
         private bool hadDoneDamage;
@@ -25,24 +26,25 @@ namespace Effects
         {
             if (timeUntilDamage<=Time.time && !hadDoneDamage)
             {
-                Debug.Log("Damage at : "+ timeUntilDamage + " | "+Time.time);
                 EventManager.currentManager.AddEvent(new DamageEnemy(damageToTake));
                 EventManager.currentManager.AddEvent(new DamageEnemyVisuals(damageToTake));
                 EventManager.currentManager.AddEvent(new UpdateTotalScore(damageToTake));
                 EventManager.currentManager.AddEvent(new PlaySfxAudio(enemyHurtSound));
+                if (!isNormalAttack)
+                    EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
                 hadDoneDamage = true;
             }
             
             
             if (effectLifetimeTimeStamp >= Time.time) return;
-            Debug.Log("destroy at : "+ effectLifetimeTimeStamp + " | "+Time.time);
             Destroy(gameObject);
         }
 
-        public void SetEffectData(float damage, EventReference eventReference)
+        public void SetEffectData(float damage, EventReference eventReference, bool effectIsNormalAttack=true)
         {
             damageToTake = damage;
             enemyHurtSound = eventReference;
+            isNormalAttack = effectIsNormalAttack;
         }
     }
 }

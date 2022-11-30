@@ -9,6 +9,7 @@ namespace GameEvents
     {
         public int timesToPerform=1;
         public PoseDataSet ExerciseToPerform;
+        public EventReference StartingVoiceLineToPlay;
         public EventReference VoiceLineToPlay;
         public Sprite SpriteToShow;
     }
