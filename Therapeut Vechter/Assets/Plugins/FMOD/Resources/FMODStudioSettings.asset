@@ -431,7 +431,7 @@ MonoBehaviour:
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
-  AutomaticEventLoading: 1
+  AutomaticEventLoading: 0
   BankLoadType: 0
   AutomaticSampleLoading: 0
   EncryptionKey: 
@@ -454,7 +454,11 @@ MonoBehaviour:
   - Music
   - SFX
   - VO
-  BanksToLoad: []
+  BanksToLoad:
+  - Master
+  - Music
+  - SFX
+  - VO
   LiveUpdatePort: 9264
   EnableMemoryTracking: 0
   AndroidUseOBB: 0
