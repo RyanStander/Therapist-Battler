@@ -201,7 +201,7 @@ public class GameManager : MonoBehaviour
                 starsAchieved = 1;
             }
 
-            EventManager.currentManager.AddEvent(new EndLevel(totalScore, starsAchieved));
+            EventManager.currentManager.AddEvent(new EndLevel(totalScore,maxScore, starsAchieved));
         }
 
         //Check if it has reached the list or player has died
