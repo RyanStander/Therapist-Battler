@@ -6,6 +6,7 @@ namespace UI
     public class EndLevelScreenUIManager : MonoBehaviour
     {
         [SerializeField] private GameObject levelEndScreen;
+        [SerializeField] private GameObject hud;
         [SerializeField] private GameObject levelEndCharacters;
 
         private void OnEnable()
@@ -26,6 +27,7 @@ namespace UI
             {
                 levelEndScreen.SetActive(true);
                 levelEndCharacters.SetActive(true);
+                hud.SetActive(false);
                 
                 //use the endLevel data to get a set the scores
             }
