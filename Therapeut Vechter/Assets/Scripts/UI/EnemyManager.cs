@@ -12,7 +12,7 @@ namespace UI
         [SerializeField] private Image enemyImage;
         [SerializeField] private Image enemyBackgroundImage;
         [SerializeField] private Animator enemyImageAnimator;
-        [SerializeField] private Slider enemySlider;
+        [SerializeField] private Slider[] enemySliders;
         [SerializeField] private Color enemyDamageColor = Color.red;
         [SerializeField] private float colorUpdateSpeed = 1f;
 
@@ -63,11 +63,14 @@ namespace UI
                 
                 currentDisplayHealth = setupEnemy.EnemyHealth;
                 currentHealth = currentDisplayHealth;
-                enemySlider.maxValue = currentDisplayHealth;
-                enemySlider.value = currentDisplayHealth;
+                foreach (var enemySlider in enemySliders)
+                {
+                    enemySlider.maxValue = currentDisplayHealth;
+                    enemySlider.value = currentDisplayHealth;   
+                    enemySlider.gameObject.SetActive(true);
+                }
                 healthUpdateSpeed = setupEnemy.EnemyHealthUpdateSpeed;
                 
-                enemySlider.gameObject.SetActive(true);
                 enemyBackgroundImage.gameObject.SetActive(true);
                 enemyImage.gameObject.SetActive(true);
             }
@@ -98,7 +101,10 @@ namespace UI
             if (eventData is HideEnemy)
             {
                 enemyImage.gameObject.SetActive(false);
-                enemySlider.gameObject.SetActive(false);
+                foreach (var enemySlider in enemySliders)
+                {
+                    enemySlider.gameObject.SetActive(false);
+                }
                 enemyBackgroundImage.gameObject.SetActive(false);
             }
             else
@@ -110,7 +116,11 @@ namespace UI
         {
             currentDisplayHealth = Mathf.Lerp(currentDisplayHealth, currentHealth, healthUpdateSpeed);
 
-            enemySlider.value = currentDisplayHealth;
+            
+            foreach (var enemySlider in enemySliders)
+            {
+                enemySlider.value = currentDisplayHealth;
+            }
         }
 
         private void PlayDamageEffect()
