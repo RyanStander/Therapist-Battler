@@ -49,11 +49,13 @@ public class UpdateTotalScore : EventData
 public class EndLevel : EventData
 {
     public readonly float PlayerScore;
+    public readonly float MaxScore;
     public readonly int StarsAchieved;
 
-    public EndLevel(float playerScore, int starsAchieved) : base(EventType.EndLevel)
+    public EndLevel(float playerScore, float maxScore, int starsAchieved) : base(EventType.EndLevel)
     {
         PlayerScore = playerScore;
+        MaxScore = maxScore;
         StarsAchieved = starsAchieved;
     }
 }

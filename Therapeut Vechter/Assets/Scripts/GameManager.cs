@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image exerciseImage;
     [SerializeField] private Image backgroundImage;
     [SerializeField] private Image backgroundTransitionImage;
-    [SerializeField] private Slider playerHealthBar;
+    [SerializeField] private Slider[] playerHealthBars;
 
     [Header("Scoring")] [Range(0, 1)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
@@ -167,8 +167,11 @@ public class GameManager : MonoBehaviour
 
         scoreText.text = 0.ToString();
 
-        playerHealthBar.maxValue = playerHealth;
-        playerHealthBar.value = playerHealth;
+        foreach (var playerHealthBar in playerHealthBars)
+        {
+            playerHealthBar.maxValue = playerHealth;
+            playerHealthBar.value = playerHealth;
+        }
 
         backgroundImage.sprite = gameEventDataHolder.startingBackground;
 
@@ -198,7 +201,7 @@ public class GameManager : MonoBehaviour
                 starsAchieved = 1;
             }
 
-            EventManager.currentManager.AddEvent(new EndLevel(totalScore, starsAchieved));
+            EventManager.currentManager.AddEvent(new EndLevel(totalScore,maxScore, starsAchieved));
         }
 
         //Check if it has reached the list or player has died
@@ -522,7 +525,10 @@ public class GameManager : MonoBehaviour
 
         playerCurrentDisplayHealth = Mathf.Lerp(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
 
-        playerHealthBar.value = playerCurrentDisplayHealth;
+        foreach (var playerHealthBar in playerHealthBars)
+        {
+            playerHealthBar.value = playerCurrentDisplayHealth;
+        }
     }
 
 
