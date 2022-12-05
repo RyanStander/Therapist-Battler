@@ -131,12 +131,15 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnEnemyTakeDamage);
+        EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnPlayerTakeDamage);
         EventManager.currentManager.Subscribe(EventType.DialogueAudioStatusUpdate, OnDialogueAudioStatusUpdate);
     }
 
     private void OnDisable()
     {
-        EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnEnemyTakeDamage);
+        EventManager.currentManager.Unsubscribe(EventType.DamageEnemy, OnEnemyTakeDamage);
+        EventManager.currentManager.Unsubscribe(EventType.DamageEnemy, OnPlayerTakeDamage);
+        EventManager.currentManager.Unsubscribe(EventType.DialogueAudioStatusUpdate, OnDialogueAudioStatusUpdate);
     }
 
     private void Awake()
@@ -304,7 +307,8 @@ public class GameManager : MonoBehaviour
             comboCount++;
             EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
 
-            EventManager.currentManager.AddEvent(new CreatePlayerNormalAttack(currentScoreCalculation,fightingEvent.enemyHurtSound));
+            //Fire a player attack
+            EventManager.currentManager.AddEvent(new CreateNormalAttack(currentScoreCalculation,fightingEvent.enemyHurtSound));
 
             if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
             {
@@ -312,9 +316,8 @@ public class GameManager : MonoBehaviour
 
                 exercisePerformIndex = 0;
 
-                playerHealth -= fightingEvent.enemyDamage;
-
-                EventManager.currentManager.AddEvent(new PlaySfxAudio(fightingEvent.enemyAttackSound));
+                //Fire an enemy attack
+                EventManager.currentManager.AddEvent(new CreateNormalAttack(fightingEvent.enemyDamage,fightingEvent.enemyAttackSound,false,fightingEvent.enemyDamageEffect));
 
                 //We reset the attack index so that it starts the first attack again
                 if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
@@ -335,7 +338,7 @@ public class GameManager : MonoBehaviour
             if (comboDamage>enemyHealth)
                 isDead = true;
 
-            EventManager.currentManager.AddEvent(new CreatePlayerComboAttack(comboDamage,fightingEvent.enemyHurtSound));
+            EventManager.currentManager.AddEvent(new CreateComboAttack(comboDamage,fightingEvent.enemyHurtSound));
 
             totalScore += comboDamage;
 
@@ -363,7 +366,6 @@ public class GameManager : MonoBehaviour
                 StartBackgroundTransition(puzzleEvent.BackgroundSprite);
             hasPerformedFirstTimeSetup = true;
         }
-
 
         //if it reaches the end of the pose data list
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
@@ -577,6 +579,18 @@ public class GameManager : MonoBehaviour
         else
         {
             Debug.Log("EventData of type DamageEnemy was not of type DamageEnemy.");
+        }
+    }
+
+    private void OnPlayerTakeDamage(EventData eventData)
+    {
+        if (eventData is DamagePlayer damagePlayer)
+        {
+            playerHealth -= damagePlayer.PlayerDamage;
+        }
+        else
+        {
+            Debug.Log("EventData of type DamagePlayer was not of type DamagePlayer.");
         }
     }
 

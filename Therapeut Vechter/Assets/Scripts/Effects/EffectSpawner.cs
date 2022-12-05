@@ -9,23 +9,30 @@ namespace Effects
         
         private void OnEnable()
         {
-            EventManager.currentManager.Subscribe(EventType.CreatePlayerNormalAttack,OnPlayerNormalAttack);
-            EventManager.currentManager.Subscribe(EventType.CreatePlayerComboAttack,OnPlayerComboAttack);
+            EventManager.currentManager.Subscribe(EventType.CreateNormalAttack,OnNormalAttack);
+            EventManager.currentManager.Subscribe(EventType.CreateComboAttack,OnComboAttack);
         }
 
         private void OnDisable()
         {
-            EventManager.currentManager.Unsubscribe(EventType.CreatePlayerNormalAttack,OnPlayerNormalAttack);
-            EventManager.currentManager.Unsubscribe(EventType.CreatePlayerComboAttack,OnPlayerComboAttack);
+            EventManager.currentManager.Unsubscribe(EventType.CreateNormalAttack,OnNormalAttack);
+            EventManager.currentManager.Unsubscribe(EventType.CreateComboAttack,OnComboAttack);
         }
 
-        private void OnPlayerNormalAttack(EventData eventData)
+        private void OnNormalAttack(EventData eventData)
         {
-            if (eventData is CreatePlayerNormalAttack createPlayerNormalAttack)
+            if (eventData is CreateNormalAttack createNormalAttack)
             {
-                var normalAttack = Instantiate(playerNormalAttackEffect, transform);
+                if (!createNormalAttack.IsPlayerAttack&& createNormalAttack.AttackEffect==null)
+                {
+                    Debug.LogError("If an attack is not from the player, it must have an effect specified");
+                    return;
+                }
+                
+                var normalAttack = Instantiate(createNormalAttack.IsPlayerAttack ? playerNormalAttackEffect : createNormalAttack.AttackEffect, transform);
+
                 var damageEffect = normalAttack.AddComponent<TakeDamageOnEffectEnd>();
-                damageEffect.SetEffectData(createPlayerNormalAttack.Damage,createPlayerNormalAttack.EnemyHurtSFX);
+                damageEffect.SetEffectData(createNormalAttack.Damage,createNormalAttack.OnHitSfx,createNormalAttack.IsPlayerAttack);
             }
             else
             {
@@ -34,13 +41,13 @@ namespace Effects
 
         }
 
-        private void OnPlayerComboAttack(EventData eventData)
+        private void OnComboAttack(EventData eventData)
         {
-            if (eventData is CreatePlayerComboAttack createPlayerComboAttack)
+            if (eventData is CreateComboAttack createComboAttack)
             {
                 var comboAttack = Instantiate(playerComboAttackEffect, transform);
                 var damageEffect = comboAttack.AddComponent<TakeDamageOnEffectEnd>();
-                damageEffect.SetEffectData(createPlayerComboAttack.Damage,createPlayerComboAttack.EnemyHurtSFX,false);
+                damageEffect.SetEffectData(createComboAttack.Damage,createComboAttack.OnHitSfx,false);
             }
             else
             {

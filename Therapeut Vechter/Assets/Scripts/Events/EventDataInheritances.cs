@@ -60,6 +60,20 @@ public class EndLevel : EventData
     }
 }
 
+#region Player
+
+public class DamagePlayer : EventData
+{
+    public readonly float PlayerDamage;
+
+    public DamagePlayer(float playerDamage) : base(EventType.DamagePlayer)
+    {
+        PlayerDamage = playerDamage;
+    }
+}
+
+#endregion
+
 
 #region EnemyManager
 
@@ -120,30 +134,34 @@ public class DamageEnemy : EventData
 /// <summary>
 /// Creates an attack effect for the player 
 /// </summary>
-public class CreatePlayerNormalAttack : EventData
+public class CreateNormalAttack : EventData
 {
     public readonly float Damage;
-    public readonly EventReference EnemyHurtSFX;
+    public readonly EventReference OnHitSfx;
+    public readonly bool IsPlayerAttack;
+    public readonly GameObject AttackEffect;
 
-    public CreatePlayerNormalAttack(float damage, EventReference enemyHurtSfx) : base(EventType.CreatePlayerNormalAttack)
+    public CreateNormalAttack(float damage, EventReference onHitSfx, bool isPlayerAttack=true,GameObject attackEffect=null) : base(EventType.CreateNormalAttack)
     {
         Damage = damage;
-        EnemyHurtSFX = enemyHurtSfx;
+        OnHitSfx = onHitSfx;
+        IsPlayerAttack = isPlayerAttack;
+        AttackEffect = attackEffect;
     }
 }
 
 /// <summary>
 /// Creates an attack effect for the player combo
 /// </summary>
-public class CreatePlayerComboAttack : EventData
+public class CreateComboAttack : EventData
 {
     public readonly float Damage;
-    public readonly EventReference EnemyHurtSFX;
+    public readonly EventReference OnHitSfx;
 
-    public CreatePlayerComboAttack(float damage, EventReference enemyHurtSfx) : base(EventType.CreatePlayerComboAttack)
+    public CreateComboAttack(float damage, EventReference onHitSfx) : base(EventType.CreateComboAttack)
     {
         Damage = damage;
-        EnemyHurtSFX = enemyHurtSfx;
+        OnHitSfx = onHitSfx;
     }
 }
 
