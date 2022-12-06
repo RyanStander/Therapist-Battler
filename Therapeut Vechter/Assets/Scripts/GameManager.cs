@@ -27,7 +27,7 @@ public class GameManager : MonoBehaviour
 
     [Header("Scoring")] [Range(0, 1)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
-    
+
     [SerializeField] private float comboDuration = 3;
 
     [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
@@ -36,8 +36,7 @@ public class GameManager : MonoBehaviour
     private float playerDamage;
 
     #endregion
-
-
+    
     #region Private Fields
 
     //the score that the player has achieved
@@ -161,10 +160,10 @@ public class GameManager : MonoBehaviour
 
     private void InitialiseGame()
     {
-        if (GameData.Instance!=null&& GameData.Instance.currentLevel!=null)
+        if (GameData.Instance != null && GameData.Instance.currentLevel != null)
             gameEventDataHolder = GameData.Instance.currentLevel;
-        
-        
+
+
         ResetVariables();
 
         scoreText.text = 0.ToString();
@@ -203,7 +202,7 @@ public class GameManager : MonoBehaviour
                 starsAchieved = 1;
             }
 
-            EventManager.currentManager.AddEvent(new EndLevel(totalScore,maxScore, starsAchieved));
+            EventManager.currentManager.AddEvent(new EndLevel(totalScore, maxScore, starsAchieved));
         }
 
         //Check if it has reached the list or player has died
@@ -242,24 +241,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    #region Fighting Event
+
     private void ManageFightingEvent(FightingData fightingEvent)
     {
         //if the enemy has just appeared
-        if (!hasPerformedFirstTimeSetup)
-        {
-            exerciseImage.gameObject.SetActive(false);
-            hasPerformedFirstTimeSetup = true;
-
-            //set background image
-            if (fightingEvent.BackgroundSprite != null)
-                StartBackgroundTransition(fightingEvent.BackgroundSprite);
-
-
-            enemyHealth = fightingEvent.enemyHealth;
-
-            EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,
-                scoreUpdateSpeed));
-        }
+        SetupFightingEvent(fightingEvent);
 
         //if enemy dies
         if (enemyHealth < 1)
@@ -270,82 +257,120 @@ public class GameManager : MonoBehaviour
         }
 
         if (isDead)
-        {
             return;
-        }
 
-        if (!hasPlayedDialogueAudio)
+        TryPlayFightingExerciseDialogue(fightingEvent);
+
+        //Checks if the current Exercise has been completed
+        if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count <= poseDataIndex)
+            CompletedFightingExercise(fightingEvent);
+
+        ManageComboDamage(fightingEvent);
+
+        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+
+        CheckPosePerformance(fightingEvent);
+    }
+
+    private void SetupFightingEvent(FightingData fightingEvent)
+    {
+        if (hasPerformedFirstTimeSetup)
+            return;
+
+        exerciseImage.gameObject.SetActive(false);
+        hasPerformedFirstTimeSetup = true;
+
+        //set background image
+        if (fightingEvent.BackgroundSprite != null)
+            StartBackgroundTransition(fightingEvent.BackgroundSprite);
+
+
+        enemyHealth = fightingEvent.enemyHealth;
+
+        EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,
+            scoreUpdateSpeed));
+    }
+
+    private void TryPlayFightingExerciseDialogue(FightingData fightingEvent)
+    {
+        if (hasPlayedDialogueAudio)
+            return;
+
+        hasPlayedDialogueAudio = true;
+
+        EventManager.currentManager.AddEvent(
+            exercisePerformIndex == 0
+                ? new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
+                : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+    }
+
+    private void CompletedFightingExercise(FightingData fightingEvent)
+    {
+        exercisePerformIndex++;
+
+        hasPlayedDialogueAudio = false;
+        poseDataIndex = 0;
+
+        var currentScoreCalculation =
+            (currentExerciseScore /
+             fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count) *
+            fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.scoreValue;
+
+        //add to score
+        totalScore += currentScoreCalculation;
+
+        currentExerciseScore = 0;
+        exerciseTimerIsRunning = false;
+
+        comboTimeStamp = Time.time + comboDuration;
+        comboCount++;
+        EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
+
+        //Fire a player attack
+        EventManager.currentManager.AddEvent(new CreateNormalAttack(currentScoreCalculation,
+            fightingEvent.enemyHurtSound));
+
+        if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
         {
-            hasPlayedDialogueAudio = true;
+            playerAttackIndex++;
+
+            exercisePerformIndex = 0;
+
+            //Fire an enemy attack
+            EventManager.currentManager.AddEvent(new CreateNormalAttack(fightingEvent.enemyDamage,
+                fightingEvent.enemyAttackSound, false, fightingEvent.enemyDamageEffect));
+
+            //We reset the attack index so that it starts the first attack again
+            if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
+            {
+                playerAttackIndex = 0;
+            }
 
             EventManager.currentManager.AddEvent(
-                exercisePerformIndex == 0
-                    ? new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
-                    : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
         }
+    }
 
-        if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count <= poseDataIndex)
-        {
-            exercisePerformIndex++;
-
-            hasPlayedDialogueAudio = false;
-            poseDataIndex = 0;
-
-            var currentScoreCalculation =
-                (currentExerciseScore /
-                 fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count) *
-                fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.scoreValue;
-
-            //add to score
-            totalScore += currentScoreCalculation;
-            
-            currentExerciseScore = 0;
-            exerciseTimerIsRunning = false;
-
-            comboTimeStamp = Time.time + comboDuration;
-            comboCount++;
-            EventManager.currentManager.AddEvent(new UpdateComboScore(true, comboDuration, comboCount));
-
-            //Fire a player attack
-            EventManager.currentManager.AddEvent(new CreateNormalAttack(currentScoreCalculation,fightingEvent.enemyHurtSound));
-
-            if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
-            {
-                playerAttackIndex++;
-
-                exercisePerformIndex = 0;
-
-                //Fire an enemy attack
-                EventManager.currentManager.AddEvent(new CreateNormalAttack(fightingEvent.enemyDamage,fightingEvent.enemyAttackSound,false,fightingEvent.enemyDamageEffect));
-
-                //We reset the attack index so that it starts the first attack again
-                if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
-                {
-                    playerAttackIndex = 0;
-                }
-
-                EventManager.currentManager.AddEvent(
-                    new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
-            }
-        }
-
-        var comboDamage = (baseComboDamage*((float)comboCount/(10-comboCount)));
+    private void ManageComboDamage(FightingData fightingEvent)
+    {
+        var comboDamage = (baseComboDamage * ((float)comboCount / (10 - comboCount)));
 
         //have a combo timer running, depending on how many combos they get, they get higher damage
         if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage > enemyHealth)
         {
-            if (comboDamage>enemyHealth)
+            if (comboDamage > enemyHealth)
                 isDead = true;
 
-            EventManager.currentManager.AddEvent(new CreateComboAttack(comboDamage,fightingEvent.enemyHurtSound));
+            EventManager.currentManager.AddEvent(new CreateComboAttack(comboDamage, fightingEvent.enemyHurtSound));
 
             totalScore += comboDamage;
 
             comboCount = 0;
         }
+    }
 
-        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
-
+    private void CheckPosePerformance(FightingData fightingEvent)
+    {
         var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
             .playerAttack.poseDatas[poseDataIndex]);
 
@@ -356,7 +381,9 @@ public class GameManager : MonoBehaviour
         currentExerciseScore += score;
         poseDataIndex++;
     }
-
+    
+    #endregion
+    
     private void ManagePuzzleEvent(EnvironmentPuzzleData puzzleEvent)
     {
         if (!hasPerformedFirstTimeSetup)
