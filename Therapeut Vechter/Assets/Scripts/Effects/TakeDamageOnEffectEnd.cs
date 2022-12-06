@@ -46,7 +46,7 @@ namespace Effects
             }
 
 
-            if (effectLifetimeTimeStamp >= Time.time) return;
+            if (effectLifetimeTimeStamp >= Time.time || !hadDoneDamage) return;
             Destroy(gameObject);
         }
 

@@ -131,14 +131,14 @@ public class GameManager : MonoBehaviour
     private void OnEnable()
     {
         EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnEnemyTakeDamage);
-        EventManager.currentManager.Subscribe(EventType.DamageEnemy, OnPlayerTakeDamage);
+        EventManager.currentManager.Subscribe(EventType.DamagePlayer, OnPlayerTakeDamage);
         EventManager.currentManager.Subscribe(EventType.DialogueAudioStatusUpdate, OnDialogueAudioStatusUpdate);
     }
 
     private void OnDisable()
     {
         EventManager.currentManager.Unsubscribe(EventType.DamageEnemy, OnEnemyTakeDamage);
-        EventManager.currentManager.Unsubscribe(EventType.DamageEnemy, OnPlayerTakeDamage);
+        EventManager.currentManager.Unsubscribe(EventType.DamagePlayer, OnPlayerTakeDamage);
         EventManager.currentManager.Unsubscribe(EventType.DialogueAudioStatusUpdate, OnDialogueAudioStatusUpdate);
     }
 

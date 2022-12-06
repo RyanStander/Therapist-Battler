@@ -32,7 +32,7 @@ namespace Effects
                 var normalAttack = Instantiate(createNormalAttack.IsPlayerAttack ? playerNormalAttackEffect : createNormalAttack.AttackEffect, transform);
 
                 var damageEffect = normalAttack.AddComponent<TakeDamageOnEffectEnd>();
-                damageEffect.SetEffectData(createNormalAttack.Damage,createNormalAttack.OnHitSfx,createNormalAttack.IsPlayerAttack);
+                damageEffect.SetEffectData(createNormalAttack.Damage,createNormalAttack.OnHitSfx,true,createNormalAttack.IsPlayerAttack);
             }
             else
             {
