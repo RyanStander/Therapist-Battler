@@ -27,12 +27,11 @@ public class GameManager : MonoBehaviour
 
     [Header("Scoring")] [Range(0, 1)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
-
-    [SerializeField] private float scoreModifier = 100;
+    
     [SerializeField] private float comboDuration = 3;
 
     [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
-    private float comboCountDamageModifier = 20;
+    private float baseComboDamage = 20;
 
     private float playerDamage;
 
@@ -330,7 +329,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        var comboDamage = Mathf.Pow(this.comboCountDamageModifier, comboCount);
+        var comboDamage = (baseComboDamage*((float)comboCount/(10-comboCount)));
 
         //have a combo timer running, depending on how many combos they get, they get higher damage
         if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage > enemyHealth)
@@ -521,7 +520,7 @@ public class GameManager : MonoBehaviour
 
     private void SlowScoreIncreaseOverTime()
     {
-        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore * scoreModifier, scoreUpdateSpeed);
+        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore, scoreUpdateSpeed);
 
         scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
 
