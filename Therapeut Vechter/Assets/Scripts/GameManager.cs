@@ -156,8 +156,7 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-
-
+    
     private void InitialiseGame()
     {
         if (GameData.Instance != null && GameData.Instance.currentLevel != null)
@@ -269,7 +268,7 @@ public class GameManager : MonoBehaviour
 
         RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
 
-        CheckPosePerformance(fightingEvent);
+        CheckPosePerformance(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas[poseDataIndex]);
     }
 
     private void SetupFightingEvent(FightingData fightingEvent)
@@ -369,31 +368,37 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void CheckPosePerformance(FightingData fightingEvent)
-    {
-        var score = poseMatchCheck.PoseScoring(fightingEvent.playerAttackSequence[playerAttackIndex]
-            .playerAttack.poseDatas[poseDataIndex]);
-
-        //if it returns -1 it means the player did not achieve a good pose
-        if (score == -1)
-            return;
-
-        currentExerciseScore += score;
-        poseDataIndex++;
-    }
-    
     #endregion
-    
+
+    #region Puzzle Event
+
     private void ManagePuzzleEvent(EnvironmentPuzzleData puzzleEvent)
     {
-        if (!hasPerformedFirstTimeSetup)
-        {
-            if (puzzleEvent.BackgroundSprite != null)
-                StartBackgroundTransition(puzzleEvent.BackgroundSprite);
-            hasPerformedFirstTimeSetup = true;
-        }
+        SetupPuzzleEvent(puzzleEvent.BackgroundSprite);
 
         //if it reaches the end of the pose data list
+        CompletedPuzzleExercise(puzzleEvent);
+
+        TryPlayPuzzleExerciseDialogue(puzzleEvent);
+
+        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+
+        CheckPosePerformance(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
+            .poseDatas[poseDataIndex]);
+    }
+
+    private void SetupPuzzleEvent(Sprite backgroundSprite)
+    {
+        if (hasPerformedFirstTimeSetup) 
+            return;
+        
+        if (backgroundSprite != null)
+            StartBackgroundTransition(backgroundSprite);
+        hasPerformedFirstTimeSetup = true;
+    }
+
+    private void CompletedPuzzleExercise(EnvironmentPuzzleData puzzleEvent)
+    {
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
             var currentScoreCalculation =
@@ -424,7 +429,10 @@ public class GameManager : MonoBehaviour
             gameEventsIndex++;
             return;
         }
+    }
 
+    private void TryPlayPuzzleExerciseDialogue(EnvironmentPuzzleData puzzleEvent)
+    {
         if (poseDataIndex == 0 && !hasPlayedDialogueAudio)
         {
             hasPlayedDialogueAudio = true;
@@ -445,20 +453,9 @@ public class GameManager : MonoBehaviour
                 exerciseImage.gameObject.SetActive(false);
             }
         }
-
-        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
-
-        var score = poseMatchCheck.PoseScoring(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
-            .poseDatas[poseDataIndex]);
-
-        //if it returns -1 it means the player did not achieve a good pose
-        if (score == -1)
-            return;
-
-        currentExerciseScore += score;
-        EventManager.currentManager.AddEvent(new UpdateTotalScore(score));
-        poseDataIndex++;
     }
+
+    #endregion
 
     private void ManageDialogueEvent(DialogueData dialogueEvent)
     {
@@ -524,8 +521,22 @@ public class GameManager : MonoBehaviour
         exerciseTimerIsRunning = false;
     }
 
-    #endregion
+    private void CheckPosePerformance(PoseData poseData, bool updateScore=true)
+    {
+        var score = poseMatchCheck.PoseScoring(poseData);
 
+        //if it returns -1 it means the player did not achieve a good pose
+        if (score == -1)
+            return;
+
+        currentExerciseScore += score;
+        poseDataIndex++;
+
+        //We dont want to update it when when the player is fighting an enemy (this would happen when an attack triggers instead
+        if (updateScore)
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(score));
+    }
+    
     //Resets the main variables
     private void ResetVariables()
     {
@@ -544,7 +555,7 @@ public class GameManager : MonoBehaviour
         isDead = false;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
-
+    
     private void SlowScoreIncreaseOverTime()
     {
         currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore, scoreUpdateSpeed);
@@ -558,7 +569,8 @@ public class GameManager : MonoBehaviour
             playerHealthBar.value = playerCurrentDisplayHealth;
         }
     }
-
+    
+    #endregion
 
     #region Background Transition
 
