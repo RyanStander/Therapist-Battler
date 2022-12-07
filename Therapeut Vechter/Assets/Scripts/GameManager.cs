@@ -232,6 +232,8 @@ public class GameManager : MonoBehaviour
                 ManagePuzzleEvent(puzzleEvent);
                 break;
             case DialogueData dialogueEvent:
+                if (Input.GetKeyUp(KeyCode.Space))
+                    SkipEvent();
                 ManageDialogueEvent(dialogueEvent);
                 break;
             case FightingData fightingData:
@@ -482,6 +484,12 @@ public class GameManager : MonoBehaviour
 
     #region Extra Functions
 
+    private void SkipEvent()
+    {
+        ResetVariables();
+        gameEventsIndex++;
+    }
+    
     private void SetupLevelScore()
     {
         foreach (var gameEvent in gameEventDataHolder.gameEvents)
