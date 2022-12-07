@@ -13,11 +13,45 @@ MonoBehaviour:
   m_Name: ACT_2_Level_2_Goblin
   m_EditorClassIdentifier: 
   OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic: {fileID: 0}
+  OverrideMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   BackgroundSprite: {fileID: 0}
-  enemySprite: {fileID: 0}
-  enemyHealth: 100
+  enemySprite: {fileID: 21300000, guid: c0bdf810ef22261409ba7b89dc6bbfba, type: 3}
+  enemyHealth: 150
   enemyDamage: 10
-  enemyAttackSounds: []
-  enemyAttackedSounds: []
-  playerAttackSequence: []
+  enemyAttackSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  enemyHurtSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  playerAttackSequence:
+  - startingVoiceLine:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    exerciseName:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
+    playerAttack: {fileID: 11400000, guid: 3eaedbfa221a7db40a083fb06b89efc7, type: 2}
+    timesToPerform: 5
