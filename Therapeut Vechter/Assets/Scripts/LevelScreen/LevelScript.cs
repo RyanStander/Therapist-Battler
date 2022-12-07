@@ -59,7 +59,7 @@ namespace LevelScreen
             StartCoroutine(CountStars(0.05f));
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             LoadEffect();
         }
