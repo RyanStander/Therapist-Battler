@@ -17,8 +17,12 @@ public enum EventType
     DamageEnemy,
     HideEnemy,
     
-    CreatePlayerNormalAttack,
-    CreatePlayerComboAttack,
+    //Player
+    DamagePlayer,
+    
+    //Effects
+    CreateNormalAttack,
+    CreateComboAttack,
     
     //Audio
     PlayDialogueAudio,
