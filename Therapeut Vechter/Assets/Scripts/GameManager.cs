@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour
     private float playerDamage;
 
     #endregion
-    
+
     #region Private Fields
 
     //the score that the player has achieved
@@ -156,7 +156,7 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    
+
     private void InitialiseGame()
     {
         if (GameData.Instance != null && GameData.Instance.currentLevel != null)
@@ -226,19 +226,29 @@ public class GameManager : MonoBehaviour
             hasSwappedMusicAudioSource = true;
         }
 
+        SkipDialogue();
+
         switch (gameEventDataHolder.gameEvents[gameEventsIndex])
         {
             case EnvironmentPuzzleData puzzleEvent:
                 ManagePuzzleEvent(puzzleEvent);
                 break;
             case DialogueData dialogueEvent:
-                if (Input.GetKeyUp(KeyCode.Space))
-                    SkipEvent();
                 ManageDialogueEvent(dialogueEvent);
                 break;
             case FightingData fightingData:
                 ManageFightingEvent(fightingData);
                 break;
+        }
+    }
+
+    private void SkipDialogue()
+    {
+        if (Input.GetKeyUp(KeyCode.Space) && gameEventDataHolder.gameEvents[gameEventsIndex] is DialogueData)
+        {
+            EventManager.currentManager.AddEvent(new StopDialogue());
+            isPlayingDialogueAudio=false;
+            SkipEvent();
         }
     }
 
@@ -268,9 +278,10 @@ public class GameManager : MonoBehaviour
 
         ManageComboDamage(fightingEvent);
 
-        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine);
 
-        CheckPosePerformance(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas[poseDataIndex]);
+        CheckPosePerformance(
+            fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas[poseDataIndex]);
     }
 
     private void SetupFightingEvent(FightingData fightingEvent)
@@ -302,7 +313,7 @@ public class GameManager : MonoBehaviour
         EventManager.currentManager.AddEvent(
             exercisePerformIndex == 0
                 ? new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
-                : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+                : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
     }
 
     private void CompletedFightingExercise(FightingData fightingEvent)
@@ -348,7 +359,7 @@ public class GameManager : MonoBehaviour
             }
 
             EventManager.currentManager.AddEvent(
-                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
         }
     }
 
@@ -381,9 +392,16 @@ public class GameManager : MonoBehaviour
         //if it reaches the end of the pose data list
         CompletedPuzzleExercise(puzzleEvent);
 
+        if (puzzleEvent.exerciseData.Length == eventExerciseDataIndex)
+        {
+            ResetVariables();
+            gameEventsIndex++;
+            return;
+        }
+
         TryPlayPuzzleExerciseDialogue(puzzleEvent);
 
-        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay);
 
         CheckPosePerformance(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
             .poseDatas[poseDataIndex]);
@@ -391,9 +409,9 @@ public class GameManager : MonoBehaviour
 
     private void SetupPuzzleEvent(Sprite backgroundSprite)
     {
-        if (hasPerformedFirstTimeSetup) 
+        if (hasPerformedFirstTimeSetup)
             return;
-        
+
         if (backgroundSprite != null)
             StartBackgroundTransition(backgroundSprite);
         hasPerformedFirstTimeSetup = true;
@@ -424,12 +442,6 @@ public class GameManager : MonoBehaviour
             }
 
             poseDataIndex = 0;
-
-            if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
-
-            ResetVariables();
-            gameEventsIndex++;
-            return;
         }
     }
 
@@ -439,10 +451,27 @@ public class GameManager : MonoBehaviour
         {
             hasPlayedDialogueAudio = true;
 
-            EventManager.currentManager.AddEvent(
-                exercisePerformIndex == 0
-                    ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay)
-                    : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
+            //If it is not the 0th index play random sound
+            if (exercisePerformIndex != 0)
+            {
+                EventManager.currentManager.AddEvent(
+                    new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
+            }
+            //if it is the 0th index
+            else
+            {
+                //Get the path of the event
+                RuntimeManager.StudioSystem.getEvent(
+                    puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay.Path,
+                    out var eventDescription);
+
+                //check if it is valid path, if it isnt play the random sound instead
+                EventManager.currentManager.AddEvent(
+                    !eventDescription.isValid()
+                        ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay)
+                        : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay));
+            }
+
 
             //If there is no image chosen, the exercise will not display
             if (puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow == true)
@@ -489,7 +518,7 @@ public class GameManager : MonoBehaviour
         ResetVariables();
         gameEventsIndex++;
     }
-    
+
     private void SetupLevelScore()
     {
         foreach (var gameEvent in gameEventDataHolder.gameEvents)
@@ -529,7 +558,7 @@ public class GameManager : MonoBehaviour
         exerciseTimerIsRunning = false;
     }
 
-    private void CheckPosePerformance(PoseData poseData, bool updateScore=true)
+    private void CheckPosePerformance(PoseData poseData, bool updateScore = true)
     {
         var score = poseMatchCheck.PoseScoring(poseData);
 
@@ -544,7 +573,7 @@ public class GameManager : MonoBehaviour
         if (updateScore)
             EventManager.currentManager.AddEvent(new UpdateTotalScore(score));
     }
-    
+
     //Resets the main variables
     private void ResetVariables()
     {
@@ -563,7 +592,7 @@ public class GameManager : MonoBehaviour
         isDead = false;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
-    
+
     private void SlowScoreIncreaseOverTime()
     {
         currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore, scoreUpdateSpeed);
@@ -577,7 +606,7 @@ public class GameManager : MonoBehaviour
             playerHealthBar.value = playerCurrentDisplayHealth;
         }
     }
-    
+
     #endregion
 
     #region Background Transition

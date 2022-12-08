@@ -22,12 +22,20 @@ MonoBehaviour:
     Path: 
   BackgroundSprite: {fileID: 21300000, guid: 79d2218fa9a83224cb4011ef63907e8e, type: 3}
   exerciseData:
-  - ExerciseToPerform: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
-    VoiceLineToPlay:
+  - timesToPerform: 1
+    ExerciseToPerform: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    StartingVoiceLineToPlay:
       Guid:
         Data1: -1448644542
         Data2: 1166078514
         Data3: -1506683989
         Data4: -991439998
       Path: event:/VO/ACT1/LVL1/Exercise introduction
+    RandomVoiceLineToPlay:
+      Guid:
+        Data1: 0
+        Data2: 0
+        Data3: 0
+        Data4: 0
+      Path: 
     SpriteToShow: {fileID: 0}

@@ -189,6 +189,13 @@ public class DialogueAudioStatusUpdate : EventData
     }
 }
 
+public class StopDialogue : EventData
+{
+    public StopDialogue() : base(EventType.StopDialogue)
+    {
+    }
+}
+
 public class PlaySfxAudio : EventData
 {
     public readonly EventReference EventSoundPath;

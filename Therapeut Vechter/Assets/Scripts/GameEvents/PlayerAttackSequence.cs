@@ -1,5 +1,6 @@
 ﻿using Exercises;
 using FMODUnity;
+using UnityEngine.Serialization;
 
 namespace GameEvents
 {
@@ -7,7 +8,7 @@ namespace GameEvents
     public class PlayerAttackSequence
     {
         public EventReference startingVoiceLine;
-        public EventReference exerciseName;
+        [FormerlySerializedAs("exerciseName")] public EventReference randomVoiceLine;
         public PoseDataSet playerAttack;
         public int timesToPerform=1;
     }
