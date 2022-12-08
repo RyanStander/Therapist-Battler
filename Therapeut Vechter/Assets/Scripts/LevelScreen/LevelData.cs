@@ -16,5 +16,6 @@ namespace LevelScreen
         public int StarRequirement;
         public bool FinishedLevel;
         public Texture LevelBackgroundImage;
+        public GameObject ExerciseButton;
     }
 }

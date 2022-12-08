@@ -30,4 +30,8 @@ public enum EventType
     StopDialogue,
     PlaySfxAudio,
     PlayMusicAudio,
+    
+    //Exercise
+    ExcludeExercise,
+    ResetExcludedExercises,
 }

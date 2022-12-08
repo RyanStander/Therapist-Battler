@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+using Exercises;
 using UnityEngine;
 
 namespace GameEvents
@@ -8,5 +11,42 @@ namespace GameEvents
         public Sprite startingBackground;
         
         public BaseGameEvent[] gameEvents;
+
+        public List<PoseDataSet> exercisesInLevel = new();
+
+        private void OnValidate()
+        {
+            foreach (var gameEvent in gameEvents)
+            {
+                switch (gameEvent)
+                {
+                    //we dont care for dialogue events
+                    case DialogueData:
+                        continue;
+                    case EnvironmentPuzzleData environmentPuzzleData:
+                    {
+                        foreach (var exerciseData in environmentPuzzleData.exerciseData)
+                        {
+                            if (exercisesInLevel.Contains(exerciseData.ExerciseToPerform))
+                                return;
+                            exercisesInLevel.Add(exerciseData.ExerciseToPerform);
+                        }
+
+                        break;
+                    }
+                    case FightingData fightingData:
+                    {
+                        foreach (var playerAttackSequence in fightingData.playerAttackSequence)
+                        {
+                            if (exercisesInLevel.Contains(playerAttackSequence.playerAttack))
+                                return;
+                            exercisesInLevel.Add(playerAttackSequence.playerAttack);
+                        }
+
+                        break;
+                    }
+                }
+            }
+        }
     }
 }
