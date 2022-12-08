@@ -744,11 +744,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelBodyPoints: {fileID: 635659033}
-  poseDataSetToSaveTo: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
+  poseDataSetToSaveTo: {fileID: 11400000, guid: a11262a0e5b84a545bde15f4e3b3cb0b, type: 2}
   addPoseToPoseDataSet: 1
-  savePath: Assets/ScriptableObjects/Exercises/Poses/SplitLegSquat/
-  poseSetSaveName: SplitLegSquat
-  poseSaveName: SplitLegSquat-SquatRightLegForward
+  savePath: Assets/ScriptableObjects/Exercises/Poses/RightLegLevelSquat/
+  poseSetSaveName: RighLegLevelSquat
+  poseSaveName: RightLegLevelComplete
 --- !u!1 &650970106
 GameObject:
   m_ObjectHideFlags: 0
@@ -936,8 +936,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 722814998}
-  m_LocalRotation: {x: -0.0016618295, y: 0.9937641, z: -0.014947523, w: -0.11048429}
-  m_LocalPosition: {x: 0.8500683, y: 1.2136077, z: 3.7634912}
+  m_LocalRotation: {x: -0.0007489212, y: 0.99864864, z: -0.015035745, w: -0.049742065}
+  m_LocalPosition: {x: 0.29665285, y: 1.2117524, z: 4.0521846}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1119,8 +1119,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1269809871}
-  m_LocalRotation: {x: -0.0016618295, y: 0.9937641, z: -0.014947523, w: -0.11048429}
-  m_LocalPosition: {x: 0.8500683, y: 1.2136077, z: 3.7634912}
+  m_LocalRotation: {x: -0.0007489212, y: 0.99864864, z: -0.015035745, w: -0.049742065}
+  m_LocalPosition: {x: 0.29665285, y: 1.2117524, z: 4.0521846}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1383,7 +1383,7 @@ MonoBehaviour:
     m_LegacyHeadingDefinition: -1
     m_LegacyVelocityFilterStrength: -1
   m_XAxis:
-    Value: -0
+    Value: 0
     m_SpeedMode: 0
     m_MaxSpeed: 0
     m_AccelTime: 0.1
@@ -3000,11 +3000,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.x
-      value: -10.181675
+      value: -10.179935
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.y
-      value: -17.280376
+      value: -17.271248
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.z
@@ -3012,11 +3012,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
-      value: -13.381682
+      value: -13.378935
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.y
-      value: -54.58037
+      value: -54.559505
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.z
@@ -3024,11 +3024,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.x
-      value: 44.01832
+      value: 44.003002
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.y
-      value: -40.08038
+      value: -40.06408
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.z
@@ -3036,11 +3036,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.x
-      value: 44.01832
+      value: 44.003002
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.y
-      value: -40.08038
+      value: -40.06408
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.z
