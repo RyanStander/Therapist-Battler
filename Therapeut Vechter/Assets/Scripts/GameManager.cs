@@ -1,4 +1,5 @@
 using System.Linq;
+using DevTools;
 using Exercises;
 using FMODUnity;
 using GameEvents;
@@ -122,6 +123,14 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Cheats
+
+#if UNITY_EDITOR
+    private Cheats cheats = new Cheats();
+#endif
+
+    #endregion
+
     private float maxScore;
 
     #region Runtime
@@ -181,6 +190,10 @@ public class GameManager : MonoBehaviour
     //Manages the functionality of the level
     private void RunLevel()
     {
+#if UNITY_EDITOR
+        RunCheats();
+#endif
+        
         if (endGameTimerIsRunning && endGameDelayTimestamp <= Time.time)
         {
             var starsAchieved = 0;
@@ -215,7 +228,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
         //Swaps song
         if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
             !hasSwappedMusicAudioSource)
@@ -247,7 +259,7 @@ public class GameManager : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.Space) && gameEventDataHolder.gameEvents[gameEventsIndex] is DialogueData)
         {
             EventManager.currentManager.AddEvent(new StopDialogue());
-            isPlayingDialogueAudio=false;
+            isPlayingDialogueAudio = false;
             SkipEvent();
         }
     }
@@ -678,4 +690,15 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+#if UNITY_EDITOR
+    private void RunCheats()
+    {
+        if (cheats.SkipExercise())
+        {
+            //set to max value so that it skips the exercise
+            poseDataIndex = int.MaxValue;
+        }
+    }
+#endif
 }
