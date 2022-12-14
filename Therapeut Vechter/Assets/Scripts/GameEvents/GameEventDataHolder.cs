@@ -9,6 +9,8 @@ namespace GameEvents
     public class GameEventDataHolder : ScriptableObject
     {
         public Sprite startingBackground;
+
+        [Range(1,3)]public int currentRecoveryStage=3;
         
         public BaseGameEvent[] gameEvents;
 

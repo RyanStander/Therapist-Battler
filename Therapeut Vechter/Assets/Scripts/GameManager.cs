@@ -34,6 +34,11 @@ public class GameManager : MonoBehaviour
     [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
     private float baseComboDamage = 20;
 
+    [Header("Stage effects")] [SerializeField]
+    private GameObject[] stageOneEffectsToEnable;
+    
+    [SerializeField] private GameObject[] stageTwoEffectsToEnable;
+    
     private float playerDamage;
 
     #endregion
@@ -184,6 +189,22 @@ public class GameManager : MonoBehaviour
 
         backgroundImage.sprite = gameEventDataHolder.startingBackground;
 
+        switch (gameEventDataHolder.currentRecoveryStage)
+        {
+            case 1:
+                foreach (var stageOneEffect in stageOneEffectsToEnable)
+                {
+                    stageOneEffect.SetActive(true);
+                }
+                break;
+            case 2:
+                foreach (var stageTwoEffect in stageTwoEffectsToEnable)
+                {
+                    stageTwoEffect.SetActive(true);
+                }
+                break;
+        }
+        
         SetupLevelScore();
     }
 
