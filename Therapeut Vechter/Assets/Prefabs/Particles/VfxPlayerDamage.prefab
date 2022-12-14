@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 842269616775319694}
-  - component: {fileID: 1992595262126849662}
+  - component: {fileID: -3374974650035317286}
   m_Layer: 5
   m_Name: VfxPlayerDamage
   m_TagString: Untagged
@@ -24,7 +24,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842269616775319693}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -40,7 +40,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1992595262126849662
+--- !u!114 &-3374974650035317286
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -49,10 +49,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 842269616775319693}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8939f32afb9c4bdfac3c77c7c34574a1, type: 3}
+  m_Script: {fileID: 11500000, guid: b89679de6e3b4c0e8393b7a20719875b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   EffectDuration: 0.6
+  TimeUntilDamage: 0.6
 --- !u!1 &842269617181799153
 GameObject:
   m_ObjectHideFlags: 0
@@ -86,7 +87,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 584, y: 176}
+  m_AnchoredPosition: {x: 535, y: 106}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &842269618330485410
@@ -118,7 +119,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842269618330485410}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -632, y: 0, z: 0}
+  m_LocalPosition: {x: -418, y: -56, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -133,7 +134,7 @@ VisualEffect:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842269618330485410}
   m_Enabled: 1
-  m_Asset: {fileID: 8926484042661614526, guid: 02c1a243083662541bd7d6a7d2dff438, type: 3}
+  m_Asset: {fileID: 8926484042661614526, guid: c3f3e2c81c7c6ff4e9d78913035a7463, type: 3}
   m_InitialEventName: 
   m_InitialEventNameOverriden: 0
   m_StartSeed: 0
@@ -146,10 +147,10 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: -144, y: 242, z: 0}
+      - m_Value: {x: -3.4761262, y: 18.35133, z: 102.36148}
         m_Name: Pos1
         m_Overridden: 1
-      - m_Value: {x: 584, y: 176, z: 0}
+      - m_Value: {x: 52.548233, y: 23.055664, z: 102.36148}
         m_Name: Pos2
         m_Overridden: 1
     m_Vector4f:
@@ -288,6 +289,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -144, y: 242}
+  m_AnchoredPosition: {x: 11, y: 62}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}

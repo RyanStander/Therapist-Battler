@@ -5,9 +5,11 @@ using UnityEngine;
 //Defines the different event types to be used in event data in enumeration form
 public enum EventType 
 {
-    ReceiveDebug,
+    EndLevel,
     
     UpdateComboScore,
+    UpdateTotalScore,
+    SetupTotalScore,
     
     //Enemy
     SetupEnemy,
@@ -15,11 +17,21 @@ public enum EventType
     DamageEnemy,
     HideEnemy,
     
-    CreatePlayerNormalAttack,
+    //Player
+    DamagePlayer,
+    
+    //Effects
+    CreateNormalAttack,
+    CreateComboAttack,
     
     //Audio
     PlayDialogueAudio,
     DialogueAudioStatusUpdate,
+    StopDialogue,
     PlaySfxAudio,
     PlayMusicAudio,
+    
+    //Exercise
+    ExcludeExercise,
+    ResetExcludedExercises,
 }

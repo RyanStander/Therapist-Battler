@@ -10,8 +10,9 @@ namespace UI
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField] private Image enemyImage;
+        [SerializeField] private Image enemyBackgroundImage;
         [SerializeField] private Animator enemyImageAnimator;
-        [SerializeField] private Slider enemySlider;
+        [SerializeField] private Slider[] enemySliders;
         [SerializeField] private Color enemyDamageColor = Color.red;
         [SerializeField] private float colorUpdateSpeed = 1f;
 
@@ -56,16 +57,22 @@ namespace UI
                 if (setupEnemy.EnemySprite!=null)
                 {
                     enemyImage.sprite = setupEnemy.EnemySprite;
-                    enemyImage.gameObject.SetActive(true);
+                    enemyImage.gameObject.SetActive(false);
+                    enemyBackgroundImage.gameObject.SetActive(false);
                 }
                 
                 currentDisplayHealth = setupEnemy.EnemyHealth;
                 currentHealth = currentDisplayHealth;
-                enemySlider.maxValue = currentDisplayHealth;
-                enemySlider.value = currentDisplayHealth;
+                foreach (var enemySlider in enemySliders)
+                {
+                    enemySlider.maxValue = currentDisplayHealth;
+                    enemySlider.value = currentDisplayHealth;   
+                    enemySlider.gameObject.SetActive(true);
+                }
                 healthUpdateSpeed = setupEnemy.EnemyHealthUpdateSpeed;
                 
-                enemySlider.gameObject.SetActive(true);
+                enemyBackgroundImage.gameObject.SetActive(true);
+                enemyImage.gameObject.SetActive(true);
             }
             else
                 Debug.LogError(
@@ -94,7 +101,11 @@ namespace UI
             if (eventData is HideEnemy)
             {
                 enemyImage.gameObject.SetActive(false);
-                enemySlider.gameObject.SetActive(false);
+                foreach (var enemySlider in enemySliders)
+                {
+                    enemySlider.gameObject.SetActive(false);
+                }
+                enemyBackgroundImage.gameObject.SetActive(false);
             }
             else
                 Debug.LogError(
@@ -105,7 +116,11 @@ namespace UI
         {
             currentDisplayHealth = Mathf.Lerp(currentDisplayHealth, currentHealth, healthUpdateSpeed);
 
-            enemySlider.value = currentDisplayHealth;
+            
+            foreach (var enemySlider in enemySliders)
+            {
+                enemySlider.value = currentDisplayHealth;
+            }
         }
 
         private void PlayDamageEffect()

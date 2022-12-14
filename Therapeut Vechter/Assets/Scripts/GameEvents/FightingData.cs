@@ -11,16 +11,12 @@ namespace GameEvents
         public Sprite enemySprite;
         public float enemyHealth=100;
         public float enemyDamage=10;
+        public GameObject enemyDamageEffect;
         public EventReference enemyAttackSound;
         public EventReference enemyHurtSound;
         [Tooltip("This is the order in which the player attacks with, if it reaches the end it goes back to the start")]
         public PlayerAttackSequence[] playerAttackSequence;//Using jagged arrays as they are not size restricted
     }
 
-    [System.Serializable]
-    public class PlayerAttackSequence
-    {
-        public EventReference exerciseName;
-        public PoseDataSet[] playerAttack;
-    }
+
 }

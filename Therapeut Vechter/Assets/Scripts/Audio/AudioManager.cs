@@ -2,6 +2,7 @@ using System;
 using FMOD.Studio;
 using FMODUnity;
 using UnityEngine;
+using STOP_MODE = FMOD.Studio.STOP_MODE;
 
 namespace Audio
 {
@@ -19,6 +20,7 @@ namespace Audio
         private void OnEnable()
         {
             EventManager.currentManager.Subscribe(EventType.PlayDialogueAudio, OnPlayDialogueAudio);
+            EventManager.currentManager.Subscribe(EventType.StopDialogue, OnStopDialogue);
             EventManager.currentManager.Subscribe(EventType.PlaySfxAudio, OnPlaySfxAudio);
             EventManager.currentManager.Subscribe(EventType.PlayMusicAudio, OnPlayMusicAudio);
         }
@@ -26,6 +28,7 @@ namespace Audio
         private void OnDisable()
         {
             EventManager.currentManager.Unsubscribe(EventType.PlayDialogueAudio, OnPlayDialogueAudio);
+            EventManager.currentManager.Unsubscribe(EventType.StopDialogue, OnStopDialogue);
             EventManager.currentManager.Unsubscribe(EventType.PlaySfxAudio, OnPlaySfxAudio);
             EventManager.currentManager.Unsubscribe(EventType.PlayMusicAudio, OnPlayMusicAudio);
         }
@@ -45,7 +48,7 @@ namespace Audio
 
         #endregion
 
-        #region MyRegion
+        #region OnEvents
 
         private void OnPlayDialogueAudio(EventData eventData)
         {
@@ -72,7 +75,7 @@ namespace Audio
                     return;
                 
                 sfxAudioEventInstance = RuntimeManager.CreateInstance(sfxAudio.EventSoundPath);
-                
+
                 sfxAudioEventInstance.start();
                 sfxAudioEventInstance.release();
             }
@@ -90,6 +93,14 @@ namespace Audio
 
                 musicAudioEventInstance.start();
                 musicAudioEventInstance.release();
+            }
+        }
+
+        private void OnStopDialogue(EventData eventData)
+        {
+            if (eventData is StopDialogue )
+            {
+                dialogueAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
             }
         }
 
