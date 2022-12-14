@@ -9,7 +9,7 @@ namespace UI
     /// </summary>
     public class EnemyManager : MonoBehaviour
     {
-        [SerializeField] private Image enemyImage;
+        [SerializeField] private RawImage enemyImage;
         [SerializeField] private Image enemyBackgroundImage;
         [SerializeField] private Animator enemyImageAnimator;
         [SerializeField] private Slider[] enemySliders;
@@ -56,7 +56,7 @@ namespace UI
             {
                 if (setupEnemy.EnemySprite!=null)
                 {
-                    enemyImage.sprite = setupEnemy.EnemySprite;
+                    enemyImage.texture = setupEnemy.EnemySprite;
                     enemyImage.gameObject.SetActive(false);
                     enemyBackgroundImage.gameObject.SetActive(false);
                 }

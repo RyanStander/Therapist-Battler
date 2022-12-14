@@ -8,7 +8,7 @@ namespace GameEvents
     public class FightingData : BaseGameEvent
     {
         [Header("Enemy Stats")]
-        public Sprite enemySprite;
+        public Texture enemySprite;
         public float enemyHealth=100;
         public float enemyDamage=10;
         public GameObject enemyDamageEffect;

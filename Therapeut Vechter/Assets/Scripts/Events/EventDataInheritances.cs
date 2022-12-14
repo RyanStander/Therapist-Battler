@@ -83,11 +83,11 @@ public class DamagePlayer : EventData
 /// </summary>
 public class SetupEnemy : EventData
 {
-    public readonly Sprite EnemySprite;
+    public readonly Texture EnemySprite;
     public readonly float EnemyHealth;
     public readonly float EnemyHealthUpdateSpeed;
 
-    public SetupEnemy(Sprite enemySprite, float enemyHealth, float enemyHealthUpdateSpeed) : base(EventType.SetupEnemy)
+    public SetupEnemy(Texture enemySprite, float enemyHealth, float enemyHealthUpdateSpeed) : base(EventType.SetupEnemy)
     {
         EnemySprite = enemySprite;
         EnemyHealth = enemyHealth;
