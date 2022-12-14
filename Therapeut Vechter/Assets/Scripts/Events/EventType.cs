@@ -27,6 +27,11 @@ public enum EventType
     //Audio
     PlayDialogueAudio,
     DialogueAudioStatusUpdate,
+    StopDialogue,
     PlaySfxAudio,
     PlayMusicAudio,
+    
+    //Exercise
+    ExcludeExercise,
+    ResetExcludedExercises,
 }

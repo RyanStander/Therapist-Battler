@@ -1,5 +1,6 @@
 ﻿//Event that informs subscribers of a debug log
 
+using Exercises;
 using FMODUnity;
 using UnityEngine;
 
@@ -189,6 +190,13 @@ public class DialogueAudioStatusUpdate : EventData
     }
 }
 
+public class StopDialogue : EventData
+{
+    public StopDialogue() : base(EventType.StopDialogue)
+    {
+    }
+}
+
 public class PlaySfxAudio : EventData
 {
     public readonly EventReference EventSoundPath;
@@ -210,3 +218,19 @@ public class PlayMusicAudio : EventData
 }
 
 #endregion
+
+public class ExcludeExercise : EventData
+{
+    public readonly PoseDataSet ExerciseToExclude;
+    public ExcludeExercise(PoseDataSet exerciseToExclude) : base(EventType.ExcludeExercise)
+    {
+        ExerciseToExclude = exerciseToExclude;
+    }
+}
+
+public class ResetExcludedExercises : EventData
+{
+    public ResetExcludedExercises() : base(EventType.ResetExcludedExercises)
+    {
+    }
+}
