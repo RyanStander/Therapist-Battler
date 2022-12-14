@@ -134,6 +134,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 4966924332372053252}
+        m_TargetAssemblyTypeName: UI.ExcludeExercise, Assembly-CSharp
+        m_MethodName: ExcludeExerciseFromLevel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!114 &8209321326878668827
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -164,6 +176,7 @@ GameObject:
   - component: {fileID: 5442370539543060518}
   - component: {fileID: 5317973820478203554}
   - component: {fileID: 603100889400035454}
+  - component: {fileID: 4966924332372053252}
   m_Layer: 5
   m_Name: ExersizeButton
   m_TagString: Untagged
@@ -290,3 +303,15 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &4966924332372053252
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4474902770234995988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65a2a6cef2234508a9a3056aaf7e7f39, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

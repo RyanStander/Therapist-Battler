@@ -17,6 +17,7 @@ namespace LevelScreen
         [SerializeField] private RawImage backgroundRawImage;
         [SerializeField] private Canvas maskCanvas;
         [SerializeField] private GameObject exerciseDisplayContent;
+        [SerializeField] private GameObject exerciseButton;
 
         [Header("Level Load Stats")] [Tooltip("How fast the mask moves to its position")] [SerializeField]
         private float positionChangeScalar = 0.001f;
@@ -183,11 +184,10 @@ namespace LevelScreen
         {
             foreach (var exercise in level.GameEventDataHolderLevel.exercisesInLevel)
             {
-                var obj = Instantiate(level.ExerciseButton, exerciseDisplayContent.transform);
+                var obj = Instantiate(exerciseButton, exerciseDisplayContent.transform);
                 var excludeExercise = obj.GetComponent<UI.ExcludeExercise>();
                 excludeExercise.SetExerciseToExclude(exercise);
             }
-
         }
 
         //put the background image of the levels at middle height of screen

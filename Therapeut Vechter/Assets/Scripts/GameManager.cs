@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviour
 #if UNITY_EDITOR
         RunCheats();
 #endif
-        
+
         if (endGameTimerIsRunning && endGameDelayTimestamp <= Time.time)
         {
             var starsAchieved = 0;
@@ -280,6 +280,10 @@ public class GameManager : MonoBehaviour
         }
 
         if (isDead)
+            return;
+
+        if (CheckIfExerciseIsToBeExcluded(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack,
+                fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform))
             return;
 
         TryPlayFightingExerciseDialogue(fightingEvent);
@@ -401,15 +405,20 @@ public class GameManager : MonoBehaviour
     {
         SetupPuzzleEvent(puzzleEvent.BackgroundSprite);
 
-        //if it reaches the end of the pose data list
-        CompletedPuzzleExercise(puzzleEvent);
-
         if (puzzleEvent.exerciseData.Length == eventExerciseDataIndex)
         {
             ResetVariables();
             gameEventsIndex++;
             return;
         }
+        
+        if (CheckIfExerciseIsToBeExcluded(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform,
+                puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform))
+            return;
+
+        //if it reaches the end of the pose data list
+        if (CompletedPuzzleExercise(puzzleEvent))
+            return;
 
         TryPlayPuzzleExerciseDialogue(puzzleEvent);
 
@@ -429,7 +438,7 @@ public class GameManager : MonoBehaviour
         hasPerformedFirstTimeSetup = true;
     }
 
-    private void CompletedPuzzleExercise(EnvironmentPuzzleData puzzleEvent)
+    private bool CompletedPuzzleExercise(EnvironmentPuzzleData puzzleEvent)
     {
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
@@ -454,7 +463,9 @@ public class GameManager : MonoBehaviour
             }
 
             poseDataIndex = 0;
+            return true;
         }
+        return false;
     }
 
     private void TryPlayPuzzleExerciseDialogue(EnvironmentPuzzleData puzzleEvent)
@@ -617,6 +628,24 @@ public class GameManager : MonoBehaviour
         {
             playerHealthBar.value = playerCurrentDisplayHealth;
         }
+    }
+
+    private bool CheckIfExerciseIsToBeExcluded(PoseDataSet poseDataSet, int timesToPerform)
+    {
+        if (GameData.Instance.exercisesToExclude.Contains(poseDataSet))
+        {
+            var currentScoreCalculation = poseDataSet.scoreValue * timesToPerform;
+            totalScore += currentScoreCalculation;
+
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
+
+            exercisePerformIndex = 0;
+            eventExerciseDataIndex++;
+
+            return true;
+        }
+
+        return false;
     }
 
     #endregion

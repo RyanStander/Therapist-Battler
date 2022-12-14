@@ -28,7 +28,7 @@ namespace GameEvents
                         foreach (var exerciseData in environmentPuzzleData.exerciseData)
                         {
                             if (exercisesInLevel.Contains(exerciseData.ExerciseToPerform))
-                                return;
+                                continue;
                             exercisesInLevel.Add(exerciseData.ExerciseToPerform);
                         }
 
@@ -39,7 +39,7 @@ namespace GameEvents
                         foreach (var playerAttackSequence in fightingData.playerAttackSequence)
                         {
                             if (exercisesInLevel.Contains(playerAttackSequence.playerAttack))
-                                return;
+                                continue;
                             exercisesInLevel.Add(playerAttackSequence.playerAttack);
                         }
 
