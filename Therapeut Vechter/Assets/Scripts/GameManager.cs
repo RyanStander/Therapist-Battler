@@ -1,4 +1,5 @@
 using System.Linq;
+using DevTools;
 using Exercises;
 using FMODUnity;
 using GameEvents;
@@ -36,7 +37,7 @@ public class GameManager : MonoBehaviour
     private float playerDamage;
 
     #endregion
-    
+
     #region Private Fields
 
     //the score that the player has achieved
@@ -122,6 +123,14 @@ public class GameManager : MonoBehaviour
 
     #endregion
 
+    #region Cheats
+
+#if UNITY_EDITOR
+    private Cheats cheats = new Cheats();
+#endif
+
+    #endregion
+
     private float maxScore;
 
     #region Runtime
@@ -156,7 +165,7 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
-    
+
     private void InitialiseGame()
     {
         if (GameData.Instance != null && GameData.Instance.currentLevel != null)
@@ -181,6 +190,10 @@ public class GameManager : MonoBehaviour
     //Manages the functionality of the level
     private void RunLevel()
     {
+#if UNITY_EDITOR
+        RunCheats();
+#endif
+
         if (endGameTimerIsRunning && endGameDelayTimestamp <= Time.time)
         {
             var starsAchieved = 0;
@@ -215,7 +228,6 @@ public class GameManager : MonoBehaviour
             return;
         }
 
-
         //Swaps song
         if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
             !hasSwappedMusicAudioSource)
@@ -225,6 +237,8 @@ public class GameManager : MonoBehaviour
 
             hasSwappedMusicAudioSource = true;
         }
+
+        SkipDialogue();
 
         switch (gameEventDataHolder.gameEvents[gameEventsIndex])
         {
@@ -237,6 +251,16 @@ public class GameManager : MonoBehaviour
             case FightingData fightingData:
                 ManageFightingEvent(fightingData);
                 break;
+        }
+    }
+
+    private void SkipDialogue()
+    {
+        if (Input.GetKeyUp(KeyCode.Space) && gameEventDataHolder.gameEvents[gameEventsIndex] is DialogueData)
+        {
+            EventManager.currentManager.AddEvent(new StopDialogue());
+            isPlayingDialogueAudio = false;
+            SkipEvent();
         }
     }
 
@@ -258,6 +282,10 @@ public class GameManager : MonoBehaviour
         if (isDead)
             return;
 
+        if (CheckIfExerciseIsToBeExcluded(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack,
+                fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform))
+            return;
+
         TryPlayFightingExerciseDialogue(fightingEvent);
 
         //Checks if the current Exercise has been completed
@@ -266,9 +294,10 @@ public class GameManager : MonoBehaviour
 
         ManageComboDamage(fightingEvent);
 
-        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName);
+        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine);
 
-        CheckPosePerformance(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas[poseDataIndex]);
+        CheckPosePerformance(
+            fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas[poseDataIndex]);
     }
 
     private void SetupFightingEvent(FightingData fightingEvent)
@@ -300,7 +329,7 @@ public class GameManager : MonoBehaviour
         EventManager.currentManager.AddEvent(
             exercisePerformIndex == 0
                 ? new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
-                : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+                : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
     }
 
     private void CompletedFightingExercise(FightingData fightingEvent)
@@ -346,7 +375,7 @@ public class GameManager : MonoBehaviour
             }
 
             EventManager.currentManager.AddEvent(
-                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].exerciseName));
+                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
         }
     }
 
@@ -376,12 +405,24 @@ public class GameManager : MonoBehaviour
     {
         SetupPuzzleEvent(puzzleEvent.BackgroundSprite);
 
+        if (puzzleEvent.exerciseData.Length == eventExerciseDataIndex)
+        {
+            ResetVariables();
+            gameEventsIndex++;
+            return;
+        }
+        
+        if (CheckIfExerciseIsToBeExcluded(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform,
+                puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform))
+            return;
+
         //if it reaches the end of the pose data list
-        CompletedPuzzleExercise(puzzleEvent);
+        if (CompletedPuzzleExercise(puzzleEvent))
+            return;
 
         TryPlayPuzzleExerciseDialogue(puzzleEvent);
 
-        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay);
+        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay);
 
         CheckPosePerformance(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
             .poseDatas[poseDataIndex]);
@@ -389,15 +430,15 @@ public class GameManager : MonoBehaviour
 
     private void SetupPuzzleEvent(Sprite backgroundSprite)
     {
-        if (hasPerformedFirstTimeSetup) 
+        if (hasPerformedFirstTimeSetup)
             return;
-        
+
         if (backgroundSprite != null)
             StartBackgroundTransition(backgroundSprite);
         hasPerformedFirstTimeSetup = true;
     }
 
-    private void CompletedPuzzleExercise(EnvironmentPuzzleData puzzleEvent)
+    private bool CompletedPuzzleExercise(EnvironmentPuzzleData puzzleEvent)
     {
         if (puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count <= poseDataIndex)
         {
@@ -422,13 +463,9 @@ public class GameManager : MonoBehaviour
             }
 
             poseDataIndex = 0;
-
-            if (puzzleEvent.exerciseData.Length != eventExerciseDataIndex) return;
-
-            ResetVariables();
-            gameEventsIndex++;
-            return;
+            return true;
         }
+        return false;
     }
 
     private void TryPlayPuzzleExerciseDialogue(EnvironmentPuzzleData puzzleEvent)
@@ -437,10 +474,27 @@ public class GameManager : MonoBehaviour
         {
             hasPlayedDialogueAudio = true;
 
-            EventManager.currentManager.AddEvent(
-                exercisePerformIndex == 0
-                    ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay)
-                    : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].VoiceLineToPlay));
+            //If it is not the 0th index play random sound
+            if (exercisePerformIndex != 0)
+            {
+                EventManager.currentManager.AddEvent(
+                    new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
+            }
+            //if it is the 0th index
+            else
+            {
+                //Get the path of the event
+                RuntimeManager.StudioSystem.getEvent(
+                    puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay.Path,
+                    out var eventDescription);
+
+                //check if it is valid path, if it isnt play the random sound instead
+                EventManager.currentManager.AddEvent(
+                    !eventDescription.isValid()
+                        ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay)
+                        : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay));
+            }
+
 
             //If there is no image chosen, the exercise will not display
             if (puzzleEvent.exerciseData[eventExerciseDataIndex].SpriteToShow == true)
@@ -482,6 +536,12 @@ public class GameManager : MonoBehaviour
 
     #region Extra Functions
 
+    private void SkipEvent()
+    {
+        ResetVariables();
+        gameEventsIndex++;
+    }
+
     private void SetupLevelScore()
     {
         foreach (var gameEvent in gameEventDataHolder.gameEvents)
@@ -521,7 +581,7 @@ public class GameManager : MonoBehaviour
         exerciseTimerIsRunning = false;
     }
 
-    private void CheckPosePerformance(PoseData poseData, bool updateScore=true)
+    private void CheckPosePerformance(PoseData poseData, bool updateScore = true)
     {
         var score = poseMatchCheck.PoseScoring(poseData);
 
@@ -536,7 +596,7 @@ public class GameManager : MonoBehaviour
         if (updateScore)
             EventManager.currentManager.AddEvent(new UpdateTotalScore(score));
     }
-    
+
     //Resets the main variables
     private void ResetVariables()
     {
@@ -555,7 +615,7 @@ public class GameManager : MonoBehaviour
         isDead = false;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
-    
+
     private void SlowScoreIncreaseOverTime()
     {
         currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore, scoreUpdateSpeed);
@@ -569,7 +629,25 @@ public class GameManager : MonoBehaviour
             playerHealthBar.value = playerCurrentDisplayHealth;
         }
     }
-    
+
+    private bool CheckIfExerciseIsToBeExcluded(PoseDataSet poseDataSet, int timesToPerform)
+    {
+        if (GameData.Instance.exercisesToExclude.Contains(poseDataSet))
+        {
+            var currentScoreCalculation = poseDataSet.scoreValue * timesToPerform;
+            totalScore += currentScoreCalculation;
+
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
+
+            exercisePerformIndex = 0;
+            eventExerciseDataIndex++;
+
+            return true;
+        }
+
+        return false;
+    }
+
     #endregion
 
     #region Background Transition
@@ -641,4 +719,15 @@ public class GameManager : MonoBehaviour
     }
 
     #endregion
+
+#if UNITY_EDITOR
+    private void RunCheats()
+    {
+        if (cheats.SkipExercise())
+        {
+            //set to max value so that it skips the exercise
+            poseDataIndex = int.MaxValue;
+        }
+    }
+#endif
 }
