@@ -59,17 +59,13 @@
   </ol>
 </details>
 
-
-
 <!-- ABOUT THE PROJECT -->
 ## About The Project
-This project is a sound-based solution to help keep patients motivated in their recovery process from ACL replacement surgery. The gamified experience focuses on patients' progrssion and offers data collection during the therapy sessions.
+This project is a sound-based solution to help keep patients motivated in their recovery process from ACL replacement surgery. The gamified experience focuses on patients' progression and offers data collection during the therapy sessions.
 
  <img src="https://cdn.discordapp.com/attachments/1016574318827810870/1019533953989873714/unknown.png" alt="Product Name Screen Shot" >
  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 ### Built With
 Below is a list of applications used for building our project. Make sure to familiarise yourself with these before attempting to work on it
@@ -85,42 +81,23 @@ Below is a list of applications used for building our project. Make sure to fami
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-
-
 <!-- GETTING STARTED -->
 ## Getting Started
 Below we will discuss how to get everything you need to run the Therapy project in Unity
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+Setting Up Xsens Awinda Suit with Ruelsing systems (To be added)
+
+Unity version 2021.3.6f1
 
 ### Installation
 
-_Below is a template example of how to install the software._
+_Setting up fusion clinic software_
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
-   git clone https://github.com/your_username_/Project-Name.git
-   ```
-3. Install NPM packages
-   ```sh
-   npm install
-   ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
-   ```
-### Code structure:
+[Unity Install Instructions](https://learn.unity.com/tutorial/install-the-unity-hub-and-editor#6273ef3cedbc2a0924192d2f)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -234,24 +211,6 @@ This one's rather simple, the same path as creation a Game Event, find the Game 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-<!-- ROADMAP -->
-## Roadmap
-
- _Template roadmap_
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
-
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
-
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
-
 <!-- CONTRIBUTING -->
 ## Contributing
 
@@ -273,7 +232,27 @@ Don't forget to give the project a star! Thanks again!
 <!-- LICENSE -->
 ## License
 
-_Figure out what liscence we work under_
+MIT License
+
+Copyright (c) 2022 Ryan Stander
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -295,15 +274,12 @@ Project Link: [https://github.com/RyanStander/Therapist-Battler](https://github.
 
 These are some special credits for our project.
 
-_Template acknowledgements_
+_Acknowledgements_
 * [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
 * [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
 * [React Icons](https://react-icons.github.io/react-icons/search)
+* [Night Cafe](https://creator.nightcafe.studio)
+* [Replica Studios](https://replicastudios.com)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
