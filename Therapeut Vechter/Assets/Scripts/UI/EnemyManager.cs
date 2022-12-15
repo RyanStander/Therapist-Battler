@@ -132,7 +132,6 @@ namespace UI
 
             if (enemyVideoDataHolder == null)
                 return;
-            Destroy(enemyVideoDataHolder.gameObject);
             var enemyColor = enemyVideoDataHolder.RawImage.color;
 
             var c = Color.Lerp(enemyColor, defaultColor, colorUpdateSpeed);
