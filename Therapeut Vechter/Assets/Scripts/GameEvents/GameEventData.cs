@@ -1,6 +1,7 @@
 using Exercises;
 using FMODUnity;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace GameEvents
 {
@@ -10,7 +11,7 @@ namespace GameEvents
         public int timesToPerform=1;
         public PoseDataSet ExerciseToPerform;
         public EventReference StartingVoiceLineToPlay;
-        public EventReference VoiceLineToPlay;
+        [FormerlySerializedAs("VoiceLineToPlay")] public EventReference RandomVoiceLineToPlay;
         public Sprite SpriteToShow;
     }
 }
