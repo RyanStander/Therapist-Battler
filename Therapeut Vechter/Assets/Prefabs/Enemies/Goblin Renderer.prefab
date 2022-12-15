@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 3819016832689140381}
   - component: {fileID: 3819016832689140382}
   - component: {fileID: 4631418367633550820}
+  - component: {fileID: 5328608640448822124}
+  - component: {fileID: 8755707595925096176}
   m_Layer: 5
   m_Name: Goblin Renderer
   m_TagString: Untagged
@@ -36,7 +38,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 524, y: 84}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 551.533, y: 613.227}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3819016832689140381
@@ -107,3 +109,38 @@ VideoPlayer:
   m_WaitForFirstFrame: 1
   m_FrameReadyEventEnabled: 0
   m_VideoShaders: []
+--- !u!114 &5328608640448822124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819016832689140376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b01bccfb4992475a991b4003d1e63072, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  RawImage: {fileID: 3819016832689140382}
+  VideoPlayer: {fileID: 4631418367633550820}
+  Animator: {fileID: 8755707595925096176}
+--- !u!95 &8755707595925096176
+Animator:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3819016832689140376}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c825a921d819f204ebd609d36826f803, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
