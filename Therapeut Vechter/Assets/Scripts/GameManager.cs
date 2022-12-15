@@ -336,7 +336,7 @@ public class GameManager : MonoBehaviour
 
         enemyHealth = fightingEvent.enemyHealth;
 
-        EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,
+        EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemyGameObject, fightingEvent.enemyHealth,
             scoreUpdateSpeed));
     }
 

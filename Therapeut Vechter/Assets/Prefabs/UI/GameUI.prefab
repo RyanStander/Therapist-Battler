@@ -178,16 +178,16 @@ VisualEffect:
       m_Array: []
     m_Vector3f:
       m_Array:
-      - m_Value: {x: 445.6231, y: 131.89444, z: 0}
+      - m_Value: {x: 437.10498, y: 129.42184, z: 0}
         m_Name: Pos1
         m_Overridden: 1
-      - m_Value: {x: 430.937, y: -39.289917, z: 0}
+      - m_Value: {x: 422.69775, y: -38.512054, z: 0}
         m_Name: Pos2
         m_Overridden: 1
-      - m_Value: {x: 694.36816, y: 27.256256, z: 0}
+      - m_Value: {x: 681.12683, y: 26.770538, z: 0}
         m_Name: Pos3
         m_Overridden: 1
-      - m_Value: {x: 694.36816, y: 27.256256, z: 0}
+      - m_Value: {x: 681.12683, y: 26.770538, z: 0}
         m_Name: Pos4
         m_Overridden: 1
     m_Vector4f:
@@ -1135,11 +1135,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7135353160267072083}
   - component: {fileID: 1720231329487349253}
-  - component: {fileID: 6967188088334075512}
-  - component: {fileID: 1960975296178848720}
-  - component: {fileID: 7794615748047059090}
   m_Layer: 5
-  m_Name: EnemyImage
+  m_Name: EnemyInstantiationLocation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1163,7 +1160,7 @@ RectTransform:
   m_AnchorMin: {x: 0.78031284, y: 0.56470406}
   m_AnchorMax: {x: 0.78031284, y: 0.56470406}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 502.74, y: 693.03}
+  m_SizeDelta: {x: 50, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1720231329487349253
 CanvasRenderer:
@@ -1173,66 +1170,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4983894448504859586}
   m_CullTransparentMesh: 1
---- !u!114 &6967188088334075512
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983894448504859586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 0
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 2800000, guid: df11179da8c15344695ee4390247bb68, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
---- !u!114 &1960975296178848720
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983894448504859586}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 934c80ef81504a3ca112300da171c7a9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rawImage: {fileID: 6967188088334075512}
---- !u!95 &7794615748047059090
-Animator:
-  serializedVersion: 4
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4983894448504859586}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: c825a921d819f204ebd609d36826f803, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &5364952941050488020
 GameObject:
   m_ObjectHideFlags: 0
@@ -4078,9 +4015,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eaf0a042986a5c4aae658fbe1cfb80e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemyImage: {fileID: 6967188088334075512}
   enemyBackgroundImage: {fileID: 7895697537412455380}
-  enemyImageAnimator: {fileID: 7794615748047059090}
+  enemyInstantiateLocation: {fileID: 7135353160267072083}
   enemySliders:
   - {fileID: 4943832403016690386}
   - {fileID: 9124468206205525928}

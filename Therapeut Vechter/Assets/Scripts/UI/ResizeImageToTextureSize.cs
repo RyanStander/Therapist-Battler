@@ -77,14 +77,18 @@ namespace UI
             {
 
                 rect.height = aspectRatio / rectAspectRatio;
-                rect.y = (1 - rect.height) * 0.5f;
+                rect.y = rect.height;
+                // rect.y = (1 - rect.height) * 0.5f;
             }
             else
             {
                 rect.width = rectAspectRatio / aspectRatio;
-                rect.x = (1 - rect.width) * 0.5f; 
-			
+                rect.x = rect.width;
+                //rect.x = (1 - rect.width) * 0.5f; 
+
             }
+
+            rawImage.GetComponent<RectTransform>().position = new Vector2(0, 0);
             image.uvRect = rect;
         }
     }
