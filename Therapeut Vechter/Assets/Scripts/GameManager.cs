@@ -315,7 +315,11 @@ public class GameManager : MonoBehaviour
 
         ManageComboDamage(fightingEvent);
 
-        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine);
+        //Get the duration before playing exercise.
+        var timerModifier =
+            DetermineClipLengthInSeconds(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine);
+        
+        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine,timerModifier);
 
         CheckPosePerformance(
             fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas[poseDataIndex]);
@@ -336,7 +340,7 @@ public class GameManager : MonoBehaviour
 
         enemyHealth = fightingEvent.enemyHealth;
 
-        EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemySprite, fightingEvent.enemyHealth,
+        EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemyGameObject, fightingEvent.enemyHealth,
             scoreUpdateSpeed));
     }
 
@@ -443,7 +447,12 @@ public class GameManager : MonoBehaviour
 
         TryPlayPuzzleExerciseDialogue(puzzleEvent);
 
-        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay);
+        //Get the duration before playing exercise.
+        var timerModifier =
+            DetermineClipLengthInSeconds(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay);
+
+        
+        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay,timerModifier);
 
         CheckPosePerformance(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
             .poseDatas[poseDataIndex]);
@@ -495,14 +504,9 @@ public class GameManager : MonoBehaviour
         {
             hasPlayedDialogueAudio = true;
 
-            //If it is not the 0th index play random sound
-            if (exercisePerformIndex != 0)
-            {
-                EventManager.currentManager.AddEvent(
-                    new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
-            }
-            //if it is the 0th index
-            else
+            
+            if (exercisePerformIndex == 0)
+                //if it is the 0th index
             {
                 //Get the path of the event
                 RuntimeManager.StudioSystem.getEvent(
@@ -514,6 +518,12 @@ public class GameManager : MonoBehaviour
                     !eventDescription.isValid()
                         ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay)
                         : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay));
+            }
+            else
+                //If it is not the 0th index play random sound
+            {
+                EventManager.currentManager.AddEvent(
+                    new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
             }
 
 
@@ -586,13 +596,13 @@ public class GameManager : MonoBehaviour
         EventManager.currentManager.AddEvent(new SetupTotalScore(maxScore));
     }
 
-    private void RepeatExerciseNameAfterTime(EventReference eventReference)
+    private void RepeatExerciseNameAfterTime(EventReference eventReference, float timerModifierInSeconds=0)
     {
         //Set a timestamp to repeat the exercise if it is 0
         if (!exerciseTimerIsRunning)
         {
             exerciseTimerIsRunning = true;
-            exerciseRepeatTimeStamp = Time.time + timeUntilRepeatExerciseName;
+            exerciseRepeatTimeStamp = Time.time + timeUntilRepeatExerciseName+timerModifierInSeconds;
         }
 
 
@@ -602,6 +612,18 @@ public class GameManager : MonoBehaviour
         exerciseTimerIsRunning = false;
     }
 
+    private int DetermineClipLengthInSeconds(EventReference eventReference)
+    {
+        var clipLength=0;
+        if (exercisePerformIndex != 0) 
+            return clipLength;
+        
+        RuntimeManager.StudioSystem.getEvent(eventReference.Path, out var eventDescription);
+        eventDescription.getLength(out clipLength);
+
+        return clipLength/1000;
+    }
+    
     private void CheckPosePerformance(PoseData poseData, bool updateScore = true)
     {
         var score = poseMatchCheck.PoseScoring(poseData);
@@ -653,20 +675,22 @@ public class GameManager : MonoBehaviour
 
     private bool CheckIfExerciseIsToBeExcluded(PoseDataSet poseDataSet, int timesToPerform)
     {
-        if (GameData.Instance.exercisesToExclude.Contains(poseDataSet))
-        {
-            var currentScoreCalculation = poseDataSet.scoreValue * timesToPerform;
-            totalScore += currentScoreCalculation;
+        if (GameData.Instance == null)
+            return false;
+        
+        if (!GameData.Instance.exercisesToExclude.Contains(poseDataSet)) 
+            return false;
+        
+        var currentScoreCalculation = poseDataSet.scoreValue * timesToPerform;
+        totalScore += currentScoreCalculation;
 
-            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
+        EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
 
-            exercisePerformIndex = 0;
-            eventExerciseDataIndex++;
+        exercisePerformIndex = 0;
+        eventExerciseDataIndex++;
 
-            return true;
-        }
+        return true;
 
-        return false;
     }
 
     #endregion

@@ -9,9 +9,8 @@ namespace UI
     /// </summary>
     public class EnemyManager : MonoBehaviour
     {
-        [SerializeField] private Image enemyImage;
         [SerializeField] private Image enemyBackgroundImage;
-        [SerializeField] private Animator enemyImageAnimator;
+        [SerializeField] private RectTransform enemyInstantiateLocation;
         [SerializeField] private Slider[] enemySliders;
         [SerializeField] private Color enemyDamageColor = Color.red;
         [SerializeField] private float colorUpdateSpeed = 1f;
@@ -21,7 +20,9 @@ namespace UI
         private float healthUpdateSpeed;
 
         private bool playDamageEffect;
-        private Color defaultColor;
+        private Color defaultColor = Color.white;
+
+        private EnemyVideoDataHolder enemyVideoDataHolder;
 
 
         private void OnEnable()
@@ -38,11 +39,6 @@ namespace UI
             EventManager.currentManager.Unsubscribe(EventType.HideEnemy, OnHideEnemy);
         }
 
-        private void Start()
-        {
-            defaultColor = enemyImage.color;
-        }
-
         private void FixedUpdate()
         {
             LerpUpdateEnemyHealth();
@@ -54,25 +50,25 @@ namespace UI
         {
             if (eventData is SetupEnemy setupEnemy)
             {
-                if (setupEnemy.EnemySprite!=null)
+                if (setupEnemy.EnemyGameObject != null)
                 {
-                    enemyImage.sprite = setupEnemy.EnemySprite;
-                    enemyImage.gameObject.SetActive(false);
+                    enemyVideoDataHolder = Instantiate(setupEnemy.EnemyGameObject, enemyInstantiateLocation)
+                        .GetComponent<EnemyVideoDataHolder>();
                     enemyBackgroundImage.gameObject.SetActive(false);
                 }
-                
+
                 currentDisplayHealth = setupEnemy.EnemyHealth;
                 currentHealth = currentDisplayHealth;
                 foreach (var enemySlider in enemySliders)
                 {
                     enemySlider.maxValue = currentDisplayHealth;
-                    enemySlider.value = currentDisplayHealth;   
+                    enemySlider.value = currentDisplayHealth;
                     enemySlider.gameObject.SetActive(true);
                 }
+
                 healthUpdateSpeed = setupEnemy.EnemyHealthUpdateSpeed;
-                
+
                 enemyBackgroundImage.gameObject.SetActive(true);
-                enemyImage.gameObject.SetActive(true);
             }
             else
                 Debug.LogError(
@@ -86,10 +82,12 @@ namespace UI
                 currentHealth -= damageEnemy.DamageToTake;
 
                 playDamageEffect = true;
-                
-                enemyImageAnimator.Play("EnemyImageHitEffect");
 
-                enemyImage.color = enemyDamageColor;
+                if (enemyVideoDataHolder == null)
+                    return;
+                enemyVideoDataHolder.Animator.Play("EnemyImageHitEffect");
+
+                enemyVideoDataHolder.RawImage.color = enemyDamageColor;
             }
             else
                 Debug.LogError(
@@ -100,12 +98,16 @@ namespace UI
         {
             if (eventData is HideEnemy)
             {
-                enemyImage.gameObject.SetActive(false);
                 foreach (var enemySlider in enemySliders)
                 {
                     enemySlider.gameObject.SetActive(false);
                 }
+
                 enemyBackgroundImage.gameObject.SetActive(false);
+                
+                if (enemyVideoDataHolder == null)
+                    return;
+                Destroy(enemyVideoDataHolder.gameObject);
             }
             else
                 Debug.LogError(
@@ -116,7 +118,7 @@ namespace UI
         {
             currentDisplayHealth = Mathf.Lerp(currentDisplayHealth, currentHealth, healthUpdateSpeed);
 
-            
+
             foreach (var enemySlider in enemySliders)
             {
                 enemySlider.value = currentDisplayHealth;
@@ -128,12 +130,13 @@ namespace UI
             if (!playDamageEffect)
                 return;
 
-
-            var enemyColor = enemyImage.color;
+            if (enemyVideoDataHolder == null)
+                return;
+            var enemyColor = enemyVideoDataHolder.RawImage.color;
 
             var c = Color.Lerp(enemyColor, defaultColor, colorUpdateSpeed);
 
-            enemyImage.color = c;
+            enemyVideoDataHolder.RawImage.color = c;
 
             if (Math.Abs(enemyColor.r - defaultColor.r) < 0.01f && Math.Abs(enemyColor.g - defaultColor.g) < 0.01f &&
                 Math.Abs(enemyColor.b - defaultColor.b) < 0.01f)

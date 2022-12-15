@@ -13,8 +13,29 @@ MonoBehaviour:
   m_Name: SquatNearLeaves
   m_EditorClassIdentifier: 
   OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic: {fileID: 0}
+  OverrideMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  BackgroundSprite: {fileID: 0}
   exerciseData:
-  - ExerciseToPerform: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
-    VoiceLineToPlay: {fileID: 8300000, guid: 1e5e1cd26bb4dcb47a013f4fa8c15151, type: 3}
+  - timesToPerform: 3
+    ExerciseToPerform: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    StartingVoiceLineToPlay:
+      Guid:
+        Data1: -717611934
+        Data2: 1196995374
+        Data3: -1016871772
+        Data4: 1449940749
+      Path: event:/VO/ACT1/LVL1/Exercise bridge
+    RandomVoiceLineToPlay:
+      Guid:
+        Data1: -1068951644
+        Data2: 1292815222
+        Data3: 1005338244
+        Data4: 1651437012
+      Path: event:/VO/FEEDBACK/Exercise dead lift
     SpriteToShow: {fileID: 21300000, guid: 1d614a6dffe605540a0e0ca513681470, type: 3}

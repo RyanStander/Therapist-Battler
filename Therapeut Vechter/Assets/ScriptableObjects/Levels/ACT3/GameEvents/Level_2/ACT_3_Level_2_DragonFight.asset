@@ -21,32 +21,33 @@ MonoBehaviour:
       Data4: 0
     Path: 
   BackgroundSprite: {fileID: 21300000, guid: 477fd0887d03daf4d9f3c5a951cbdbca, type: 3}
-  enemySprite: {fileID: 21300000, guid: 1dc362402c9f5864c8399f57ed26cdb9, type: 3}
-  enemyHealth: 1500
+  enemyGameObject: {fileID: 2129498092976654831, guid: 5c69e42f517487846b27c9164e6e1cd4, type: 3}
+  enemyHealth: 2000
   enemyDamage: 15
+  enemyDamageEffect: {fileID: 5304927950568512166, guid: d33dbb8e30d3bfc449312ab7f461fd43, type: 3}
   enemyAttackSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 661774987
+      Data2: 1156531602
+      Data3: 1111906726
+      Data4: 1243777979
+    Path: event:/SFX/ENEMIES/Dragon/Fire breath short
   enemyHurtSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 313314195
+      Data2: 1146820680
+      Data3: 1567318200
+      Data4: 110946598
+    Path: event:/SFX/ENEMIES/Dragon/Faint growling
   playerAttackSequence:
   - startingVoiceLine:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    exerciseName:
+        Data1: -955837759
+        Data2: 1140685368
+        Data3: -1750223729
+        Data4: 1122957800
+      Path: event:/VO/EXERCISE/Dragon fight part 1
+    randomVoiceLine:
       Guid:
         Data1: 632877504
         Data2: 1176963898
@@ -57,12 +58,12 @@ MonoBehaviour:
     timesToPerform: 5
   - startingVoiceLine:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    exerciseName:
+        Data1: -1948582780
+        Data2: 1304633255
+        Data3: 1688848769
+        Data4: -1795166754
+      Path: event:/VO/EXERCISE/Dragon fight part 2
+    randomVoiceLine:
       Guid:
         Data1: 77254432
         Data2: 1084599889
@@ -73,12 +74,12 @@ MonoBehaviour:
     timesToPerform: 5
   - startingVoiceLine:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    exerciseName:
+        Data1: 829114678
+        Data2: 1282065857
+        Data3: 315512755
+        Data4: -954677878
+      Path: event:/VO/EXERCISE/Dragon fight part 3
+    randomVoiceLine:
       Guid:
         Data1: -836732412
         Data2: 1107966994

@@ -103,7 +103,7 @@ namespace LevelScreen
         {
             //Star amount getting
             sceneStarCount = GameObject.Find("StarAmount");
-            lockIcon = transform.Find("LockIcon").gameObject;
+            lockIcon = transform.Find("Lock Parent").gameObject;
             //stars
             starOne = GameObject.Find("Star 1");
             starTwo = GameObject.Find("Star 2");
