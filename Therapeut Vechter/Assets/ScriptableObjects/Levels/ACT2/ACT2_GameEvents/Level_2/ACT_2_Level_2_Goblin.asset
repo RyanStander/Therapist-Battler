@@ -24,34 +24,51 @@ MonoBehaviour:
   enemySprite: {fileID: 21300000, guid: c0bdf810ef22261409ba7b89dc6bbfba, type: 3}
   enemyHealth: 150
   enemyDamage: 10
+  enemyDamageEffect: {fileID: 5304927950568512166, guid: d33dbb8e30d3bfc449312ab7f461fd43, type: 3}
   enemyAttackSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: -1743877763
+      Data2: 1161761953
+      Data3: -19787618
+      Data4: 1114149600
+    Path: event:/SFX/ENEMIES/Goblin/Knife attack
   enemyHurtSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1498859832
+      Data2: 1246464378
+      Data3: 98228634
+      Data4: 85272501
+    Path: event:/SFX/ENEMIES/Goblin/Turning invisible
   playerAttackSequence:
   - startingVoiceLine:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    exerciseName:
+        Data1: 537213491
+        Data2: 1150055144
+        Data3: 475406756
+        Data4: -2066935116
+      Path: event:/VO/EXERCISE/Goblin part 1
+    randomVoiceLine:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
+        Data1: 77254432
+        Data2: 1084599889
+        Data3: 1880952200
+        Data4: 909355782
+      Path: event:/VO/FEEDBACK/Exercise double leg jumps
     playerAttack: {fileID: 11400000, guid: 3eaedbfa221a7db40a083fb06b89efc7, type: 2}
+    timesToPerform: 5
+  - startingVoiceLine:
+      Guid:
+        Data1: 1388285505
+        Data2: 1309453637
+        Data3: 1212055458
+        Data4: 926811178
+      Path: event:/VO/EXERCISE/Goblin part 2
+    randomVoiceLine:
+      Guid:
+        Data1: -836732412
+        Data2: 1107966994
+        Data3: 891611551
+        Data4: -577693812
+      Path: event:/VO/FEEDBACK/Exercise split leg squat
+    playerAttack: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
     timesToPerform: 5

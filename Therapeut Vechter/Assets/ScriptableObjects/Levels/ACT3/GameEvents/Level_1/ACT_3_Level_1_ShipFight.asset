@@ -24,50 +24,51 @@ MonoBehaviour:
   enemySprite: {fileID: 0}
   enemyHealth: 550
   enemyDamage: 15
+  enemyDamageEffect: {fileID: 0}
   enemyAttackSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 776197155
+      Data2: 1091393256
+      Data3: 57826959
+      Data4: -1436997937
+    Path: event:/SFX/PLACES/Ship/Cannon shoot
   enemyHurtSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 776197155
+      Data2: 1091393256
+      Data3: 57826959
+      Data4: -1436997937
+    Path: event:/SFX/PLACES/Ship/Cannon shoot
   playerAttackSequence:
   - startingVoiceLine:
       Guid:
-        Data1: 0
-        Data2: 0
-        Data3: 0
-        Data4: 0
-      Path: 
-    exerciseName:
-      Guid:
-        Data1: 77254432
-        Data2: 1084599889
-        Data3: 1880952200
-        Data4: 909355782
-      Path: event:/VO/FEEDBACK/Exercise double leg jumps
-    playerAttack: {fileID: 11400000, guid: 3eaedbfa221a7db40a083fb06b89efc7, type: 2}
-    timesToPerform: 5
-  - startingVoiceLine:
+        Data1: 1340261612
+        Data2: 1172924163
+        Data3: 1017237124
+        Data4: 1037852018
+      Path: event:/VO/EXERCISE/Ship battle part 1
+    randomVoiceLine:
       Guid:
         Data1: 632877504
         Data2: 1176963898
         Data3: 813203857
         Data4: -2080458140
       Path: event:/VO/FEEDBACK/Exercise squat
-    exerciseName:
+    playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    timesToPerform: 5
+  - startingVoiceLine:
+      Guid:
+        Data1: -1106810502
+        Data2: 1104206665
+        Data3: -1991717247
+        Data4: -1459892261
+      Path: event:/VO/EXERCISE/Ship battle part 2
+    randomVoiceLine:
       Guid:
         Data1: 77254432
         Data2: 1084599889
         Data3: 1880952200
         Data4: 909355782
       Path: event:/VO/FEEDBACK/Exercise double leg jumps
-    playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    playerAttack: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
     timesToPerform: 5
