@@ -37,14 +37,14 @@ namespace LevelScreen
             lastIndexInt =  objList.Length - 1;
             lastArrayObj = objList[lastIndexInt].gameObject;
             lastArrayObj.transform.Find("LevelOptionParent").localPosition = new Vector3(-250,50,0);
-            lastArrayObj.transform.Find("LevelOptionParent/PointArrow").localPosition = new Vector3(160,-50,0);
-            lastArrayObj.transform.Find("LevelOptionParent/PointArrow").rotation =Quaternion.Euler(0, 0, 90);
+            lastArrayObj.transform.Find("LevelOptionParent/back color").localPosition = new Vector3(38,0,0);
+            lastArrayObj.transform.Find("LevelOptionParent/back color").rotation =Quaternion.Euler(0, 180, 0);
             //second last object linked
             secondLastIndexInt =  objList.Length - 2;
             secondLastArrayObj = objList[secondLastIndexInt].gameObject;
             secondLastArrayObj.transform.Find("LevelOptionParent").localPosition = new Vector3(-250,50,0);
-            secondLastArrayObj.transform.Find("LevelOptionParent/PointArrow").localPosition = new Vector3(160,-50,0);
-            secondLastArrayObj.transform.Find("LevelOptionParent/PointArrow").rotation =Quaternion.Euler(0, 0, 90);
+            secondLastArrayObj.transform.Find("LevelOptionParent/back color").localPosition = new Vector3(38,0,0);
+            secondLastArrayObj.transform.Find("LevelOptionParent/back color").rotation =Quaternion.Euler(0, 180, 0);
         }
     }
 }
