@@ -90,7 +90,7 @@ namespace UI
 
         private void LerpUpdateEnemyHealth()
         {
-            currentDisplayScore = Mathf.Lerp(currentDisplayScore, currentScore, scoreUpdateSpeed);
+            currentDisplayScore = Mathf.MoveTowards(currentDisplayScore, currentScore, scoreUpdateSpeed);
 
             scoreSlider.value = currentDisplayScore;
         }
