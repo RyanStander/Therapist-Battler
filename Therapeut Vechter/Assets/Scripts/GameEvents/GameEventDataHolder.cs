@@ -18,6 +18,7 @@ namespace GameEvents
 
         private void OnValidate()
         {
+            exercisesInLevel = new List<PoseDataSet>();
             foreach (var gameEvent in gameEvents)
             {
                 switch (gameEvent)
