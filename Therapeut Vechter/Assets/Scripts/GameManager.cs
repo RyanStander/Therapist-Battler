@@ -303,6 +303,12 @@ public class GameManager : MonoBehaviour
         if (isDead)
             return;
 
+        if (CheckIfAllExercisesInFightAreExcluded(fightingEvent))
+        {
+            enemyHealth = 0;
+            return;
+        }
+
         if (CheckIfExerciseIsToBeExcluded(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack,
                 fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform))
             return;
@@ -693,6 +699,22 @@ public class GameManager : MonoBehaviour
 
     }
 
+    private bool CheckIfAllExercisesInFightAreExcluded(FightingData fightingData)
+    {
+        if (GameData.Instance == null)
+            return false;
+
+        foreach (var playerAttackSequence in fightingData.playerAttackSequence)
+        {
+            if (!GameData.Instance.exercisesToExclude.Contains(playerAttackSequence.playerAttack)) 
+                return true;
+        }
+
+        //TODO: do score tally
+
+        return false;
+    }
+    
     #endregion
 
     #region Background Transition
