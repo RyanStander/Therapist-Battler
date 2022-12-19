@@ -13,11 +13,78 @@ MonoBehaviour:
   m_Name: ACT_3_Level_2_ShipBattle
   m_EditorClassIdentifier: 
   OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic: {fileID: 0}
-  BackgroundSprite: {fileID: 0}
+  OverrideMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  BackgroundSprite: {fileID: 21300000, guid: ed081368b01d2294c99cb0c486dda14b, type: 3}
   enemySprite: {fileID: 0}
-  enemyHealth: 100
-  enemyDamage: 10
-  enemyAttackSounds: []
-  enemyAttackedSounds: []
-  playerAttackSequence: []
+  enemyHealth: 1500
+  enemyDamage: 15
+  enemyDamageEffect: {fileID: 0}
+  enemyAttackSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  enemyHurtSound:
+    Guid:
+      Data1: -1830101716
+      Data2: 1297346205
+      Data3: -1788096886
+      Data4: -549361124
+    Path: event:/SFX/ENEMIES/Dragon/Arm attack
+  playerAttackSequence:
+  - startingVoiceLine:
+      Guid:
+        Data1: 1340261612
+        Data2: 1172924163
+        Data3: 1017237124
+        Data4: 1037852018
+      Path: event:/VO/EXERCISE/Ship battle part 1
+    randomVoiceLine:
+      Guid:
+        Data1: 632877504
+        Data2: 1176963898
+        Data3: 813203857
+        Data4: -2080458140
+      Path: event:/VO/FEEDBACK/Exercise squat
+    playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    timesToPerform: 5
+  - startingVoiceLine:
+      Guid:
+        Data1: -1106810502
+        Data2: 1104206665
+        Data3: -1991717247
+        Data4: -1459892261
+      Path: event:/VO/EXERCISE/Ship battle part 2
+    randomVoiceLine:
+      Guid:
+        Data1: -836732412
+        Data2: 1107966994
+        Data3: 891611551
+        Data4: -577693812
+      Path: event:/VO/FEEDBACK/Exercise split leg squat
+    playerAttack: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
+    timesToPerform: 5
+  - startingVoiceLine:
+      Guid:
+        Data1: -283664867
+        Data2: 1105746914
+        Data3: 1246834599
+        Data4: 13344908
+      Path: event:/VO/EXERCISE/Ship battle part 3
+    randomVoiceLine:
+      Guid:
+        Data1: 77254432
+        Data2: 1084599889
+        Data3: 1880952200
+        Data4: 909355782
+      Path: event:/VO/FEEDBACK/Exercise double leg jumps
+    playerAttack: {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
+    timesToPerform: 5

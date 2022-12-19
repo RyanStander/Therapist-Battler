@@ -13,11 +13,62 @@ MonoBehaviour:
   m_Name: ACT_2_Level_1_Elf
   m_EditorClassIdentifier: 
   OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic: {fileID: 0}
-  BackgroundSprite: {fileID: 0}
-  enemySprite: {fileID: 0}
-  enemyHealth: 100
+  OverrideMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  BackgroundSprite: {fileID: 21300000, guid: 49465da560f5bed4fbdcf112abe597b5, type: 3}
+  enemyGameObject: {fileID: 196389368014922394, guid: 93aa2b81a5a7a7146ad9383b236bb238, type: 3}
+  enemyHealth: 1100
   enemyDamage: 10
-  enemyAttackSounds: []
-  enemyAttackedSounds: []
-  playerAttackSequence: []
+  enemyDamageEffect: {fileID: 5304927950568512166, guid: d33dbb8e30d3bfc449312ab7f461fd43, type: 3}
+  enemyAttackSound:
+    Guid:
+      Data1: 1054932321
+      Data2: 1269541166
+      Data3: 1607599023
+      Data4: -1396287551
+    Path: event:/SFX/ENEMIES/Elf/Bow attack
+  enemyHurtSound:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  playerAttackSequence:
+  - startingVoiceLine:
+      Guid:
+        Data1: 375024452
+        Data2: 1251133214
+        Data3: 1654539695
+        Data4: -1046130200
+      Path: event:/VO/EXERCISE/Elf part 1
+    randomVoiceLine:
+      Guid:
+        Data1: 632877504
+        Data2: 1176963898
+        Data3: 813203857
+        Data4: -2080458140
+      Path: event:/VO/FEEDBACK/Exercise squat
+    playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    timesToPerform: 5
+  - startingVoiceLine:
+      Guid:
+        Data1: -92779156
+        Data2: 1132322008
+        Data3: -1010813273
+        Data4: 656264520
+      Path: event:/VO/EXERCISE/Elf part 2
+    randomVoiceLine:
+      Guid:
+        Data1: -836732412
+        Data2: 1107966994
+        Data3: 891611551
+        Data4: -577693812
+      Path: event:/VO/FEEDBACK/Exercise split leg squat
+    playerAttack: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
+    timesToPerform: 5

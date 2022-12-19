@@ -1,17 +1,8 @@
 ﻿//Event that informs subscribers of a debug log
 
+using Exercises;
 using FMODUnity;
 using UnityEngine;
-
-public class SendDebugLog : EventData
-{
-    public readonly string Debuglog;
-
-    public SendDebugLog(string givenLog) : base(EventType.ReceiveDebug)
-    {
-        Debuglog = givenLog;
-    }
-}
 
 /// <summary>
 /// Updates the displayed combo score ui
@@ -22,7 +13,7 @@ public class UpdateComboScore : EventData
     public readonly float ComboTimer;
     public readonly int ComboCount;
 
-    public UpdateComboScore(bool enableCombo,float comboTimer,int comboCount): base(EventType.UpdateComboScore)
+    public UpdateComboScore(bool enableCombo, float comboTimer, int comboCount) : base(EventType.UpdateComboScore)
     {
         EnableCombo = enableCombo;
         ComboTimer = comboTimer;
@@ -30,21 +21,76 @@ public class UpdateComboScore : EventData
     }
 }
 
+/// <summary>
+/// Setup the displayed score ui
+/// </summary>
+public class SetupTotalScore : EventData
+{
+    public readonly float MaxScore;
 
- #region EnemyManager
+    public SetupTotalScore(float maxScore) : base(EventType.SetupTotalScore)
+    {
+        MaxScore = maxScore;
+    }
+}
+
+/// <summary>
+/// Updates the displayed score ui
+/// </summary>
+public class UpdateTotalScore : EventData
+{
+    public readonly float Score;
+
+    public UpdateTotalScore(float score) : base(EventType.UpdateTotalScore)
+    {
+        Score = score;
+    }
+}
+
+public class EndLevel : EventData
+{
+    public readonly float PlayerScore;
+    public readonly float MaxScore;
+    public readonly int StarsAchieved;
+
+    public EndLevel(float playerScore, float maxScore, int starsAchieved) : base(EventType.EndLevel)
+    {
+        PlayerScore = playerScore;
+        MaxScore = maxScore;
+        StarsAchieved = starsAchieved;
+    }
+}
+
+#region Player
+
+public class DamagePlayer : EventData
+{
+    public readonly float PlayerDamage;
+
+    public DamagePlayer(float playerDamage) : base(EventType.DamagePlayer)
+    {
+        PlayerDamage = playerDamage;
+    }
+}
+
+#endregion
+
+
+#region EnemyManager
 
 /// <summary>
 /// Sets the enemy displays
 /// </summary>
 public class SetupEnemy : EventData
 {
-    public readonly Sprite EnemySprite;
+    public readonly GameObject EnemyGameObject;
     public readonly float EnemyHealth;
     public readonly float EnemyHealthUpdateSpeed;
-    public SetupEnemy(Sprite enemySprite,float enemyHealth, float enemyHealthUpdateSpeed) : base(EventType.SetupEnemy)
+
+    public SetupEnemy(GameObject enemyGameObject, float enemyHealth, float enemyHealthUpdateSpeed) : base(EventType.SetupEnemy)
     {
-        EnemySprite = enemySprite;
-        EnemyHealth=enemyHealth;
+        EnemyGameObject = enemyGameObject;
+        EnemyHealth = enemyHealth;
         EnemyHealthUpdateSpeed = enemyHealthUpdateSpeed;
     }
 }
@@ -56,7 +102,6 @@ public class HideEnemy : EventData
 {
     public HideEnemy() : base(EventType.HideEnemy)
     {
-        
     }
 }
 
@@ -66,6 +111,7 @@ public class HideEnemy : EventData
 public class DamageEnemyVisuals : EventData
 {
     public readonly float DamageToTake;
+
     public DamageEnemyVisuals(float damageToTake) : base(EventType.DamageEnemyVisuals)
     {
         DamageToTake = damageToTake;
@@ -87,15 +133,36 @@ public class DamageEnemy : EventData
 #region Effects
 
 /// <summary>
-/// Creates an attack effect for the player
+/// Creates an attack effect for the player 
 /// </summary>
-public class CreatePlayerNormalAttack : EventData
+public class CreateNormalAttack : EventData
 {
     public readonly float Damage;
+    public readonly EventReference OnHitSfx;
+    public readonly bool IsPlayerAttack;
+    public readonly GameObject AttackEffect;
 
-    public CreatePlayerNormalAttack(float damage): base(EventType.CreatePlayerNormalAttack)
+    public CreateNormalAttack(float damage, EventReference onHitSfx, bool isPlayerAttack=true,GameObject attackEffect=null) : base(EventType.CreateNormalAttack)
     {
         Damage = damage;
+        OnHitSfx = onHitSfx;
+        IsPlayerAttack = isPlayerAttack;
+        AttackEffect = attackEffect;
+    }
+}
+
+/// <summary>
+/// Creates an attack effect for the player combo
+/// </summary>
+public class CreateComboAttack : EventData
+{
+    public readonly float Damage;
+    public readonly EventReference OnHitSfx;
+
+    public CreateComboAttack(float damage, EventReference onHitSfx) : base(EventType.CreateComboAttack)
+    {
+        Damage = damage;
+        OnHitSfx = onHitSfx;
     }
 }
 
@@ -106,6 +173,7 @@ public class CreatePlayerNormalAttack : EventData
 public class PlayDialogueAudio : EventData
 {
     public readonly EventReference EventSoundPath;
+
     public PlayDialogueAudio(EventReference eventSoundPath) : base(EventType.PlayDialogueAudio)
     {
         EventSoundPath = eventSoundPath;
@@ -115,15 +183,24 @@ public class PlayDialogueAudio : EventData
 public class DialogueAudioStatusUpdate : EventData
 {
     public readonly bool IsPlayingDialogue;
+
     public DialogueAudioStatusUpdate(bool isPlayingDialogue) : base(EventType.DialogueAudioStatusUpdate)
     {
         IsPlayingDialogue = isPlayingDialogue;
     }
 }
 
+public class StopDialogue : EventData
+{
+    public StopDialogue() : base(EventType.StopDialogue)
+    {
+    }
+}
+
 public class PlaySfxAudio : EventData
 {
     public readonly EventReference EventSoundPath;
+
     public PlaySfxAudio(EventReference eventSoundPath) : base(EventType.PlaySfxAudio)
     {
         EventSoundPath = eventSoundPath;
@@ -133,6 +210,7 @@ public class PlaySfxAudio : EventData
 public class PlayMusicAudio : EventData
 {
     public readonly EventReference EventSoundPath;
+
     public PlayMusicAudio(EventReference eventSoundPath) : base(EventType.PlayMusicAudio)
     {
         EventSoundPath = eventSoundPath;
@@ -140,3 +218,19 @@ public class PlayMusicAudio : EventData
 }
 
 #endregion
+
+public class ExcludeExercise : EventData
+{
+    public readonly PoseDataSet ExerciseToExclude;
+    public ExcludeExercise(PoseDataSet exerciseToExclude) : base(EventType.ExcludeExercise)
+    {
+        ExerciseToExclude = exerciseToExclude;
+    }
+}
+
+public class ResetExcludedExercises : EventData
+{
+    public ResetExcludedExercises() : base(EventType.ResetExcludedExercises)
+    {
+    }
+}

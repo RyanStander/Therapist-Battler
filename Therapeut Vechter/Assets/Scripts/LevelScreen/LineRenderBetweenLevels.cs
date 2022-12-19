@@ -31,6 +31,11 @@ namespace LevelScreen
         //line renderer functionality
         private void Update()
         {
+            DrawLines();
+        }
+
+        private void DrawLines()
+        {
             //line drawing
             if (allLinesDrawn == false)
             {

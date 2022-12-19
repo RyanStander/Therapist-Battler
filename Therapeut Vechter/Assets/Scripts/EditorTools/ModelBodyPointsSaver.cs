@@ -53,7 +53,7 @@ namespace EditorTools
             AssetDatabase.CreateAsset(poseData,savePath+poseSaveName+".asset");
 
             //Brings the project window to the front and focuses it
-            EditorUtility.FocusProjectWindow();
+            //EditorUtility.FocusProjectWindow();
 
             if (!addPoseToPoseDataSet || poseDataSetToSaveTo == null) 
                 return;

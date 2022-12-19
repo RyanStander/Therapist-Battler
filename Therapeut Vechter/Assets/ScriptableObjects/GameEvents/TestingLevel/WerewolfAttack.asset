@@ -13,28 +13,46 @@ MonoBehaviour:
   m_Name: WerewolfAttack
   m_EditorClassIdentifier: 
   OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic: {fileID: 0}
+  OverrideMusic:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
   BackgroundSprite: {fileID: 0}
-  backgroundSprite: {fileID: 0}
-  enemySprite: {fileID: 21300000, guid: b3cbd47076be07e4fbadef90ba1cabd8, type: 3}
-  enemyHealth: 200
+  enemyGameObject: {fileID: 2129498092976654831, guid: 5c69e42f517487846b27c9164e6e1cd4, type: 3}
+  enemyHealth: 1000
   enemyDamage: 10
-  enemyAttackSounds:
-  - {fileID: 8300000, guid: 0edb4af8fbfffe741892d1f93fb48dc4, type: 3}
-  enemyAttackedSounds:
-  - {fileID: 8300000, guid: 6107f0910453b40449c0c509bf4a147f, type: 3}
+  enemyDamageEffect: {fileID: 5304927950568512166, guid: d33dbb8e30d3bfc449312ab7f461fd43, type: 3}
+  enemyAttackSound:
+    Guid:
+      Data1: -36586687
+      Data2: 1074731766
+      Data3: -1036873835
+      Data4: -692222715
+    Path: event:/VO/ACT3/LVL2/Story dragon v2
+  enemyHurtSound:
+    Guid:
+      Data1: -1504852401
+      Data2: 1216306239
+      Data3: 1439686585
+      Data4: 985703385
+    Path: event:/VO/ACT3/LVL2/Story after dragon story end
   playerAttackSequence:
-  - exerciseName: {fileID: 8300000, guid: 5db562b72b1cedf4ca8e6db0e7fd82fe, type: 3}
-    playerAttack:
-    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
-    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
-    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
-    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
-    - {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
-  - exerciseName: {fileID: 8300000, guid: a8c39f2d742f36b4286425a7b3cc7614, type: 3}
-    playerAttack:
-    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
-    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
-    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
-    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
-    - {fileID: 11400000, guid: 906c6ea430ca457439ddfcde1fb20ea1, type: 2}
+  - startingVoiceLine:
+      Guid:
+        Data1: 632877504
+        Data2: 1176963898
+        Data3: 813203857
+        Data4: -2080458140
+      Path: event:/VO/FEEDBACK/Squat
+    randomVoiceLine:
+      Guid:
+        Data1: 632877504
+        Data2: 1176963898
+        Data3: 813203857
+        Data4: -2080458140
+      Path: event:/VO/FEEDBACK/Squat
+    playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
+    timesToPerform: 2
