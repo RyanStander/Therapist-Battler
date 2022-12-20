@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Linq;
 using DevTools;
 using Exercises;
@@ -26,7 +27,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Image backgroundTransitionImage;
     [SerializeField] private Slider[] playerHealthBars;
 
-    [Header("Scoring")] [Range(0, 1)] [SerializeField]
+    [Header("Scoring")] [Range(0, 10)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
 
     [SerializeField] private float comboDuration = 3;
@@ -36,9 +37,9 @@ public class GameManager : MonoBehaviour
 
     [Header("Stage effects")] [SerializeField]
     private GameObject[] stageOneEffectsToEnable;
-    
+
     [SerializeField] private GameObject[] stageTwoEffectsToEnable;
-    
+
     private float playerDamage;
 
     #endregion
@@ -185,6 +186,7 @@ public class GameManager : MonoBehaviour
         {
             playerHealthBar.maxValue = playerHealth;
             playerHealthBar.value = playerHealth;
+            playerCurrentDisplayHealth = playerHealth;
         }
 
         backgroundImage.sprite = gameEventDataHolder.startingBackground;
@@ -196,15 +198,17 @@ public class GameManager : MonoBehaviour
                 {
                     stageOneEffect.SetActive(true);
                 }
+
                 break;
             case 2:
                 foreach (var stageTwoEffect in stageTwoEffectsToEnable)
                 {
                     stageTwoEffect.SetActive(true);
                 }
+
                 break;
         }
-        
+
         SetupLevelScore();
     }
 
@@ -261,6 +265,9 @@ public class GameManager : MonoBehaviour
 
         SkipDialogue();
 
+        if (gameEventDataHolder.gameEvents.Length <= gameEventsIndex)
+            return;
+
         switch (gameEventDataHolder.gameEvents[gameEventsIndex])
         {
             case EnvironmentPuzzleData puzzleEvent:
@@ -303,9 +310,21 @@ public class GameManager : MonoBehaviour
         if (isDead)
             return;
 
-        if (CheckIfExerciseIsToBeExcluded(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack,
-                fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform))
+        if (CheckIfAllExercisesInFightAreExcluded(fightingEvent))
+        {
+            enemyHealth = 0;
             return;
+        }
+
+        if (CheckIfExerciseIsToBeExcluded(fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack,
+                fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform, false))
+        {
+            playerAttackIndex++;
+            if (playerAttackIndex >= fightingEvent.playerAttackSequence.Length)
+                playerAttackIndex = 0;
+
+            return;
+        }
 
         TryPlayFightingExerciseDialogue(fightingEvent);
 
@@ -318,8 +337,9 @@ public class GameManager : MonoBehaviour
         //Get the duration before playing exercise.
         var timerModifier =
             DetermineClipLengthInSeconds(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine);
-        
-        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine,timerModifier);
+
+        RepeatExerciseNameAfterTime(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine,
+            timerModifier);
 
         CheckPosePerformance(
             fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas[poseDataIndex]);
@@ -370,7 +390,7 @@ public class GameManager : MonoBehaviour
             fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.scoreValue;
 
         //add to score
-        totalScore += currentScoreCalculation;
+        IncreaseScore(currentScoreCalculation, false);
 
         currentExerciseScore = 0;
         exerciseTimerIsRunning = false;
@@ -416,7 +436,7 @@ public class GameManager : MonoBehaviour
 
             EventManager.currentManager.AddEvent(new CreateComboAttack(comboDamage, fightingEvent.enemyHurtSound));
 
-            totalScore += comboDamage;
+            IncreaseScore(comboDamage, false);
 
             comboCount = 0;
         }
@@ -436,7 +456,7 @@ public class GameManager : MonoBehaviour
             gameEventsIndex++;
             return;
         }
-        
+
         if (CheckIfExerciseIsToBeExcluded(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform,
                 puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform))
             return;
@@ -451,8 +471,9 @@ public class GameManager : MonoBehaviour
         var timerModifier =
             DetermineClipLengthInSeconds(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay);
 
-        
-        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay,timerModifier);
+
+        RepeatExerciseNameAfterTime(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay,
+            timerModifier);
 
         CheckPosePerformance(puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform
             .poseDatas[poseDataIndex]);
@@ -477,9 +498,9 @@ public class GameManager : MonoBehaviour
                  puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.poseDatas.Count) *
                 puzzleEvent.exerciseData[eventExerciseDataIndex].ExerciseToPerform.scoreValue;
             //add to score
-            totalScore += currentScoreCalculation;
 
-            EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
+            IncreaseScore(currentScoreCalculation);
+
             currentExerciseScore = 0;
 
             exerciseTimerIsRunning = false;
@@ -495,6 +516,7 @@ public class GameManager : MonoBehaviour
             poseDataIndex = 0;
             return true;
         }
+
         return false;
     }
 
@@ -504,7 +526,7 @@ public class GameManager : MonoBehaviour
         {
             hasPlayedDialogueAudio = true;
 
-            
+
             if (exercisePerformIndex == 0)
                 //if it is the 0th index
             {
@@ -596,13 +618,13 @@ public class GameManager : MonoBehaviour
         EventManager.currentManager.AddEvent(new SetupTotalScore(maxScore));
     }
 
-    private void RepeatExerciseNameAfterTime(EventReference eventReference, float timerModifierInSeconds=0)
+    private void RepeatExerciseNameAfterTime(EventReference eventReference, float timerModifierInSeconds = 0)
     {
         //Set a timestamp to repeat the exercise if it is 0
         if (!exerciseTimerIsRunning)
         {
             exerciseTimerIsRunning = true;
-            exerciseRepeatTimeStamp = Time.time + timeUntilRepeatExerciseName+timerModifierInSeconds;
+            exerciseRepeatTimeStamp = Time.time + timeUntilRepeatExerciseName + timerModifierInSeconds;
         }
 
 
@@ -614,16 +636,16 @@ public class GameManager : MonoBehaviour
 
     private int DetermineClipLengthInSeconds(EventReference eventReference)
     {
-        var clipLength=0;
-        if (exercisePerformIndex != 0) 
+        var clipLength = 0;
+        if (exercisePerformIndex != 0)
             return clipLength;
-        
+
         RuntimeManager.StudioSystem.getEvent(eventReference.Path, out var eventDescription);
         eventDescription.getLength(out clipLength);
 
-        return clipLength/1000;
+        return clipLength / 1000;
     }
-    
+
     private void CheckPosePerformance(PoseData poseData, bool updateScore = true)
     {
         var score = poseMatchCheck.PoseScoring(poseData);
@@ -661,11 +683,11 @@ public class GameManager : MonoBehaviour
 
     private void SlowScoreIncreaseOverTime()
     {
-        currentDisplayScore = Mathf.Lerp(currentDisplayScore, totalScore, scoreUpdateSpeed);
+        currentDisplayScore = Mathf.MoveTowards(currentDisplayScore, totalScore, scoreUpdateSpeed);
 
         scoreText.text = Mathf.Floor(currentDisplayScore).ToString();
 
-        playerCurrentDisplayHealth = Mathf.Lerp(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
+        playerCurrentDisplayHealth = Mathf.MoveTowards(playerCurrentDisplayHealth, playerHealth, scoreUpdateSpeed);
 
         foreach (var playerHealthBar in playerHealthBars)
         {
@@ -673,24 +695,49 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private bool CheckIfExerciseIsToBeExcluded(PoseDataSet poseDataSet, int timesToPerform)
+    private bool CheckIfExerciseIsToBeExcluded(PoseDataSet poseDataSet, int timesToPerform, bool increaseScore = true)
     {
         if (GameData.Instance == null)
             return false;
-        
-        if (!GameData.Instance.exercisesToExclude.Contains(poseDataSet)) 
-            return false;
-        
-        var currentScoreCalculation = poseDataSet.scoreValue * timesToPerform;
-        totalScore += currentScoreCalculation;
 
-        EventManager.currentManager.AddEvent(new UpdateTotalScore(currentScoreCalculation));
+        if (!GameData.Instance.exercisesToExclude.Contains(poseDataSet))
+            return false;
+
+        if (increaseScore)
+        {
+            var currentScoreCalculation = poseDataSet.scoreValue * timesToPerform;
+
+            IncreaseScore(currentScoreCalculation);
+        }
 
         exercisePerformIndex = 0;
         eventExerciseDataIndex++;
 
         return true;
+    }
 
+    private void IncreaseScore(float scoreIncrease, bool updateScoreUI = true)
+    {
+        totalScore += scoreIncrease;
+
+        if (updateScoreUI)
+            EventManager.currentManager.AddEvent(new UpdateTotalScore(scoreIncrease));
+    }
+
+    private bool CheckIfAllExercisesInFightAreExcluded(FightingData fightingData)
+    {
+        if (GameData.Instance == null)
+            return false;
+
+        var fightingDataExercises = ExtensionMethods.GetAllExercises(fightingData);
+
+        if (!fightingDataExercises.All(fightingExercise =>
+                GameData.Instance.exercisesToExclude.Contains(fightingExercise)))
+            return false;
+
+        IncreaseScore(fightingData.enemyHealth);
+
+        return true;
     }
 
     #endregion
