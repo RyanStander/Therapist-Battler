@@ -85,14 +85,16 @@ namespace Audio
         {
             if (eventData is PlayMusicAudio musicAudio)
             {
+                musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
+                
                 RuntimeManager.StudioSystem.getEvent(musicAudio.EventSoundPath.Path, out var eventDescription);
                 if (!eventDescription.isValid())
                     return;
-                
-                musicAudioEventInstance = RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
 
+                musicAudioEventInstance = RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
+                
                 musicAudioEventInstance.start();
-                musicAudioEventInstance.release();
+                //musicAudioEventInstance.release();
             }
         }
 
