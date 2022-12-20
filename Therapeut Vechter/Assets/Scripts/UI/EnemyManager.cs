@@ -116,7 +116,7 @@ namespace UI
 
         private void LerpUpdateEnemyHealth()
         {
-            currentDisplayHealth = Mathf.Lerp(currentDisplayHealth, currentHealth, healthUpdateSpeed);
+            currentDisplayHealth = Mathf.MoveTowards(currentDisplayHealth, currentHealth, healthUpdateSpeed);
 
 
             foreach (var enemySlider in enemySliders)
