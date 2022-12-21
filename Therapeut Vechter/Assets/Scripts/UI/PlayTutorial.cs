@@ -1,3 +1,5 @@
+using FMOD.Studio;
+using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,51 +7,54 @@ using UnityEngine.UI;
 
 public class PlayTutorial : MonoBehaviour
 {
-    public FMODUnity.EventReference[] SoundToPlay;
+    private EventInstance dialogueAudioEventInstance;
     [SerializeField]
-    private FMODUnity.StudioEventEmitter emitter;
+    private Texture[] image;
+    public FMODUnity.EventReference[] SoundToPlay;
     public Button NextButton;
-    private bool ClickButton = false;
+    public RawImage tutorialRotater;
+
+    private int i;
 
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
     void Update()
     {
 
-        if (!emitter.IsPlaying() && ClickButton) 
+    }
+
+    public void ShowNextImage()
+    {
+        
+        if (i > SoundToPlay.Length) 
         {
-            foreach (var element in SoundToPlay)
-            {
-                FMODUnity.RuntimeManager.PlayOneShot(element);
-                ClickButton = false;
-            }
+            Debug.Log("End reached");
+            NextButton.enabled = false;
         }
 
-        
+        RuntimeManager.StudioSystem.getEvent(SoundToPlay[i].Path, out var eventDescription);
+        if (!eventDescription.isValid())
+            return;
+
+        dialogueAudioEventInstance = RuntimeManager.CreateInstance(SoundToPlay[i].Path);
+        tutorialRotater.texture = image[i];
+
+        dialogueAudioEventInstance.start();
 
     }
 
-    private void Awake()
+    public void IncreaseValue()
     {
-        // adding a delegate with parameters
-        NextButton.onClick.AddListener(delegate { ParameterOnClick("Button was pressed!"); });
-    }
-
-    private void ParameterOnClick(string test)
-    {
-        Debug.Log(test);
-        ClickButton = true;
-    }
-
-    bool IsPlaying(FMOD.Studio.EventInstance instance)
-    {
-        FMOD.Studio.PLAYBACK_STATE state;
-        instance.getPlaybackState(out state);
-        return state != FMOD.Studio.PLAYBACK_STATE.STOPPED;
+        i++;
+        if (i >= SoundToPlay.Length)
+        {
+            NextButton.enabled = false;
+            return;
+        }
     }
 }
