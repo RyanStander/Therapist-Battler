@@ -37,6 +37,8 @@ public class PlayTutorial : MonoBehaviour
             NextButton.enabled = false;
         }
 
+        dialogueAudioEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+
         RuntimeManager.StudioSystem.getEvent(SoundToPlay[i].Path, out var eventDescription);
         if (!eventDescription.isValid())
             return;
