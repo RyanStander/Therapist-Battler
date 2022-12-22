@@ -22,8 +22,7 @@ public enum EventType
     
     //Effects
     CreateNormalAttack,
-    CreateComboAttack,
-    
+
     //Audio
     PlayDialogueAudio,
     DialogueAudioStatusUpdate,
