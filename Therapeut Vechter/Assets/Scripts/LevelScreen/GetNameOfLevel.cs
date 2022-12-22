@@ -8,13 +8,13 @@ namespace LevelScreen
     {
         [SerializeField] private TMP_Text levelName;
 
-        private string levelString;
+        [SerializeField]
+        private string popUpCartTitle;
 
         //put name of level on the popup, gets name from the leveldata script
         private void Start()
         {
-            levelString = gameObject.GetComponent<LevelScript>().Name;
-            levelName.text = levelString;
+            levelName.text = popUpCartTitle;
         }
     }
 }
