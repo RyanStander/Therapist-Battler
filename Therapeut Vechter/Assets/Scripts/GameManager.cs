@@ -189,6 +189,7 @@ public class GameManager : MonoBehaviour
             playerHealthBar.maxValue = playerHealth;
             playerHealthBar.value = playerHealth;
             playerCurrentDisplayHealth = playerHealth;
+            playerHealthBar.gameObject.SetActive(false);
         }
 
         backgroundImage.sprite = gameEventDataHolder.startingBackground;
@@ -351,6 +352,11 @@ public class GameManager : MonoBehaviour
     {
         if (hasPerformedFirstTimeSetup)
             return;
+        
+        foreach (var playerHealthBar in playerHealthBars)
+        {
+            playerHealthBar.gameObject.SetActive(true);   
+        }
 
         exerciseImage.gameObject.SetActive(false);
         hasPerformedFirstTimeSetup = true;
@@ -665,6 +671,11 @@ public class GameManager : MonoBehaviour
         exerciseImage.gameObject.SetActive(false);
 
         EventManager.currentManager.AddEvent(new HideEnemy());
+
+        foreach (var playerHealthBar in playerHealthBars)
+        {
+            playerHealthBar.gameObject.SetActive(false);   
+        }
 
         hasSwappedMusicAudioSource = false;
         hasPlayedDialogueAudio = false;
