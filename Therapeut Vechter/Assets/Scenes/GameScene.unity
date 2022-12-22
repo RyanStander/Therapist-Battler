@@ -606,11 +606,6 @@ Transform:
   m_Father: {fileID: 201850754}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &409472631 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8250115282445062279, guid: 87cc40e72ec16a547b95cf53a4d8c3ce, type: 3}
-  m_PrefabInstance: {fileID: 617240375}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &531890031 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7895697537181450633, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
@@ -833,7 +828,7 @@ Animator:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 635659031}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c35d1425b5afc3243b87daebfa34af04, type: 3}
   m_Controller: {fileID: 9100000, guid: 98d706cb8b1a214478d0286e45da5100, type: 2}
   m_CullingMode: 1
@@ -3081,6 +3076,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1243361130}
     - target: {fileID: 7470805623104302956, guid: 6115b2dfc65658743bbdd63784962a83, type: 3}
+      propertyPath: comboDamageModifier
+      value: 0.15
+      objectReference: {fileID: 0}
+    - target: {fileID: 7470805623104302956, guid: 6115b2dfc65658743bbdd63784962a83, type: 3}
       propertyPath: backgroundTransitionImage
       value: 
       objectReference: {fileID: 581402358}
@@ -3096,14 +3095,6 @@ PrefabInstance:
       propertyPath: playerHealthBars.Array.data[1]
       value: 
       objectReference: {fileID: 0}
-    - target: {fileID: 7470805623104302956, guid: 6115b2dfc65658743bbdd63784962a83, type: 3}
-      propertyPath: stageOneEffectsToEnable.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 7470805623104302956, guid: 6115b2dfc65658743bbdd63784962a83, type: 3}
-      propertyPath: stageOneEffectsToEnable.Array.data[0]
-      value: 
-      objectReference: {fileID: 409472631}
     - target: {fileID: 7470805623104302958, guid: 6115b2dfc65658743bbdd63784962a83, type: 3}
       propertyPath: m_Name
       value: GameManager
@@ -3143,11 +3134,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.x
-      value: -10.182474
+      value: -10.181862
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.y
-      value: -17.284561
+      value: -17.281357
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[0].m_Value.z
@@ -3155,11 +3146,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.x
-      value: -13.382942
+      value: -13.381977
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.y
-      value: -54.58994
+      value: -54.582615
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[1].m_Value.z
@@ -3167,11 +3158,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.x
-      value: 44.02534
+      value: 44.019962
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.y
-      value: -40.087856
+      value: -40.08213
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[2].m_Value.z
@@ -3179,11 +3170,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.x
-      value: 44.02534
+      value: 44.019962
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.y
-      value: -40.087856
+      value: -40.08213
       objectReference: {fileID: 0}
     - target: {fileID: 1102903751536081708, guid: b9f8f6e8c9d67794689ab068196d0a07, type: 3}
       propertyPath: m_PropertySheet.m_Vector3f.m_Array.Array.data[3].m_Value.z

@@ -151,21 +151,6 @@ public class CreateNormalAttack : EventData
     }
 }
 
-/// <summary>
-/// Creates an attack effect for the player combo
-/// </summary>
-public class CreateComboAttack : EventData
-{
-    public readonly float Damage;
-    public readonly EventReference OnHitSfx;
-
-    public CreateComboAttack(float damage, EventReference onHitSfx) : base(EventType.CreateComboAttack)
-    {
-        Damage = damage;
-        OnHitSfx = onHitSfx;
-    }
-}
-
 #endregion
 
 #region Audio
