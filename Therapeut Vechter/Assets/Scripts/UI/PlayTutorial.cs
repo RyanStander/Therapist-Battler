@@ -1,60 +1,54 @@
 using FMOD.Studio;
 using FMODUnity;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class PlayTutorial : MonoBehaviour
+namespace UI
 {
-    private EventInstance dialogueAudioEventInstance;
-    [SerializeField]
-    private Texture[] tutorialImage;
-    [SerializeField]
-    private EventReference[] SoundToPlay;
-    [SerializeField]
-    private Button NextButton;
-    [SerializeField]
-    private RawImage tutorialRotater;
-    [SerializeField] 
-    private string sceneName;
-    [SerializeField]
-    private GameObject outroText;
-
-    private int Index;
-
-    public void Update()
+    public class PlayTutorial : MonoBehaviour
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) 
+        [SerializeField] private Texture[] tutorialImage;
+        [SerializeField] private EventReference[] soundToPlay;
+        [SerializeField] private Button nextButton;
+        [SerializeField] private RawImage tutorialRotater;
+        [SerializeField] private string sceneName;
+        [SerializeField] private GameObject outroText;
+
+        private int index;
+        private EventInstance dialogueAudioEventInstance;
+
+        public void Update()
         {
-            SceneManager.LoadScene(sceneName);
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                SceneManager.LoadScene(sceneName);
+            }
         }
-    }
 
-    public void ShowNextImage()
-    {
-        dialogueAudioEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
-
-        RuntimeManager.StudioSystem.getEvent(SoundToPlay[Index].Path, out var eventDescription);
-        if (!eventDescription.isValid())
-            return;
-
-        dialogueAudioEventInstance = RuntimeManager.CreateInstance(SoundToPlay[Index].Path);
-        tutorialRotater.texture = tutorialImage[Index];
-
-        dialogueAudioEventInstance.start();
-
-    }
-
-    public void IncreaseValue()
-    {
-        Index++;
-        if (Index >= SoundToPlay.Length)
+        public void ShowNextImage()
         {
-            NextButton.enabled = false;
+            dialogueAudioEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+
+            RuntimeManager.StudioSystem.getEvent(soundToPlay[index].Path, out var eventDescription);
+            if (!eventDescription.isValid())
+                return;
+
+            dialogueAudioEventInstance = RuntimeManager.CreateInstance(soundToPlay[index].Path);
+            tutorialRotater.texture = tutorialImage[index];
+
+            dialogueAudioEventInstance.start();
+        }
+
+        public void IncreaseValue()
+        {
+            index++;
+
+            if (index < soundToPlay.Length)
+                return;
+
+            nextButton.enabled = false;
             outroText.SetActive(true);
-            return;
         }
     }
 }
