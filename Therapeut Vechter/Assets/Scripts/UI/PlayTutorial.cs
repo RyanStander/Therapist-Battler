@@ -3,48 +3,45 @@ using FMODUnity;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayTutorial : MonoBehaviour
 {
     private EventInstance dialogueAudioEventInstance;
     [SerializeField]
-    private Texture[] image;
-    public FMODUnity.EventReference[] SoundToPlay;
-    public Button NextButton;
-    public RawImage tutorialRotater;
+    private Texture[] tutorialImage;
+    [SerializeField]
+    private EventReference[] SoundToPlay;
+    [SerializeField]
+    private Button NextButton;
+    [SerializeField]
+    private RawImage tutorialRotater;
+    [SerializeField] 
+    private string sceneName;
+    [SerializeField]
+    private GameObject outroText;
 
-    private int i;
+    private int Index;
 
-    // Start is called before the first frame update
-    void Start()
+    public void Update()
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        if (Input.GetKeyDown(KeyCode.Escape)) 
+        {
+            SceneManager.LoadScene(sceneName);
+        }
     }
 
     public void ShowNextImage()
     {
-        
-        if (i > SoundToPlay.Length) 
-        {
-            Debug.Log("End reached");
-            NextButton.enabled = false;
-        }
-
         dialogueAudioEventInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
 
-        RuntimeManager.StudioSystem.getEvent(SoundToPlay[i].Path, out var eventDescription);
+        RuntimeManager.StudioSystem.getEvent(SoundToPlay[Index].Path, out var eventDescription);
         if (!eventDescription.isValid())
             return;
 
-        dialogueAudioEventInstance = RuntimeManager.CreateInstance(SoundToPlay[i].Path);
-        tutorialRotater.texture = image[i];
+        dialogueAudioEventInstance = RuntimeManager.CreateInstance(SoundToPlay[Index].Path);
+        tutorialRotater.texture = tutorialImage[Index];
 
         dialogueAudioEventInstance.start();
 
@@ -52,10 +49,11 @@ public class PlayTutorial : MonoBehaviour
 
     public void IncreaseValue()
     {
-        i++;
-        if (i >= SoundToPlay.Length)
+        Index++;
+        if (Index >= SoundToPlay.Length)
         {
             NextButton.enabled = false;
+            outroText.SetActive(true);
             return;
         }
     }
