@@ -17,7 +17,6 @@ namespace Audio
 
 
         private bool isPlayingDialogueAudio;
-        private int musicParameterValue=0;
         private const string MusicParameterName = "MusicStage";
 
         #region Runtime
@@ -119,7 +118,10 @@ namespace Audio
 
             RuntimeManager.StudioSystem.getEvent(musicAudio.EventSoundPath.Path, out var eventDescription);
             if (!eventDescription.isValid())
+            {
+                Debug.Log("Given music path is invalid");
                 return;
+            }
 
             musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
@@ -133,7 +135,10 @@ namespace Audio
             if (eventData.IsEventOfType<AdvanceMusicStage>())
                 return;
 
+            musicAudioEventInstance.getParameterByName(MusicParameterName, out var musicParameterValue);
+
             musicParameterValue++;
+            
             musicAudioEventInstance.setParameterByName(MusicParameterName, musicParameterValue);
         }
 

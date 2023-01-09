@@ -169,7 +169,7 @@ public class PlayExerciseDialogueAudio : EventData
 {
     public readonly EventReference EventSoundPath;
 
-    public PlayExerciseDialogueAudio(EventReference eventSoundPath) : base(EventType.PlayDialogueAudio)
+    public PlayExerciseDialogueAudio(EventReference eventSoundPath) : base(EventType.PlayExerciseDialogueAudio)
     {
         EventSoundPath = eventSoundPath;
     }
@@ -224,7 +224,7 @@ public class PlayAmbienceAudio : EventData
 {
     public readonly EventReference EventSoundPath;
     
-    public PlayAmbienceAudio(EventReference eventSoundPath) : base(EventType.PlayMusicAudio)
+    public PlayAmbienceAudio(EventReference eventSoundPath) : base(EventType.PlayAmbienceAudio)
     {
         EventSoundPath = eventSoundPath;
     }

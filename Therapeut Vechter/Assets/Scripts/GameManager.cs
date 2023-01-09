@@ -420,6 +420,9 @@ public class GameManager : MonoBehaviour
 
         if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
         {
+            if (fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtEndOfExerciseSet)
+                EventManager.currentManager.AddEvent(new AdvanceMusicStage());
+            
             playerAttackIndex++;
 
             exercisePerformIndex = 0;
@@ -512,6 +515,9 @@ public class GameManager : MonoBehaviour
             exercisePerformIndex++;
             if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
+                if (puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtEndOfExerciseSet)
+                    EventManager.currentManager.AddEvent(new AdvanceMusicStage());
+                
                 exercisePerformIndex = 0;
 
                 eventExerciseDataIndex++;
