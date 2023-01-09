@@ -30,6 +30,7 @@ public enum EventType
     StopDialogue,
     PlaySfxAudio,
     PlayMusicAudio,
+    AdvanceMusicStage,
     PlayAmbienceAudio,
     
     //Exercise

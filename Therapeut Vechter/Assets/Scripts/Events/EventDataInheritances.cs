@@ -212,6 +212,14 @@ public class PlayMusicAudio : EventData
     }
 }
 
+public class AdvanceMusicStage : EventData
+{
+    public AdvanceMusicStage(): base(EventType.AdvanceMusicStage)
+    {
+        
+    }
+}
+
 public class PlayAmbienceAudio : EventData
 {
     public readonly EventReference EventSoundPath;

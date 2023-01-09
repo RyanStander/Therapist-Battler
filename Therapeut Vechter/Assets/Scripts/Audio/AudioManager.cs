@@ -17,6 +17,8 @@ namespace Audio
 
 
         private bool isPlayingDialogueAudio;
+        private int musicParameterValue=0;
+        private const string MusicParameterName = "MusicStage";
 
         #region Runtime
 
@@ -28,6 +30,7 @@ namespace Audio
             EventManager.currentManager.Subscribe(EventType.PlayMusicAudio, OnPlayMusicAudio);
             EventManager.currentManager.Subscribe(EventType.PlayExerciseDialogueAudio, OnPlayExerciseDialogueAudio);
             EventManager.currentManager.Subscribe(EventType.PlayAmbienceAudio, OnPlayAmbienceAudio);
+            EventManager.currentManager.Subscribe(EventType.AdvanceMusicStage, OnAdvanceMusicStage);
         }
 
         private void OnDisable()
@@ -38,6 +41,7 @@ namespace Audio
             EventManager.currentManager.Unsubscribe(EventType.PlayMusicAudio, OnPlayMusicAudio);
             EventManager.currentManager.Unsubscribe(EventType.PlayExerciseDialogueAudio, OnPlayExerciseDialogueAudio);
             EventManager.currentManager.Unsubscribe(EventType.PlayAmbienceAudio, OnPlayAmbienceAudio);
+            EventManager.currentManager.Unsubscribe(EventType.AdvanceMusicStage, OnAdvanceMusicStage);
         }
 
         private void FixedUpdate()
@@ -59,14 +63,14 @@ namespace Audio
 
         private void OnPlayDialogueAudio(EventData eventData)
         {
-            if (!eventData.IsEventOfType<PlayDialogueAudio>(out var playDialogueAudio)) 
+            if (!eventData.IsEventOfType<PlayDialogueAudio>(out var playDialogueAudio))
                 return;
-            
+
             RuntimeManager.StudioSystem.getEvent(playDialogueAudio.EventSoundPath.Path, out var eventDescription);
-            
+
             if (!eventDescription.isValid())
                 return;
-                
+
             exerciseDialogueAudioEventInstance = RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
 
             exerciseDialogueAudioEventInstance.start();
@@ -74,16 +78,17 @@ namespace Audio
 
         private void OnPlayExerciseDialogueAudio(EventData eventData)
         {
-            if (!eventData.IsEventOfType<PlayExerciseDialogueAudio>(out var playExerciseDialogueAudio)) 
+            if (!eventData.IsEventOfType<PlayExerciseDialogueAudio>(out var playExerciseDialogueAudio))
                 return;
-            
-            RuntimeManager.StudioSystem.getEvent(playExerciseDialogueAudio.EventSoundPath.Path, out var eventDescription);
-            
+
+            RuntimeManager.StudioSystem.getEvent(playExerciseDialogueAudio.EventSoundPath.Path,
+                out var eventDescription);
+
             if (!eventDescription.isValid())
                 return;
-            
+
             musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
-                
+
             dialogueAudioEventInstance = RuntimeManager.CreateInstance(playExerciseDialogueAudio.EventSoundPath);
 
             dialogueAudioEventInstance.start();
@@ -93,14 +98,14 @@ namespace Audio
 
         private void OnPlaySfxAudio(EventData eventData)
         {
-            if (!eventData.IsEventOfType<PlaySfxAudio>(out var sfxAudio)) 
+            if (!eventData.IsEventOfType<PlaySfxAudio>(out var sfxAudio))
                 return;
-            
+
             RuntimeManager.StudioSystem.getEvent(sfxAudio.EventSoundPath.Path, out var eventDescription);
-                
+
             if (!eventDescription.isValid())
                 return;
-                
+
             sfxAudioEventInstance = RuntimeManager.CreateInstance(sfxAudio.EventSoundPath);
 
             sfxAudioEventInstance.start();
@@ -109,41 +114,50 @@ namespace Audio
 
         private void OnPlayMusicAudio(EventData eventData)
         {
-            if (eventData.IsEventOfType<PlayMusicAudio>(out var musicAudio)) 
+            if (eventData.IsEventOfType<PlayMusicAudio>(out var musicAudio))
                 return;
-            
+
             RuntimeManager.StudioSystem.getEvent(musicAudio.EventSoundPath.Path, out var eventDescription);
             if (!eventDescription.isValid())
                 return;
-            
+
             musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
             musicAudioEventInstance = RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
-                
+
             musicAudioEventInstance.start();
         }
-        
+
+        private void OnAdvanceMusicStage(EventData eventData)
+        {
+            if (eventData.IsEventOfType<AdvanceMusicStage>())
+                return;
+
+            musicParameterValue++;
+            musicAudioEventInstance.setParameterByName(MusicParameterName, musicParameterValue);
+        }
+
         private void OnPlayAmbienceAudio(EventData eventData)
         {
-            if (eventData.IsEventOfType<PlayAmbienceAudio>(out var playAmbienceAudio)) 
+            if (eventData.IsEventOfType<PlayAmbienceAudio>(out var playAmbienceAudio))
                 return;
 
             RuntimeManager.StudioSystem.getEvent(playAmbienceAudio.EventSoundPath.Path, out var eventDescription);
             if (!eventDescription.isValid())
                 return;
-            
+
             ambienceAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
             ambienceAudioEventInstance = RuntimeManager.CreateInstance(playAmbienceAudio.EventSoundPath);
-                
+
             ambienceAudioEventInstance.start();
         }
 
         private void OnStopDialogue(EventData eventData)
         {
-            if (eventData.IsEventOfType<StopDialogue>()) 
+            if (eventData.IsEventOfType<StopDialogue>())
                 return;
-            
+
             dialogueAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
         }
 

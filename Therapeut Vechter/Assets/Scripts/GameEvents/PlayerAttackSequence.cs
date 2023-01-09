@@ -9,6 +9,7 @@ namespace GameEvents
     {
         public EventReference startingVoiceLine;
         [FormerlySerializedAs("exerciseName")] public EventReference randomVoiceLine;
+        public bool advanceToNextAudioStageAtStartOfExerciseSet = false;
         public PoseDataSet playerAttack;
         public int timesToPerform=1;
     }

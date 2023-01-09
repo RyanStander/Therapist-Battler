@@ -207,10 +207,10 @@ public class GameManager : MonoBehaviour
 
                 break;
         }
-        
+
         EventManager.currentManager.AddEvent(
             new PlayMusicAudio(gameEventDataHolder.music));
-        
+
         EventManager.currentManager.AddEvent(new PlayAmbienceAudio(gameEventDataHolder.ambience));
 
         SetupLevelScore();
@@ -343,10 +343,10 @@ public class GameManager : MonoBehaviour
     {
         if (hasPerformedFirstTimeSetup)
             return;
-        
+
         foreach (var playerHealthBar in playerHealthBars)
         {
-            playerHealthBar.gameObject.SetActive(true);   
+            playerHealthBar.gameObject.SetActive(true);
         }
 
         exerciseImage.gameObject.SetActive(false);
@@ -361,6 +361,9 @@ public class GameManager : MonoBehaviour
 
         EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemyGameObject, fightingEvent.enemyHealth,
             scoreUpdateSpeed));
+        
+        if (fightingEvent.playerAttackSequence[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet && eventExerciseDataIndex==0 && exercisePerformIndex==0)
+            EventManager.currentManager.AddEvent(new AdvanceMusicStage());
     }
 
     private void TryPlayFightingExerciseDialogue(FightingData fightingEvent)
@@ -398,9 +401,9 @@ public class GameManager : MonoBehaviour
             (currentExerciseScore /
              fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count) *
             fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.scoreValue;
-        
+
         //Add the combo modifier to damage
-        currentScoreCalculation += currentScoreCalculation*(comboDamageModifier * comboCount);
+        currentScoreCalculation += currentScoreCalculation * (comboDamageModifier * comboCount);
         //add to score
         IncreaseScore(currentScoreCalculation, false);
 
@@ -420,6 +423,9 @@ public class GameManager : MonoBehaviour
             playerAttackIndex++;
 
             exercisePerformIndex = 0;
+            
+            if (fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtStartOfExerciseSet)
+                EventManager.currentManager.AddEvent(new AdvanceMusicStage());
 
             //Fire an enemy attack
             EventManager.currentManager.AddEvent(new CreateNormalAttack(fightingEvent.enemyDamage,
@@ -442,7 +448,7 @@ public class GameManager : MonoBehaviour
 
     private void ManagePuzzleEvent(EnvironmentPuzzleData puzzleEvent)
     {
-        SetupPuzzleEvent(puzzleEvent.BackgroundSprite);
+        SetupPuzzleEvent(puzzleEvent);
 
         if (puzzleEvent.exerciseData.Length == eventExerciseDataIndex)
         {
@@ -473,14 +479,17 @@ public class GameManager : MonoBehaviour
             .poseDatas[poseDataIndex]);
     }
 
-    private void SetupPuzzleEvent(Sprite backgroundSprite)
+    private void SetupPuzzleEvent(EnvironmentPuzzleData puzzleData)
     {
         if (hasPerformedFirstTimeSetup)
             return;
 
-        if (backgroundSprite != null)
-            StartBackgroundTransition(backgroundSprite);
+        if (puzzleData.BackgroundSprite != null)
+            StartBackgroundTransition(puzzleData.BackgroundSprite);
         hasPerformedFirstTimeSetup = true;
+
+        if (puzzleData.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet && eventExerciseDataIndex==0 && exercisePerformIndex==0)
+            EventManager.currentManager.AddEvent(new AdvanceMusicStage());
     }
 
     private bool CompletedPuzzleExercise(EnvironmentPuzzleData puzzleEvent)
@@ -504,7 +513,11 @@ public class GameManager : MonoBehaviour
             if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
                 exercisePerformIndex = 0;
+
                 eventExerciseDataIndex++;
+                
+                if (puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet)
+                    EventManager.currentManager.AddEvent(new AdvanceMusicStage());
             }
 
             poseDataIndex = 0;
@@ -532,14 +545,17 @@ public class GameManager : MonoBehaviour
                 //check if it is valid path, if it isnt play the random sound instead
                 EventManager.currentManager.AddEvent(
                     !eventDescription.isValid()
-                        ? new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay)
-                        : new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay));
+                        ? new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex]
+                            .RandomVoiceLineToPlay)
+                        : new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex]
+                            .StartingVoiceLineToPlay));
             }
             else
                 //If it is not the 0th index play random sound
             {
                 EventManager.currentManager.AddEvent(
-                    new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
+                    new PlayExerciseDialogueAudio(
+                        puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
             }
 
 
@@ -665,9 +681,9 @@ public class GameManager : MonoBehaviour
 
         foreach (var playerHealthBar in playerHealthBars)
         {
-            playerHealthBar.gameObject.SetActive(false);   
+            playerHealthBar.gameObject.SetActive(false);
         }
-        
+
         hasPlayedDialogueAudio = false;
         hasPerformedFirstTimeSetup = false;
         eventExerciseDataIndex = 0;
