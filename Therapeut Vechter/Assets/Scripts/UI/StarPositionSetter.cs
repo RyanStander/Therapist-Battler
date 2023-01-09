@@ -24,7 +24,7 @@ namespace UI
             middleStar.localPosition = middleStarRect;
 
             var topStarRect = topStar.localPosition;
-            topStarRect.x = height - height / 2;
+            topStarRect.x = height * 0.9f - height / 2;
             topStar.localPosition = topStarRect;
         }
     }
