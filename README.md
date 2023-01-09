@@ -87,7 +87,37 @@ Below we will discuss how to get everything you need to run the Therapy project 
 
 ### Prerequisites
 
-Setting Up Xsens Awinda Suit with Ruelsing systems (To be added)
+#### Setting Up Xsens Awinda Suit with Ruelsing systems
+
+_All exercises are recorded with the same strap placements and it is important for all users to wear it the same as to prevent odd rotation tracking and other potential issues. Below we will show the strap placements of the lower body as well as where sensors are to be placed._
+
+The first step is to put on the Xsens shirt, you can replace this with an extra strap, if available, but it might cause problems and is thus not recommended. AFter that place on a strap above your belt as shown:
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/TorsoNPose.jpg" alt="Torso straps and shirt shown" >
+ 
+The next step is the leg straps, you can place the straps the exact same way on the opposite leg, the upper leg strap must be placed slightly above on the thigh and the lower leg strap must be placed on the part where your calf bends inwards as this prevents the strap from slipping:
+ <img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/RightLegWithStraps.jpg" alt="Upper and lower leg straps shown" >
+
+The foot strap is placed on the center of the foot as to prevent moving it when bending the foot, alternatively you can placed it inside the tongue of the shoe but this does not work for all shoes and so a strap is placed as shown:
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/RightFootWithStrap.png" alt="right foot strap shown" >
+
+Following this is the sensors, it is recommended to place these inside the strap so that it does not move as much.
+
+The sternum sensor can be placed inside the pocket.
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/SternumSensorPlacement.jpg" alt="Sternum Sensor Placement" >
+
+The pelvis sensor is placed at the center of behind you.
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/PelvisSensorPlacement.jpg" alt="Pelvis Sensor Placement" >
+
+The upper leg sensors is placed on the outside of your legs (still inside the strap).
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/RightUpperLegSensorPlacement.jpg" alt="Right Upper Leg Sensor Placement" >
+
+The lower leg sensor is placed inbetween the inside and the center of the leg.
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/LowerLegSensorPlacement.jpg" alt="Lower Leg Sensor Placement" >
+
+Lastly the foot sensor is placed on the front of the foot as shown.
+<img src="https://github.com/RyanStander/Therapist-Battler/blob/main/ImagesIconsForReadMe/SuitSetup/RightFootSensor.jpg" alt="Right Foot Sensor" >
+
+This can be mirrored
 
 Unity version 2021.3.6f1
 
