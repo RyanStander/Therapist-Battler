@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using DevTools;
 using Exercises;
@@ -72,9 +71,6 @@ public class GameManager : MonoBehaviour
     #region Audio Data
 
     private bool isPlayingDialogueAudio;
-
-    //used to determine if music has been swapped, should only happen once
-    private bool hasSwappedMusicAudioSource;
 
     //Used to play dialogue
     private bool hasPlayedDialogueAudio;
@@ -211,6 +207,11 @@ public class GameManager : MonoBehaviour
 
                 break;
         }
+        
+        EventManager.currentManager.AddEvent(
+            new PlayMusicAudio(gameEventDataHolder.music));
+        
+        EventManager.currentManager.AddEvent(new PlayAmbienceAudio(gameEventDataHolder.ambience));
 
         SetupLevelScore();
     }
@@ -254,16 +255,6 @@ public class GameManager : MonoBehaviour
             endGameTimerIsRunning = true;
 
             return;
-        }
-
-        //Swaps song
-        if (gameEventDataHolder.gameEvents[gameEventsIndex].OverrideCurrentlyPlayingMusic &&
-            !hasSwappedMusicAudioSource)
-        {
-            EventManager.currentManager.AddEvent(
-                new PlayMusicAudio(gameEventDataHolder.gameEvents[gameEventsIndex].OverrideMusic));
-
-            hasSwappedMusicAudioSource = true;
         }
 
         SkipDialogue();
@@ -381,8 +372,8 @@ public class GameManager : MonoBehaviour
 
         EventManager.currentManager.AddEvent(
             exercisePerformIndex == 0
-                ? new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
-                : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
+                ? new PlayExerciseDialogueAudio(fightingEvent.playerAttackSequence[playerAttackIndex].startingVoiceLine)
+                : new PlayExerciseDialogueAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
     }
 
     private void DisableComboMeterIfTimeOut()
@@ -441,7 +432,7 @@ public class GameManager : MonoBehaviour
             }
 
             EventManager.currentManager.AddEvent(
-                new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
+                new PlayExerciseDialogueAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
         }
     }
 
@@ -541,14 +532,14 @@ public class GameManager : MonoBehaviour
                 //check if it is valid path, if it isnt play the random sound instead
                 EventManager.currentManager.AddEvent(
                     !eventDescription.isValid()
-                        ? new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay)
-                        : new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay));
+                        ? new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay)
+                        : new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].StartingVoiceLineToPlay));
             }
             else
                 //If it is not the 0th index play random sound
             {
                 EventManager.currentManager.AddEvent(
-                    new PlaySfxAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
+                    new PlayExerciseDialogueAudio(puzzleEvent.exerciseData[eventExerciseDataIndex].RandomVoiceLineToPlay));
             }
 
 
@@ -676,8 +667,7 @@ public class GameManager : MonoBehaviour
         {
             playerHealthBar.gameObject.SetActive(false);   
         }
-
-        hasSwappedMusicAudioSource = false;
+        
         hasPlayedDialogueAudio = false;
         hasPerformedFirstTimeSetup = false;
         eventExerciseDataIndex = 0;

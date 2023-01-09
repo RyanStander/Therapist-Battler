@@ -165,6 +165,16 @@ public class PlayDialogueAudio : EventData
     }
 }
 
+public class PlayExerciseDialogueAudio : EventData
+{
+    public readonly EventReference EventSoundPath;
+
+    public PlayExerciseDialogueAudio(EventReference eventSoundPath) : base(EventType.PlayDialogueAudio)
+    {
+        EventSoundPath = eventSoundPath;
+    }
+}
+
 public class DialogueAudioStatusUpdate : EventData
 {
     public readonly bool IsPlayingDialogue;
@@ -197,6 +207,16 @@ public class PlayMusicAudio : EventData
     public readonly EventReference EventSoundPath;
 
     public PlayMusicAudio(EventReference eventSoundPath) : base(EventType.PlayMusicAudio)
+    {
+        EventSoundPath = eventSoundPath;
+    }
+}
+
+public class PlayAmbienceAudio : EventData
+{
+    public readonly EventReference EventSoundPath;
+    
+    public PlayAmbienceAudio(EventReference eventSoundPath) : base(EventType.PlayMusicAudio)
     {
         EventSoundPath = eventSoundPath;
     }
