@@ -12,17 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d57eb5abaa50d468108e96c0dd3953, type: 3}
   m_Name: ACT_1_Level_1_StepUp
   m_EditorClassIdentifier: 
-  OverrideCurrentlyPlayingMusic: 1
-  OverrideMusic:
-    Guid:
-      Data1: -588298338
-      Data2: 1100690344
-      Data3: 954950018
-      Data4: -929407174
-    Path: event:/MUSIC/ACT1/LVL1/Game Events/L1 Get out
   BackgroundSprite: {fileID: 0}
   exerciseData:
   - timesToPerform: 1
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 1
     ExerciseToPerform: {fileID: 11400000, guid: c95a53994f6c2e4488e5788170a00a59, type: 2}
     StartingVoiceLineToPlay:
       Guid:

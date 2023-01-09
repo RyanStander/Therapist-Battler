@@ -70,9 +70,9 @@ namespace Audio
             if (!eventDescription.isValid())
                 return;
 
-            exerciseDialogueAudioEventInstance = RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
+            dialogueAudioEventInstance = RuntimeManager.CreateInstance(playDialogueAudio.EventSoundPath);
 
-            exerciseDialogueAudioEventInstance.start();
+            dialogueAudioEventInstance.start();
         }
 
         private void OnPlayExerciseDialogueAudio(EventData eventData)
@@ -86,11 +86,11 @@ namespace Audio
             if (!eventDescription.isValid())
                 return;
 
-            musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
+            exerciseDialogueAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
-            dialogueAudioEventInstance = RuntimeManager.CreateInstance(playExerciseDialogueAudio.EventSoundPath);
+            exerciseDialogueAudioEventInstance = RuntimeManager.CreateInstance(playExerciseDialogueAudio.EventSoundPath);
 
-            dialogueAudioEventInstance.start();
+            exerciseDialogueAudioEventInstance.start();
             isPlayingDialogueAudio = true;
             EventManager.currentManager.AddEvent(new DialogueAudioStatusUpdate(isPlayingDialogueAudio));
         }
@@ -123,7 +123,7 @@ namespace Audio
                 return;
             }
 
-            musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
+            //musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
             musicAudioEventInstance = RuntimeManager.CreateInstance(musicAudio.EventSoundPath);
 
@@ -151,7 +151,7 @@ namespace Audio
             if (!eventDescription.isValid())
                 return;
 
-            ambienceAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
+            //ambienceAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
             ambienceAudioEventInstance = RuntimeManager.CreateInstance(playAmbienceAudio.EventSoundPath);
 
