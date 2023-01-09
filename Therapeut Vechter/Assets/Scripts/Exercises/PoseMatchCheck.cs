@@ -13,12 +13,6 @@ namespace Exercises
         [Tooltip("How many degrees a limb's rotation can be off and still be accepted")] [Range(0, 90)] [SerializeField]
         private float angleTolerance = 5f;
 
-        //The total parts that are considered matched, checked every frame
-        private int totalPartsCorrect;
-
-        //The minimum required matches to be considered a pass
-        [Range(0, 8)] [SerializeField] private int minimumRequiredMatches = 6;
-
         //The score that the player achieves based on their match skills
         private float scoring;
 
@@ -29,28 +23,30 @@ namespace Exercises
         public float PoseScoring(PoseData poseData)
         {
             scoring = 0;
-            totalPartsCorrect = 0;
 
             #region Left Parts
 
             //Upper Legs
-            if (Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation) <
-                angleTolerance)
+            if (poseData.leftUpperLegMustMatchToProgress &&
+                !(Quaternion.Angle(poseData.leftUpperLegRotation, modelBodyPoints.leftUpperLeg.localRotation) <
+                  angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             //Lower Legs
-            if (Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation) <
-                angleTolerance)
+            if (poseData.leftLowerLegMustMatchToProgress &&
+                !(Quaternion.Angle(poseData.leftLowerLegRotation, modelBodyPoints.leftLowerLeg.localRotation) <
+                  angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             //Feet
-            if (Quaternion.Angle(poseData.leftFootRotation, modelBodyPoints.leftFoot.localRotation) < angleTolerance)
+            if (poseData.leftFootMustMatchToProgress &&
+                !(Quaternion.Angle(poseData.leftFootRotation, modelBodyPoints.leftFoot.localRotation) < angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             #endregion
@@ -58,23 +54,23 @@ namespace Exercises
             #region Right Parts
 
             //Upper Legs
-            if (Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation) <
-                angleTolerance)
+            if (poseData.rightUpperLegMustMatchToProgress && !(Quaternion.Angle(poseData.rightUpperLegRotation, modelBodyPoints.rightUpperLeg.localRotation) <
+                angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             //Lower Legs
-            if (Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation) <
-                angleTolerance)
+            if (poseData.rightLowerLegMustMatchToProgress &&!(Quaternion.Angle(poseData.rightLowerLegRotation, modelBodyPoints.rightLowerLeg.localRotation) <
+                angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             //Feet
-            if (Quaternion.Angle(poseData.rightFootRotation, modelBodyPoints.rightFoot.localRotation) < angleTolerance)
+            if (poseData.rightFootMustMatchToProgress &&(Quaternion.Angle(poseData.rightFootRotation, modelBodyPoints.rightFoot.localRotation) < angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             #endregion
@@ -82,22 +78,18 @@ namespace Exercises
             #region Body Parts
 
             //Pelvis
-            if (Quaternion.Angle(poseData.pelvisRotation, modelBodyPoints.pelvis.localRotation) < angleTolerance)
+            if (poseData.pelvisMustMatchToProgress && !(Quaternion.Angle(poseData.pelvisRotation, modelBodyPoints.pelvis.localRotation) < angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             //Sternum
-            if (Quaternion.Angle(poseData.sternumRotation, modelBodyPoints.sternum.localRotation) < angleTolerance)
+            if (poseData.sternumMustMatchToProgress && !(Quaternion.Angle(poseData.sternumRotation, modelBodyPoints.sternum.localRotation) < angleTolerance))
             {
-                totalPartsCorrect++;
+                return -1;
             }
 
             #endregion
-
-            //If there are not enough parts, return -1
-            if (totalPartsCorrect < minimumRequiredMatches)
-                return -1;
 
             #region Scoring Limbs
 
@@ -127,12 +119,7 @@ namespace Exercises
 
             #endregion
 
-            var bodyPartScoring = poseData.leftUpperLegScoreValue + poseData.leftLowerLegScoreValue +
-                                  poseData.leftFootScoreValue + poseData.rightUpperLegScoreValue +
-                                  poseData.rightLowerLegScoreValue + poseData.rightFootScoreValue +
-                                  poseData.pelvisScoreValue + poseData.sternumScoreValue;
-            
-            return (scoring /8);
+            return (scoring / 8);
         }
     }
 }
