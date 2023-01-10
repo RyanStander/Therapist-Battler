@@ -64,9 +64,13 @@ namespace Audio
         {
             if (!eventData.IsEventOfType<PlayDialogueAudio>(out var playDialogueAudio))
                 return;
-            
+
             RuntimeManager.StudioSystem.getEvent(playDialogueAudio.EventSoundPath.Path, out var eventDescription);
 
+            eventDescription.isStream(out var oneshot);
+            eventDescription.getPath(out var path);
+            Debug.Log(path);
+            
             if (!eventDescription.isValid())
                 return;
 
