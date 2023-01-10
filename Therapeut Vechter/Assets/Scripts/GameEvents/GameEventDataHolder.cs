@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Exercises;
+using FMODUnity;
 using UnityEngine;
 
 namespace GameEvents
@@ -9,6 +10,8 @@ namespace GameEvents
     public class GameEventDataHolder : ScriptableObject
     {
         public Sprite startingBackground;
+        public EventReference music;
+        public EventReference ambience;
 
         [Range(1,3)]public int currentRecoveryStage=3;
         
