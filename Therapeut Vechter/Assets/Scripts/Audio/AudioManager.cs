@@ -84,7 +84,7 @@ namespace Audio
             if (!ExtensionMethods.IsPathValid(playExerciseDialogueAudio.EventSoundPath.Path))
                 return;
 
-            //exerciseDialogueAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
+            exerciseDialogueAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
             exerciseDialogueAudioEventInstance =
                 RuntimeManager.CreateInstance(playExerciseDialogueAudio.EventSoundPath);
