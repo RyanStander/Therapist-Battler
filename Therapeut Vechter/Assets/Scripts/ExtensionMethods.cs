@@ -1,6 +1,8 @@
 ﻿    using System.Collections.Generic;
     using Exercises;
+    using FMODUnity;
     using GameEvents;
+    using UnityEngine;
 
     public static class ExtensionMethods
     {
@@ -79,5 +81,18 @@
             }
 
             return puzzleExercises;
+        }
+        
+        public static bool IsPathValid(string eventPath)
+        {
+            RuntimeManager.StudioSystem.getEvent(eventPath, out var eventDescription);
+            
+            if (eventDescription.isValid())
+            {
+                return true;
+            }
+
+            Debug.LogWarning("The path: '" + eventPath + "' is not valid. Sound will not be played");
+            return false;
         }
     }

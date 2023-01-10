@@ -12,14 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d28ca67cbc551946adbe68ca973a459, type: 3}
   m_Name: ACT_1_Level_2_Wizard
   m_EditorClassIdentifier: 
-  OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
   BackgroundSprite: {fileID: 0}
   enemyGameObject: {fileID: 1465996542193815835, guid: a82bc90a0ed893a448922365fdc21bb4, type: 3}
   enemyHealth: 1000
@@ -54,6 +46,8 @@ MonoBehaviour:
         Data3: 813203857
         Data4: -2080458140
       Path: event:/VO/FEEDBACK/Exercise squat
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 0
     playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
     timesToPerform: 5
   - startingVoiceLine:
@@ -70,5 +64,7 @@ MonoBehaviour:
         Data3: 891611551
         Data4: -577693812
       Path: event:/VO/FEEDBACK/Exercise split leg squat
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 0
     playerAttack: {fileID: 11400000, guid: bbde76bc50ec12e4fb1bf75228f2c5d1, type: 2}
     timesToPerform: 5
