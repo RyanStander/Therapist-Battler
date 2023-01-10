@@ -5,7 +5,7 @@
 			<value>S2 Introduction Gnome Kingdom</value>
 		</property>
 		<property name="outputFormat">
-			<value>1</value>
+			<value>0</value>
 		</property>
 		<relationship name="folder">
 			<destination>{f3434b3d-9b01-4fb2-9d8d-4a6c67e32b21}</destination>
@@ -59,18 +59,11 @@
 	<object class="EventAutomatableProperties" id="{a991d50f-84d7-41ba-8eb0-d33018166307}" />
 	<object class="MarkerTrack" id="{c82e4aaa-b52c-4a06-9a8f-d13e6557cea0}" />
 	<object class="GroupTrack" id="{caabe43d-3f8c-43e9-adcb-0e00657ed57f}">
-		<relationship name="modules">
-			<destination>{59d9db7d-a4f5-4660-8550-91706dca57df}</destination>
-		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{237ce852-3e9e-4274-a452-ec2d27135e54}</destination>
 		</relationship>
 	</object>
-	<object class="Timeline" id="{b8578e20-75c8-49ec-8799-7f79798e3351}">
-		<relationship name="modules">
-			<destination>{59d9db7d-a4f5-4660-8550-91706dca57df}</destination>
-		</relationship>
-	</object>
+	<object class="Timeline" id="{b8578e20-75c8-49ec-8799-7f79798e3351}" />
 	<object class="EventMixerMaster" id="{5541b724-7dc0-46ce-8517-07e4a91d7621}">
 		<relationship name="effectChain">
 			<destination>{acd0d352-fa5f-4ba5-9b77-6985a4d59bfe}</destination>
@@ -88,14 +81,6 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{b96f4b47-fe31-4c75-9f36-1286a278cf17}" />
-	<object class="SingleSound" id="{59d9db7d-a4f5-4660-8550-91706dca57df}">
-		<property name="length">
-			<value>108</value>
-		</property>
-		<relationship name="audioFile">
-			<destination>{fa63f63c-09d3-417c-a6c9-4e8ab7d1c0a6}</destination>
-		</relationship>
-	</object>
 	<object class="EventMixerGroup" id="{237ce852-3e9e-4274-a452-ec2d27135e54}">
 		<property name="volume">
 			<value>-9</value>
