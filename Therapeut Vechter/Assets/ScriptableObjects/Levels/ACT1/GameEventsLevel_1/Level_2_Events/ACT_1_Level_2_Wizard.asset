@@ -16,7 +16,7 @@ MonoBehaviour:
   enemyGameObject: {fileID: 1465996542193815835, guid: a82bc90a0ed893a448922365fdc21bb4, type: 3}
   enemyHealth: 1000
   enemyDamage: 10
-  enemyDamageEffect: {fileID: 5304927950568512166, guid: d33dbb8e30d3bfc449312ab7f461fd43, type: 3}
+  enemyDamageEffect: {fileID: 5304927950568512166, guid: b3254bbf0dbe69c4ba3f23600672bdc8, type: 3}
   enemyAttackSound:
     Guid:
       Data1: -797117704
@@ -26,11 +26,11 @@ MonoBehaviour:
     Path: event:/SFX/ENEMIES/Wizard/Spell
   enemyHurtSound:
     Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 1224034287
+      Data2: 1179548786
+      Data3: -942008681
+      Data4: 1568721498
+    Path: event:/SFX/ENEMIES/Knight/Sword attack
   playerAttackSequence:
   - startingVoiceLine:
       Guid:
@@ -47,7 +47,7 @@ MonoBehaviour:
         Data4: -2080458140
       Path: event:/VO/FEEDBACK/Exercise squat
     advanceToNextAudioStageAtStartOfExerciseSet: 0
-    advanceToNextAudioStageAtEndOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 1
     playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
     timesToPerform: 5
   - startingVoiceLine:
@@ -65,6 +65,6 @@ MonoBehaviour:
         Data4: -577693812
       Path: event:/VO/FEEDBACK/Exercise split leg squat
     advanceToNextAudioStageAtStartOfExerciseSet: 0
-    advanceToNextAudioStageAtEndOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 1
     playerAttack: {fileID: 11400000, guid: bbde76bc50ec12e4fb1bf75228f2c5d1, type: 2}
     timesToPerform: 5

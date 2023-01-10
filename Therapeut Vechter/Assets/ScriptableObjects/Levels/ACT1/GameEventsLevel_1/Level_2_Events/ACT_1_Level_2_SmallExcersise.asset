@@ -12,17 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d57eb5abaa50d468108e96c0dd3953, type: 3}
   m_Name: ACT_1_Level_2_SmallExcersise
   m_EditorClassIdentifier: 
-  OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
   BackgroundSprite: {fileID: 21300000, guid: 1dd37ff741ba5d2458593ef5492d539b, type: 3}
   exerciseData:
   - timesToPerform: 1
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 1
     ExerciseToPerform: {fileID: 11400000, guid: c95a53994f6c2e4488e5788170a00a59, type: 2}
     StartingVoiceLineToPlay:
       Guid:
@@ -30,7 +24,7 @@ MonoBehaviour:
         Data2: 1085181963
         Data3: 1397905803
         Data4: -1009479173
-      Path: event:/VO/ACT1/LVL1/Exercise hovel
+      Path: event:/VO/ACT1/LVL1/6_Exercise hovel
     RandomVoiceLineToPlay:
       Guid:
         Data1: -1869810838
