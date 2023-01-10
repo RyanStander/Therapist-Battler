@@ -30,10 +30,12 @@ public class GameManager : MonoBehaviour
     [Header("Scoring")] [Range(0, 10)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
 
-    [SerializeField] private float comboDuration = 3;
+    [SerializeField] private float comboDuration = 5;
 
-    [Tooltip("The damage modifier that is applied to how high the combo count is")] [SerializeField]
-    private float baseComboDamage = 20;
+    [Tooltip("The damage modifier that is applied to how high the combo count is")]
+    [SerializeField]
+    [Range(0.01f, 0.25f)]
+    private float comboDamageModifier = 0.1f;
 
     [Header("Stage effects")] [SerializeField]
     private GameObject[] stageOneEffectsToEnable;
@@ -187,6 +189,7 @@ public class GameManager : MonoBehaviour
             playerHealthBar.maxValue = playerHealth;
             playerHealthBar.value = playerHealth;
             playerCurrentDisplayHealth = playerHealth;
+            playerHealthBar.gameObject.SetActive(false);
         }
 
         backgroundImage.sprite = gameEventDataHolder.startingBackground;
@@ -326,13 +329,13 @@ public class GameManager : MonoBehaviour
             return;
         }
 
+        DisableComboMeterIfTimeOut();
+
         TryPlayFightingExerciseDialogue(fightingEvent);
 
         //Checks if the current Exercise has been completed
         if (fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count <= poseDataIndex)
             CompletedFightingExercise(fightingEvent);
-
-        ManageComboDamage(fightingEvent);
 
         //Get the duration before playing exercise.
         var timerModifier =
@@ -349,6 +352,11 @@ public class GameManager : MonoBehaviour
     {
         if (hasPerformedFirstTimeSetup)
             return;
+        
+        foreach (var playerHealthBar in playerHealthBars)
+        {
+            playerHealthBar.gameObject.SetActive(true);   
+        }
 
         exerciseImage.gameObject.SetActive(false);
         hasPerformedFirstTimeSetup = true;
@@ -377,6 +385,16 @@ public class GameManager : MonoBehaviour
                 : new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
     }
 
+    private void DisableComboMeterIfTimeOut()
+    {
+        if (comboCount < 1 || comboTimeStamp > Time.time)
+            return;
+
+        comboCount = 0;
+
+        EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
+    }
+
     private void CompletedFightingExercise(FightingData fightingEvent)
     {
         exercisePerformIndex++;
@@ -384,11 +402,14 @@ public class GameManager : MonoBehaviour
         hasPlayedDialogueAudio = false;
         poseDataIndex = 0;
 
+        //Calculate the score of the exercise
         var currentScoreCalculation =
             (currentExerciseScore /
              fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.poseDatas.Count) *
             fightingEvent.playerAttackSequence[playerAttackIndex].playerAttack.scoreValue;
-
+        
+        //Add the combo modifier to damage
+        currentScoreCalculation += currentScoreCalculation*(comboDamageModifier * comboCount);
         //add to score
         IncreaseScore(currentScoreCalculation, false);
 
@@ -421,24 +442,6 @@ public class GameManager : MonoBehaviour
 
             EventManager.currentManager.AddEvent(
                 new PlaySfxAudio(fightingEvent.playerAttackSequence[playerAttackIndex].randomVoiceLine));
-        }
-    }
-
-    private void ManageComboDamage(FightingData fightingEvent)
-    {
-        var comboDamage = (baseComboDamage * ((float)comboCount / (10 - comboCount)));
-
-        //have a combo timer running, depending on how many combos they get, they get higher damage
-        if ((comboTimeStamp <= Time.time && comboCount > 0) || comboDamage > enemyHealth)
-        {
-            if (comboDamage > enemyHealth)
-                isDead = true;
-
-            EventManager.currentManager.AddEvent(new CreateComboAttack(comboDamage, fightingEvent.enemyHurtSound));
-
-            IncreaseScore(comboDamage, false);
-
-            comboCount = 0;
         }
     }
 
@@ -668,6 +671,11 @@ public class GameManager : MonoBehaviour
         exerciseImage.gameObject.SetActive(false);
 
         EventManager.currentManager.AddEvent(new HideEnemy());
+
+        foreach (var playerHealthBar in playerHealthBars)
+        {
+            playerHealthBar.gameObject.SetActive(false);   
+        }
 
         hasSwappedMusicAudioSource = false;
         hasPlayedDialogueAudio = false;

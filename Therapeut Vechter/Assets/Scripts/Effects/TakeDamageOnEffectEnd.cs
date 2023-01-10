@@ -40,8 +40,7 @@ namespace Effects
                 }
 
                 EventManager.currentManager.AddEvent(new PlaySfxAudio(hitSfx));
-                if (!isNormalAttack)
-                    EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
+
                 hadDoneDamage = true;
             }
 
