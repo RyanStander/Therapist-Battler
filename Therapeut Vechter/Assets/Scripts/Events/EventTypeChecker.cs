@@ -17,7 +17,8 @@
                 outEvent = eventData as T;
                 return true;
             }
-            else if(throwError)
+
+            if(throwError)
             {
                 throw new System.InvalidCastException(string.Concat("Error: EventData class with EventType.", eventData.eventType, " was received but is not of class ", typeof(T).FullName, "."));
             }
