@@ -522,7 +522,7 @@ public class GameManager : MonoBehaviour
 
                 eventExerciseDataIndex++;
                 
-                if (puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet)
+                if (puzzleEvent.exerciseData.Length<eventExerciseDataIndex && puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet)
                     EventManager.currentManager.AddEvent(new AdvanceMusicStage());
             }
 

@@ -64,7 +64,7 @@ namespace Audio
         {
             if (!eventData.IsEventOfType<PlayDialogueAudio>(out var playDialogueAudio))
                 return;
-
+            
             RuntimeManager.StudioSystem.getEvent(playDialogueAudio.EventSoundPath.Path, out var eventDescription);
 
             if (!eventDescription.isValid())
@@ -118,10 +118,7 @@ namespace Audio
 
             RuntimeManager.StudioSystem.getEvent(musicAudio.EventSoundPath.Path, out var eventDescription);
             if (!eventDescription.isValid())
-            {
-                Debug.Log("Given music path is invalid");
                 return;
-            }
 
             //musicAudioEventInstance.stop(STOP_MODE.IMMEDIATE);
 
