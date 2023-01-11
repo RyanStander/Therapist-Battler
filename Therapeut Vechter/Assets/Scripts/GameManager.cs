@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
     [Header("Scoring")] [Range(0, 10)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
 
-    [SerializeField] private EventReference successSoundEffect;
+    [SerializeField] private EventReference successSfx;
 
     [SerializeField] private float comboDuration = 5;
 
@@ -394,7 +394,7 @@ public class GameManager : MonoBehaviour
     private void CompletedFightingExercise(FightingData fightingEvent)
     {
         exercisePerformIndex++;
-        EventManager.currentManager.AddEvent(new PlaySfxAudio(successSoundEffect));
+        EventManager.currentManager.AddEvent(new PlaySfxAudio(successSfx));
 
         hasPlayedDialogueAudio = false;
         poseDataIndex = 0;
@@ -430,7 +430,7 @@ public class GameManager : MonoBehaviour
 
             exercisePerformIndex = 0;
             
-            EventManager.currentManager.AddEvent(new PlaySfxAudio(successSoundEffect));
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(successSfx));
             
             if (fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtStartOfExerciseSet)
                 EventManager.currentManager.AddEvent(new AdvanceMusicStage());
@@ -518,7 +518,7 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = false;
 
             exercisePerformIndex++;
-            EventManager.currentManager.AddEvent(new PlaySfxAudio(successSoundEffect));
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(successSfx));
             if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
                 if (puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtEndOfExerciseSet)
