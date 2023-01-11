@@ -12,19 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d28ca67cbc551946adbe68ca973a459, type: 3}
   m_Name: ACT_2_Level_1_Elf
   m_EditorClassIdentifier: 
-  OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
   BackgroundSprite: {fileID: 21300000, guid: 06a1e0284a44a9148a8ce7395c0c2984, type: 3}
   enemyGameObject: {fileID: 196389368014922394, guid: 93aa2b81a5a7a7146ad9383b236bb238, type: 3}
   enemyHealth: 1100
   enemyDamage: 10
-  enemyDamageEffect: {fileID: 5304927950568512166, guid: d33dbb8e30d3bfc449312ab7f461fd43, type: 3}
+  enemyDamageEffect: {fileID: 5304927950568512166, guid: 74f12b08d0267594c9fb3184e965f806, type: 3}
   enemyAttackSound:
     Guid:
       Data1: 1054932321
@@ -54,6 +46,8 @@ MonoBehaviour:
         Data3: 813203857
         Data4: -2080458140
       Path: event:/VO/FEEDBACK/Exercise squat
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 0
     playerAttack: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
     timesToPerform: 5
   - startingVoiceLine:
@@ -70,5 +64,7 @@ MonoBehaviour:
         Data3: 891611551
         Data4: -577693812
       Path: event:/VO/FEEDBACK/Exercise split leg squat
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 0
     playerAttack: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
     timesToPerform: 5
