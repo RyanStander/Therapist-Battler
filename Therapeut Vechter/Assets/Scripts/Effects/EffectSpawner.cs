@@ -1,3 +1,4 @@
+using FMODUnity;
 using UnityEngine;
 
 namespace Effects
@@ -5,8 +6,8 @@ namespace Effects
     public class EffectSpawner : MonoBehaviour
     {
         [SerializeField] private GameObject playerNormalAttackEffect;
-        [SerializeField] private GameObject playerComboAttackEffect;
-        
+        [SerializeField] private EventReference playerAttackSfx;
+
         private void OnEnable()
         {
             EventManager.currentManager.Subscribe(EventType.CreateNormalAttack,OnNormalAttack);
@@ -28,6 +29,9 @@ namespace Effects
                 }
                 
                 var normalAttack = Instantiate(createNormalAttack.IsPlayerAttack ? playerNormalAttackEffect : createNormalAttack.AttackEffect, transform);
+
+                if (createNormalAttack.IsPlayerAttack)
+                    EventManager.currentManager.AddEvent(new PlaySfxAudio(playerAttackSfx));
 
                 var damageEffect = normalAttack.AddComponent<TakeDamageOnEffectEnd>();
                 damageEffect.SetEffectData(createNormalAttack.Damage,createNormalAttack.OnHitSfx,true,createNormalAttack.IsPlayerAttack);
