@@ -5,8 +5,7 @@ namespace Effects
     public class EffectSpawner : MonoBehaviour
     {
         [SerializeField] private GameObject playerNormalAttackEffect;
-        [SerializeField] private GameObject playerComboAttackEffect;
-        
+
         private void OnEnable()
         {
             EventManager.currentManager.Subscribe(EventType.CreateNormalAttack,OnNormalAttack);

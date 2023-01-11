@@ -29,6 +29,8 @@ public class GameManager : MonoBehaviour
     [Header("Scoring")] [Range(0, 10)] [SerializeField]
     private float scoreUpdateSpeed = 0.5f;
 
+    [SerializeField] private EventReference successSoundEffect;
+
     [SerializeField] private float comboDuration = 5;
 
     [Tooltip("The damage modifier that is applied to how high the combo count is")]
@@ -392,6 +394,7 @@ public class GameManager : MonoBehaviour
     private void CompletedFightingExercise(FightingData fightingEvent)
     {
         exercisePerformIndex++;
+        EventManager.currentManager.AddEvent(new PlaySfxAudio(successSoundEffect));
 
         hasPlayedDialogueAudio = false;
         poseDataIndex = 0;
@@ -426,6 +429,8 @@ public class GameManager : MonoBehaviour
             playerAttackIndex++;
 
             exercisePerformIndex = 0;
+            
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(successSoundEffect));
             
             if (fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtStartOfExerciseSet)
                 EventManager.currentManager.AddEvent(new AdvanceMusicStage());
@@ -513,6 +518,7 @@ public class GameManager : MonoBehaviour
             hasPlayedDialogueAudio = false;
 
             exercisePerformIndex++;
+            EventManager.currentManager.AddEvent(new PlaySfxAudio(successSoundEffect));
             if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
                 if (puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtEndOfExerciseSet)
@@ -521,7 +527,7 @@ public class GameManager : MonoBehaviour
                 exercisePerformIndex = 0;
 
                 eventExerciseDataIndex++;
-                
+
                 if (puzzleEvent.exerciseData.Length<eventExerciseDataIndex && puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet)
                     EventManager.currentManager.AddEvent(new AdvanceMusicStage());
             }
