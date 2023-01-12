@@ -432,7 +432,7 @@ public class GameManager : MonoBehaviour
             
             EventManager.currentManager.AddEvent(new PlaySfxAudio(successSfx));
             
-            if (fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtStartOfExerciseSet)
+            if (fightingEvent.playerAttackSequence.Length>playerAttackIndex && fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtStartOfExerciseSet)
                 EventManager.currentManager.AddEvent(new AdvanceMusicStage());
 
             //Fire an enemy attack

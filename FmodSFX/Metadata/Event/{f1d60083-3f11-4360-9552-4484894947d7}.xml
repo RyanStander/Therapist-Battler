@@ -138,7 +138,7 @@
 			<destination>{fe8995c8-d9ab-4350-b39f-dfd29f4f479f}</destination>
 		</relationship>
 		<relationship name="modules">
-			<destination>{333faa36-829e-4a15-bec5-d0e4c59551c6}</destination>
+			<destination>{cce7802d-9c27-43d9-b8f9-4b47ac9e7705}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{324c52aa-662b-477c-8c6a-e6e5d623d358}</destination>
@@ -152,7 +152,7 @@
 			<destination>{74831ee4-1d9f-47fd-8acd-aed6c34c80f2}</destination>
 			<destination>{57ef79e2-8329-4382-9329-cecc0c0e18fc}</destination>
 			<destination>{6f4ab1d5-b49d-4d79-bd74-f539ccc92b93}</destination>
-			<destination>{333faa36-829e-4a15-bec5-d0e4c59551c6}</destination>
+			<destination>{cce7802d-9c27-43d9-b8f9-4b47ac9e7705}</destination>
 		</relationship>
 		<relationship name="markers">
 			<destination>{eded619b-4e1f-4c16-b63f-b4b0bad8e1d5}</destination>
@@ -374,31 +374,12 @@
 			<destination>{883a5af5-5570-4387-9f4c-473b255e955d}</destination>
 		</relationship>
 	</object>
-	<object class="SoundScatterer" id="{333faa36-829e-4a15-bec5-d0e4c59551c6}">
+	<object class="EventSound" id="{cce7802d-9c27-43d9-b8f9-4b47ac9e7705}">
 		<property name="length">
 			<value>54</value>
 		</property>
-		<property name="polyphony">
-			<value>2</value>
-		</property>
-		<property name="minimumTimeBetweenSounds">
-			<value>2500</value>
-		</property>
-		<property name="maximumTimeBetweenSounds">
-			<value>10000</value>
-		</property>
-		<property name="minimumScatterDistance">
-			<value>3.60000014</value>
-		</property>
-		<property name="maximumScatterDistance">
-			<value>7.5999999</value>
-		</property>
-		<relationship name="modulators">
-			<destination>{5a05c3c7-6937-494f-ba52-99d26b28fe3a}</destination>
-			<destination>{31729701-2da6-411e-88d7-ff7ab2fcea0a}</destination>
-		</relationship>
-		<relationship name="sound">
-			<destination>{9ba9b96b-9a3b-4b72-be0a-8b13ee6e1447}</destination>
+		<relationship name="event">
+			<destination>{9faddd5a-c4ed-429c-8674-f71da85aba19}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{324c52aa-662b-477c-8c6a-e6e5d623d358}">
@@ -527,29 +508,6 @@
 		</relationship>
 	</object>
 	<object class="MixerBusPanner" id="{ca1f722e-1005-464d-bdfb-16a25813da91}" />
-	<object class="RandomizerModulator" id="{5a05c3c7-6937-494f-ba52-99d26b28fe3a}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>pitch</value>
-		</property>
-		<property name="amount">
-			<value>6.5</value>
-		</property>
-	</object>
-	<object class="RandomizerModulator" id="{31729701-2da6-411e-88d7-ff7ab2fcea0a}">
-		<property name="nameOfPropertyBeingModulated">
-			<value>volume</value>
-		</property>
-		<property name="amount">
-			<value>4</value>
-		</property>
-	</object>
-	<object class="MultiSound" id="{9ba9b96b-9a3b-4b72-be0a-8b13ee6e1447}">
-		<relationship name="sounds">
-			<destination>{8af62647-5b44-4551-b1d8-226e4e33a963}</destination>
-			<destination>{3ea57cfa-130d-4cb7-aea0-7137058183e9}</destination>
-			<destination>{75d6a19e-e969-4507-a096-5e427c6a00a1}</destination>
-		</relationship>
-	</object>
 	<object class="Automator" id="{883a5af5-5570-4387-9f4c-473b255e955d}">
 		<property name="nameOfPropertyBeingAutomated">
 			<value>volume</value>
@@ -639,21 +597,6 @@
 		</relationship>
 	</object>
 	<object class="MixerBusFader" id="{0bd4b7a2-bf53-4fc3-b152-20748e5cc7d5}" />
-	<object class="SingleSound" id="{8af62647-5b44-4551-b1d8-226e4e33a963}">
-		<relationship name="audioFile">
-			<destination>{a532b3b3-0fe8-42ff-9f25-0d5504f7b1cd}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{3ea57cfa-130d-4cb7-aea0-7137058183e9}">
-		<relationship name="audioFile">
-			<destination>{87875980-497d-4f89-a174-327ff87067d2}</destination>
-		</relationship>
-	</object>
-	<object class="SingleSound" id="{75d6a19e-e969-4507-a096-5e427c6a00a1}">
-		<relationship name="audioFile">
-			<destination>{03c7a468-e6c9-4736-b964-acfabc9ad29b}</destination>
-		</relationship>
-	</object>
 	<object class="AutomationCurve" id="{4cb4476e-e880-45fd-8bbd-43cd694e1af6}">
 		<relationship name="parameter">
 			<destination>{d1534441-86f5-49dd-9d27-e41e8642941d}</destination>
