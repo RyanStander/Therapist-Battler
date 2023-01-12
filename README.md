@@ -137,9 +137,6 @@ _Setting up fusion clinic software_
 
 <!-- USAGE EXAMPLES -->
 ## Usage
-This is where we will show examples of how the project can be used, screenshots, code examples and demos would work.
-
-_For more examples, please refer to the [Documentation](https://example.com)_
 
 ### Creating Levels
 One of the main points this project was designed for was making the creation of levels rely on no extra scripting. Below you will find a step guide on how to create a level.
