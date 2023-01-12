@@ -62,8 +62,6 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 This project is a sound-based solution to help keep patients motivated in their recovery process from ACL replacement surgery. The gamified experience focuses on patients' progression and offers data collection during the therapy sessions.
-
- <img src="https://cdn.discordapp.com/attachments/1016574318827810870/1019533953989873714/unknown.png" alt="Product Name Screen Shot" >
  
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
