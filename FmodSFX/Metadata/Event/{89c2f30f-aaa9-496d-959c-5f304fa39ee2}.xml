@@ -69,11 +69,21 @@
 	</object>
 	<object class="GroupTrack" id="{0cbef6d2-0b79-47de-94dd-2c594f1fd173}">
 		<relationship name="modules">
-			<destination>{932dfebe-e95a-4670-8082-bd5a0a9f88d3}</destination>
-			<destination>{8a9f6607-fc0e-4d6a-86bd-8e58ca3f5002}</destination>
-			<destination>{39dbd48c-b507-47b1-b07e-fbb508f1dd5a}</destination>
-			<destination>{235b136f-c26f-45d7-85fb-f01bdb681f2f}</destination>
-			<destination>{ed5317be-1366-4c28-b0c5-fab195b28a95}</destination>
+			<destination>{f676a028-8af3-4dc4-a40d-f676eb9ddd62}</destination>
+			<destination>{216d6ef7-13ff-453c-b99b-0a2c387c4cee}</destination>
+			<destination>{6c506792-3f08-41dd-bedc-c7a2a33846c3}</destination>
+			<destination>{d8246838-e1ef-49b4-9f73-00fd610acbae}</destination>
+			<destination>{1a7bf8db-a526-46a8-a943-d077ff94daa2}</destination>
+			<destination>{66a56d9a-8b68-4f1e-8fb4-1b194cbfa6cf}</destination>
+			<destination>{77408b1c-ff1f-4ae2-aa4f-3b37cd25c7c4}</destination>
+			<destination>{2e0159dc-4f6f-4fff-8a39-ca8b1d06964b}</destination>
+			<destination>{c5f70d0f-d529-4ec2-b658-c357cbaa7257}</destination>
+			<destination>{490c3194-c05c-4829-8e6e-5fb6770e8577}</destination>
+			<destination>{26ade15e-4d04-473b-a925-6d9eacbc31fa}</destination>
+			<destination>{d0614e41-f185-4ee3-9f18-6e63987b7684}</destination>
+			<destination>{1c098e67-5eed-48bf-97f8-f415072a1e80}</destination>
+			<destination>{73b4239e-198f-4b70-a75a-65ee796d9bde}</destination>
+			<destination>{1c68810b-f15a-404e-8682-8f45b903312e}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{95a689f9-61f0-4cdb-bdfe-edc852171026}</destination>
@@ -82,11 +92,21 @@
 	<object class="Timeline" id="{54a002af-6252-407c-9712-1823a11353b3}">
 		<relationship name="modules">
 			<destination>{d412b33a-8392-47a0-9d0a-0aca77ff3fd0}</destination>
-			<destination>{932dfebe-e95a-4670-8082-bd5a0a9f88d3}</destination>
-			<destination>{8a9f6607-fc0e-4d6a-86bd-8e58ca3f5002}</destination>
-			<destination>{39dbd48c-b507-47b1-b07e-fbb508f1dd5a}</destination>
-			<destination>{235b136f-c26f-45d7-85fb-f01bdb681f2f}</destination>
-			<destination>{ed5317be-1366-4c28-b0c5-fab195b28a95}</destination>
+			<destination>{f676a028-8af3-4dc4-a40d-f676eb9ddd62}</destination>
+			<destination>{216d6ef7-13ff-453c-b99b-0a2c387c4cee}</destination>
+			<destination>{6c506792-3f08-41dd-bedc-c7a2a33846c3}</destination>
+			<destination>{d8246838-e1ef-49b4-9f73-00fd610acbae}</destination>
+			<destination>{1a7bf8db-a526-46a8-a943-d077ff94daa2}</destination>
+			<destination>{66a56d9a-8b68-4f1e-8fb4-1b194cbfa6cf}</destination>
+			<destination>{77408b1c-ff1f-4ae2-aa4f-3b37cd25c7c4}</destination>
+			<destination>{2e0159dc-4f6f-4fff-8a39-ca8b1d06964b}</destination>
+			<destination>{c5f70d0f-d529-4ec2-b658-c357cbaa7257}</destination>
+			<destination>{490c3194-c05c-4829-8e6e-5fb6770e8577}</destination>
+			<destination>{26ade15e-4d04-473b-a925-6d9eacbc31fa}</destination>
+			<destination>{d0614e41-f185-4ee3-9f18-6e63987b7684}</destination>
+			<destination>{1c098e67-5eed-48bf-97f8-f415072a1e80}</destination>
+			<destination>{73b4239e-198f-4b70-a75a-65ee796d9bde}</destination>
+			<destination>{1c68810b-f15a-404e-8682-8f45b903312e}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{528b8283-673b-4608-b423-2e9fb292e2d5}">
@@ -116,7 +136,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{2f9f290d-80a2-48c7-a39d-7680648fb188}">
 		<property name="name">
-			<value>Audio 1</value>
+			<value>VO</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{6cf803ae-7031-4495-a42d-f7279ca6cf27}</destination>
@@ -128,64 +148,207 @@
 			<destination>{528b8283-673b-4608-b423-2e9fb292e2d5}</destination>
 		</relationship>
 	</object>
-	<object class="CommandSound" id="{932dfebe-e95a-4670-8082-bd5a0a9f88d3}">
+	<object class="CommandSound" id="{f676a028-8af3-4dc4-a40d-f676eb9ddd62}">
 		<property name="start">
-			<value>8.630254870256806</value>
+			<value>11.800000000000001</value>
 		</property>
-		<property name="length">
-			<value>0.56000000000000227</value>
+		<property name="name">
+			<value>Gold drops</value>
 		</property>
 		<relationship name="commandTarget">
-			<destination>{e435958d-880e-4533-abf4-34310cd100a2}</destination>
+			<destination>{60dcc61e-b420-4448-98b3-6712686128ad}</destination>
 		</relationship>
 	</object>
-	<object class="CommandSound" id="{8a9f6607-fc0e-4d6a-86bd-8e58ca3f5002}">
+	<object class="CommandSound" id="{216d6ef7-13ff-453c-b99b-0a2c387c4cee}">
 		<property name="start">
-			<value>7.9802548702568075</value>
+			<value>6.1000000000000005</value>
 		</property>
 		<property name="length">
-			<value>0.56000000000000227</value>
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
 		</property>
 		<relationship name="commandTarget">
-			<destination>{e435958d-880e-4533-abf4-34310cd100a2}</destination>
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
 		</relationship>
 	</object>
-	<object class="CommandSound" id="{39dbd48c-b507-47b1-b07e-fbb508f1dd5a}">
-		<property name="start">
-			<value>7.3302548702568089</value>
-		</property>
-		<property name="length">
-			<value>0.56000000000000227</value>
+	<object class="CommandSound" id="{6c506792-3f08-41dd-bedc-c7a2a33846c3}">
+		<property name="commandType">
+			<value>1</value>
 		</property>
 		<relationship name="commandTarget">
-			<destination>{e435958d-880e-4533-abf4-34310cd100a2}</destination>
+			<destination>{274d3e54-aa7a-48df-a966-4fa1885f2487}</destination>
 		</relationship>
 	</object>
-	<object class="CommandSound" id="{235b136f-c26f-45d7-85fb-f01bdb681f2f}">
+	<object class="CommandSound" id="{d8246838-e1ef-49b4-9f73-00fd610acbae}">
 		<property name="start">
-			<value>6.6802548702568032</value>
+			<value>6.4000000000000004</value>
 		</property>
 		<property name="length">
-			<value>0.56000000000000227</value>
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
 		</property>
 		<relationship name="commandTarget">
-			<destination>{e435958d-880e-4533-abf4-34310cd100a2}</destination>
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
 		</relationship>
 	</object>
-	<object class="CommandSound" id="{ed5317be-1366-4c28-b0c5-fab195b28a95}">
+	<object class="CommandSound" id="{1a7bf8db-a526-46a8-a943-d077ff94daa2}">
 		<property name="start">
-			<value>6.0302548702568046</value>
+			<value>6.7000000000000002</value>
 		</property>
 		<property name="length">
-			<value>0.56000000000000227</value>
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
 		</property>
 		<relationship name="commandTarget">
-			<destination>{e435958d-880e-4533-abf4-34310cd100a2}</destination>
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{66a56d9a-8b68-4f1e-8fb4-1b194cbfa6cf}">
+		<property name="start">
+			<value>7</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{77408b1c-ff1f-4ae2-aa4f-3b37cd25c7c4}">
+		<property name="start">
+			<value>8.1999999999999957</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{2e0159dc-4f6f-4fff-8a39-ca8b1d06964b}">
+		<property name="start">
+			<value>7.9000000000000004</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{c5f70d0f-d529-4ec2-b658-c357cbaa7257}">
+		<property name="start">
+			<value>7.6000000000000005</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{490c3194-c05c-4829-8e6e-5fb6770e8577}">
+		<property name="start">
+			<value>7.3000000000000007</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{26ade15e-4d04-473b-a925-6d9eacbc31fa}">
+		<property name="start">
+			<value>9.3499999999999996</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{d0614e41-f185-4ee3-9f18-6e63987b7684}">
+		<property name="start">
+			<value>9.0500000000000007</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{1c098e67-5eed-48bf-97f8-f415072a1e80}">
+		<property name="start">
+			<value>8.7500000000000018</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{73b4239e-198f-4b70-a75a-65ee796d9bde}">
+		<property name="start">
+			<value>8.4500000000000011</value>
+		</property>
+		<property name="length">
+			<value>0.099999999999999645</value>
+		</property>
+		<property name="name">
+			<value>Goblin running</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{95ab8d40-2ace-4873-8003-b3260c6b44e8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{1c68810b-f15a-404e-8682-8f45b903312e}">
+		<property name="start">
+			<value>13.850000000000001</value>
+		</property>
+		<property name="length">
+			<value>0.5</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{5956c938-897a-4a4b-9ad9-da05b5271505}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{95a689f9-61f0-4cdb-bdfe-edc852171026}">
 		<property name="name">
-			<value>Steps</value>
+			<value>Environment</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{d186aed8-6244-437b-b7ce-f93825338bb5}</destination>
