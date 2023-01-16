@@ -4,11 +4,13 @@ using UnityEngine;
 
 namespace EditorTools
 {
+#if UNITY_EDITOR
     /// <summary>
     /// saves the rotations of different body points to a scriptable object based on given data.
     /// </summary>
     public class ModelBodyPointsSaver : MonoBehaviour
     {
+        
         [SerializeField] private ModelBodyPoints modelBodyPoints;
         [SerializeField] private PoseDataSet poseDataSetToSaveTo;
         [SerializeField] private bool addPoseToPoseDataSet = true;
@@ -82,4 +84,5 @@ namespace EditorTools
             EditorUtility.FocusProjectWindow();
         }
     }
+#endif
 }

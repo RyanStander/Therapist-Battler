@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace EditorTools
 {
+#if UNITY_EDITOR
     /// <summary>
     /// This tooling is rather simple and is just an extension to the model body points save script, adds 2 buttons
     /// </summary>
@@ -28,4 +29,5 @@ namespace EditorTools
             }
         }
     }
+#endif
 }
