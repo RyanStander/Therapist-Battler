@@ -126,13 +126,11 @@ namespace Audio
             if (!eventData.IsEventOfType<AdvanceMusicStage>())
                 return;
 
-            var getResult = musicAudioEventInstance.getParameterByName(MusicParameterName, out var musicParameterValue);
-            Debug.Log(getResult);
-            
+            musicAudioEventInstance.getParameterByName(MusicParameterName, out var musicParameterValue);
+
             musicParameterValue++;
-            
-            var result = musicAudioEventInstance.setParameterByName(MusicParameterName, musicParameterValue);
-            Debug.Log(result);
+
+            musicAudioEventInstance.setParameterByName(MusicParameterName, musicParameterValue);
         }
 
         private void OnPlayAmbienceAudio(EventData eventData)
