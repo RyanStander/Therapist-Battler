@@ -70,6 +70,7 @@
 	<object class="GroupTrack" id="{bb4c66a9-89d1-4fa4-bf83-6acbf660e52a}">
 		<relationship name="modules">
 			<destination>{c0923dbe-5762-4ade-aa1b-c810b458cca3}</destination>
+			<destination>{87766dd8-893d-499a-8bb1-428247f7f295}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{76a56f85-7445-4861-97fe-9805c50167f8}</destination>
@@ -79,6 +80,7 @@
 		<relationship name="modules">
 			<destination>{c7a5c8c1-0f91-4dba-9200-6573207dbc33}</destination>
 			<destination>{c0923dbe-5762-4ade-aa1b-c810b458cca3}</destination>
+			<destination>{87766dd8-893d-499a-8bb1-428247f7f295}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{3d6bd347-ed99-4fca-97ac-ebc0323819fc}">
@@ -111,7 +113,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{dd98c794-0334-4a74-9453-3258099d4599}">
 		<property name="name">
-			<value>Audio 1</value>
+			<value>VO</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{1639f808-28d0-41b0-9296-22d16733667b}</destination>
@@ -127,6 +129,23 @@
 		<property name="length">
 			<value>0.5</value>
 		</property>
+		<relationship name="commandTarget">
+			<destination>{c3f68d72-3113-45cb-bc48-af4c87caee17}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{87766dd8-893d-499a-8bb1-428247f7f295}">
+		<property name="length">
+			<value>0</value>
+		</property>
+		<property name="commandType">
+			<value>3</value>
+		</property>
+		<property name="targetValue">
+			<value>100</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{a9d7e1d5-7f3e-4f09-a7a2-a8f141ea0db8}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{76a56f85-7445-4861-97fe-9805c50167f8}">
 		<property name="name">
