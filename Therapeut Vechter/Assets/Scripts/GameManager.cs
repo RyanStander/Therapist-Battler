@@ -520,7 +520,11 @@ public class GameManager : MonoBehaviour
             if (exercisePerformIndex >= puzzleEvent.exerciseData[eventExerciseDataIndex].timesToPerform)
             {
                 if (puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtEndOfExerciseSet)
+                {
+                    Debug.Log("Advancing exercise");
                     EventManager.currentManager.AddEvent(new AdvanceMusicStage());
+                }
+                    
 
                 exercisePerformIndex = 0;
 
