@@ -70,6 +70,8 @@ public class GameManager : MonoBehaviour
     //Used to display the new background
     private bool transitionToNewBackground;
 
+    private bool hasCompletedFirstLoop;
+
     #region Audio Data
 
     private bool isPlayingDialogueAudio;
@@ -299,6 +301,8 @@ public class GameManager : MonoBehaviour
         if (enemyHealth < 1)
         {
             ResetVariables();
+            if (fightingEvent.advanceToNextAudioStageAtEndOfExerciseSet)
+                EventManager.currentManager.AddEvent(new AdvanceMusicStage());
             gameEventsIndex++;
             return;
         }
@@ -363,8 +367,9 @@ public class GameManager : MonoBehaviour
 
         EventManager.currentManager.AddEvent(new SetupEnemy(fightingEvent.enemyGameObject, fightingEvent.enemyHealth,
             scoreUpdateSpeed));
-        
-        if (fightingEvent.playerAttackSequence[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet && eventExerciseDataIndex==0 && exercisePerformIndex==0)
+
+        if (fightingEvent.advanceToNextAudioStageAtStartOfExerciseSet && eventExerciseDataIndex == 0 &&
+            exercisePerformIndex == 0)
             EventManager.currentManager.AddEvent(new AdvanceMusicStage());
     }
 
@@ -423,16 +428,18 @@ public class GameManager : MonoBehaviour
 
         if (fightingEvent.playerAttackSequence[playerAttackIndex].timesToPerform <= exercisePerformIndex)
         {
-            if (fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtEndOfExerciseSet)
+            if (!hasCompletedFirstLoop && fightingEvent.playerAttackSequence[playerAttackIndex]
+                    .advanceToNextAudioStageAtEndOfExerciseSet)
                 EventManager.currentManager.AddEvent(new AdvanceMusicStage());
-            
+
             playerAttackIndex++;
 
             exercisePerformIndex = 0;
-            
+
             EventManager.currentManager.AddEvent(new PlaySfxAudio(successSfx));
-            
-            if (fightingEvent.playerAttackSequence.Length>playerAttackIndex && fightingEvent.playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtStartOfExerciseSet)
+
+            if (!hasCompletedFirstLoop && fightingEvent.playerAttackSequence.Length > playerAttackIndex && fightingEvent
+                    .playerAttackSequence[playerAttackIndex].advanceToNextAudioStageAtStartOfExerciseSet)
                 EventManager.currentManager.AddEvent(new AdvanceMusicStage());
 
             //Fire an enemy attack
@@ -442,6 +449,7 @@ public class GameManager : MonoBehaviour
             //We reset the attack index so that it starts the first attack again
             if (fightingEvent.playerAttackSequence.Length <= playerAttackIndex)
             {
+                hasCompletedFirstLoop = true;
                 playerAttackIndex = 0;
             }
 
@@ -496,7 +504,8 @@ public class GameManager : MonoBehaviour
             StartBackgroundTransition(puzzleData.BackgroundSprite);
         hasPerformedFirstTimeSetup = true;
 
-        if (puzzleData.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet && eventExerciseDataIndex==0 && exercisePerformIndex==0)
+        if (puzzleData.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet &&
+            eventExerciseDataIndex == 0 && exercisePerformIndex == 0)
             EventManager.currentManager.AddEvent(new AdvanceMusicStage());
     }
 
@@ -523,12 +532,13 @@ public class GameManager : MonoBehaviour
             {
                 if (puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtEndOfExerciseSet)
                     EventManager.currentManager.AddEvent(new AdvanceMusicStage());
-                
+
                 exercisePerformIndex = 0;
 
                 eventExerciseDataIndex++;
 
-                if (puzzleEvent.exerciseData.Length<eventExerciseDataIndex && puzzleEvent.exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet)
+                if (puzzleEvent.exerciseData.Length < eventExerciseDataIndex && puzzleEvent
+                        .exerciseData[eventExerciseDataIndex].advanceToNextAudioStageAtStartOfExerciseSet)
                     EventManager.currentManager.AddEvent(new AdvanceMusicStage());
             }
 
@@ -704,6 +714,7 @@ public class GameManager : MonoBehaviour
         exercisePerformIndex = 0;
         exerciseTimerIsRunning = false;
         isDead = false;
+        hasCompletedFirstLoop = false;
         EventManager.currentManager.AddEvent(new UpdateComboScore(false, 0, 0));
     }
 

@@ -12,17 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01d57eb5abaa50d468108e96c0dd3953, type: 3}
   m_Name: ACT_2_Level_2_FirstPuzzle
   m_EditorClassIdentifier: 
-  OverrideCurrentlyPlayingMusic: 0
-  OverrideMusic:
-    Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
   BackgroundSprite: {fileID: 21300000, guid: 2996449f52b54cb49b00d33ee49a0eaa, type: 3}
   exerciseData:
   - timesToPerform: 4
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 1
     ExerciseToPerform: {fileID: 11400000, guid: a9c682bf80842b34bacc9c894659fa80, type: 2}
     StartingVoiceLineToPlay:
       Guid:
@@ -40,19 +34,21 @@ MonoBehaviour:
       Path: event:/VO/FEEDBACK/Exercise squat
     SpriteToShow: {fileID: 0}
   - timesToPerform: 2
+    advanceToNextAudioStageAtStartOfExerciseSet: 0
+    advanceToNextAudioStageAtEndOfExerciseSet: 1
     ExerciseToPerform: {fileID: 11400000, guid: 48d778bdac327074cb9be6935c078da6, type: 2}
     StartingVoiceLineToPlay:
       Guid:
-        Data1: 387900223
-        Data2: 1102552745
-        Data3: 690805659
-        Data4: 1859221240
-      Path: event:/VO/EXERCISE/Poison brewer part 1
+        Data1: -667107405
+        Data2: 1303735566
+        Data3: -1243403091
+        Data4: 1622690200
+      Path: event:/VO/EXERCISE/Poison brewer part 2
     RandomVoiceLineToPlay:
       Guid:
-        Data1: -836732412
-        Data2: 1107966994
-        Data3: 891611551
-        Data4: -577693812
-      Path: event:/VO/FEEDBACK/Exercise split leg squat
+        Data1: 857482573
+        Data2: 1179209933
+        Data3: 1705245829
+        Data4: 1006089975
+      Path: event:/VO/FEEDBACK/Exercise left leg split leg squat
     SpriteToShow: {fileID: 0}
