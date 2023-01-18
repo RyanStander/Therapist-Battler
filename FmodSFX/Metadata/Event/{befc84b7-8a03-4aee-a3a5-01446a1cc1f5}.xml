@@ -69,6 +69,9 @@
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{9d119e23-d90b-43a0-bd58-f2040c2b197e}">
+		<property name="volume">
+			<value>-6.5</value>
+		</property>
 		<relationship name="effectChain">
 			<destination>{5c319d3a-8be8-4851-992e-9e89e0c52218}</destination>
 		</relationship>
@@ -90,7 +93,7 @@
 			<value>true</value>
 		</property>
 		<property name="triggerProbability">
-			<value>67.5</value>
+			<value>30.5</value>
 		</property>
 		<property name="length">
 			<value>3</value>
@@ -142,9 +145,14 @@
 	<object class="MixerBusEffectChain" id="{5c319d3a-8be8-4851-992e-9e89e0c52218}">
 		<relationship name="effects">
 			<destination>{25ebbe8c-f95b-45fa-a6a6-9d15b0e714a0}</destination>
+			<destination>{59791cdb-61ab-45c9-9a6a-a1de7a6005fe}</destination>
 		</relationship>
 	</object>
-	<object class="MixerBusPanner" id="{7b8db806-e62b-4aca-87ed-73dba223e007}" />
+	<object class="MixerBusPanner" id="{7b8db806-e62b-4aca-87ed-73dba223e007}">
+		<relationship name="modulators">
+			<destination>{9eab4abd-4771-47f3-bd47-5dcbdc78ee98}</destination>
+		</relationship>
+	</object>
 	<object class="MixerBusFader" id="{6590629a-2186-4df1-b125-f9032d6076d6}" />
 	<object class="RandomizerModulator" id="{71d4d476-ef06-41a2-ba3f-295378eb3d08}">
 		<property name="nameOfPropertyBeingModulated">
@@ -196,5 +204,14 @@
 	</object>
 	<object class="MixerBusPanner" id="{03b3ab54-cf7a-4048-adf1-7cb2f3f491bb}" />
 	<object class="MixerBusFader" id="{25ebbe8c-f95b-45fa-a6a6-9d15b0e714a0}" />
+	<object class="SFXReverbEffect" id="{59791cdb-61ab-45c9-9a6a-a1de7a6005fe}" />
+	<object class="RandomizerModulator" id="{9eab4abd-4771-47f3-bd47-5dcbdc78ee98}">
+		<property name="nameOfPropertyBeingModulated">
+			<value>stereoPan</value>
+		</property>
+		<property name="amount">
+			<value>19.5</value>
+		</property>
+	</object>
 	<object class="MixerBusFader" id="{099bef87-d21a-46bf-b58a-0436c0e3e640}" />
 </objects>

@@ -62,6 +62,7 @@
 	<object class="GroupTrack" id="{3f9c0192-7540-468c-bcd9-0ae8df360b74}">
 		<relationship name="modules">
 			<destination>{20e014d5-4c8d-4b3f-be21-9178dd78d1d6}</destination>
+			<destination>{785dabdd-4dce-4ad9-8413-5d4be49a3619}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{0bf7b29a-8161-4b75-b917-cde485fb4b25}</destination>
@@ -83,6 +84,7 @@
 			<destination>{34d4c581-084f-4bb8-a146-6f0f2bc03e39}</destination>
 			<destination>{9e654504-26c7-42d6-ad39-b1e91abd1c59}</destination>
 			<destination>{9fb33925-30ca-42da-a655-9ea04f92606d}</destination>
+			<destination>{785dabdd-4dce-4ad9-8413-5d4be49a3619}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{be9153c2-9b0c-46eb-b82b-b800e9eeefa7}">
@@ -103,8 +105,25 @@
 	</object>
 	<object class="MixerBusPanner" id="{cad98039-2dbd-48d2-84ec-e19c9326e42e}" />
 	<object class="SingleSound" id="{20e014d5-4c8d-4b3f-be21-9178dd78d1d6}">
+		<property name="start">
+			<value>4</value>
+		</property>
 		<property name="length">
-			<value>24.800000000000001</value>
+			<value>3.5</value>
+		</property>
+		<relationship name="audioFile">
+			<destination>{4238ab50-b678-482f-8a17-e9a3d9dc0797}</destination>
+		</relationship>
+	</object>
+	<object class="SingleSound" id="{785dabdd-4dce-4ad9-8413-5d4be49a3619}">
+		<property name="start">
+			<value>7.5</value>
+		</property>
+		<property name="length">
+			<value>18.300000000000001</value>
+		</property>
+		<property name="timelockedOffset">
+			<value>6.5</value>
 		</property>
 		<relationship name="audioFile">
 			<destination>{4238ab50-b678-482f-8a17-e9a3d9dc0797}</destination>
@@ -126,7 +145,7 @@
 	</object>
 	<object class="CommandSound" id="{34d4c581-084f-4bb8-a146-6f0f2bc03e39}">
 		<property name="start">
-			<value>19.900000000000002</value>
+			<value>16</value>
 		</property>
 		<property name="length">
 			<value>2</value>
@@ -140,7 +159,7 @@
 	</object>
 	<object class="CommandSound" id="{9e654504-26c7-42d6-ad39-b1e91abd1c59}">
 		<property name="start">
-			<value>19.5</value>
+			<value>16.5</value>
 		</property>
 		<property name="length">
 			<value>0.5</value>
@@ -154,7 +173,7 @@
 	</object>
 	<object class="CommandSound" id="{9fb33925-30ca-42da-a655-9ea04f92606d}">
 		<property name="start">
-			<value>14.9</value>
+			<value>7</value>
 		</property>
 		<property name="length">
 			<value>0.5</value>
