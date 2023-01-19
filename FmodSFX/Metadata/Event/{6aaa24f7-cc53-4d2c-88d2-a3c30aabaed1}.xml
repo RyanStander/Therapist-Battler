@@ -111,7 +111,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{ba1c1eb5-9a49-45d6-9e38-1292ecb93124}">
 		<property name="name">
-			<value>Audio 1</value>
+			<value>VO</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{5fa967e6-2b07-4ff7-ba1e-1becb443f17f}</destination>
@@ -127,6 +127,12 @@
 		<property name="length">
 			<value>0.5</value>
 		</property>
+		<property name="name">
+			<value>Boat inside</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{b0bd44c1-7feb-4898-a6ad-d679ebced2fb}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{186c4c03-c47d-43b5-bfe0-9377efde8a03}">
 		<property name="name">

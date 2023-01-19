@@ -2,7 +2,7 @@
 <objects serializationModel="Studio.02.02.00">
 	<object class="Event" id="{81103043-fc99-47aa-a352-073718bceeda}">
 		<property name="name">
-			<value>6_Exercis step on the boat</value>
+			<value>7_Exercis step on the boat</value>
 		</property>
 		<property name="outputFormat">
 			<value>1</value>
@@ -70,6 +70,8 @@
 	<object class="GroupTrack" id="{9a3b6ee0-1f8f-4207-aad0-790118757059}">
 		<relationship name="modules">
 			<destination>{88990873-0ab0-44a8-896f-0e1147daea7c}</destination>
+			<destination>{a6e497b4-68c9-4077-84f1-e573a2567243}</destination>
+			<destination>{0997acc7-2bb3-42fe-b85a-12f2ab56bfd2}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{977a3550-212b-4475-afc7-1a68748245d0}</destination>
@@ -79,6 +81,8 @@
 		<relationship name="modules">
 			<destination>{d9ae8be4-ef76-4bf2-97a5-24de19af1aee}</destination>
 			<destination>{88990873-0ab0-44a8-896f-0e1147daea7c}</destination>
+			<destination>{a6e497b4-68c9-4077-84f1-e573a2567243}</destination>
+			<destination>{0997acc7-2bb3-42fe-b85a-12f2ab56bfd2}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{e585c2d8-c672-4a84-aa3e-95a59d204d28}">
@@ -99,6 +103,9 @@
 	</object>
 	<object class="MixerBusPanner" id="{6b77b7a1-0ae7-48f7-9ae5-55a8ffe76a68}" />
 	<object class="SingleSound" id="{d9ae8be4-ef76-4bf2-97a5-24de19af1aee}">
+		<property name="start">
+			<value>2</value>
+		</property>
 		<property name="length">
 			<value>13.560498866213152</value>
 		</property>
@@ -108,7 +115,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{6c1d26cd-ab3c-47f3-8592-bd1656d3ed14}">
 		<property name="name">
-			<value>Audio 1</value>
+			<value>VO</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{257fa223-15ac-4033-8fee-77ffbb819898}</destination>
@@ -122,11 +129,36 @@
 	</object>
 	<object class="CommandSound" id="{88990873-0ab0-44a8-896f-0e1147daea7c}">
 		<property name="start">
-			<value>15</value>
+			<value>16</value>
 		</property>
 		<property name="commandType">
 			<value>1</value>
 		</property>
+		<relationship name="commandTarget">
+			<destination>{f7f4d319-e309-4d8b-8adf-c380474e2db9}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{a6e497b4-68c9-4077-84f1-e573a2567243}">
+		<property name="name">
+			<value>Water (sea) increase</value>
+		</property>
+		<property name="targetValue">
+			<value>100</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{f7f4d319-e309-4d8b-8adf-c380474e2db9}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{0997acc7-2bb3-42fe-b85a-12f2ab56bfd2}">
+		<property name="start">
+			<value>16</value>
+		</property>
+		<property name="commandType">
+			<value>1</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{d44fe454-e469-4133-b537-0cf0e43657ba}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{977a3550-212b-4475-afc7-1a68748245d0}">
 		<property name="name">

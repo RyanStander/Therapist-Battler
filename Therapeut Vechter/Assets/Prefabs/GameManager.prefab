@@ -61,8 +61,15 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   scoreUpdateSpeed: 5
+  successSfx:
+    Guid:
+      Data1: -1243236994
+      Data2: 1128325255
+      Data3: 1773018546
+      Data4: 1470369481
+    Path: event:/SFX/PLAYER/Exercise indicator
   comboDuration: 5
-  baseComboDamage: 100
+  comboDamageModifier: 0.1
   stageOneEffectsToEnable: []
   stageTwoEffectsToEnable: []
   timeUntilRepeatExerciseName: 10
@@ -93,8 +100,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   modelBodyPoints: {fileID: 0}
-  angleTolerance: 22
-  minimumRequiredMatches: 6
+  angleTolerance: 30
 --- !u!114 &7470805623104302945
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -70,6 +70,8 @@
 	<object class="GroupTrack" id="{40ad5341-d94c-43d7-9c49-4efd27f8bffd}">
 		<relationship name="modules">
 			<destination>{09565b4d-38ac-444a-b174-543d9112e921}</destination>
+			<destination>{f738dab6-9d7d-4324-946f-585357bf3416}</destination>
+			<destination>{bc1d56f7-48db-4d60-8bde-9f17a531f6c5}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{cb5d37eb-cf1b-4285-9b03-8686282c2aa9}</destination>
@@ -79,6 +81,8 @@
 		<relationship name="modules">
 			<destination>{8ec71a4d-9717-42a5-ad19-6759a3c671bd}</destination>
 			<destination>{09565b4d-38ac-444a-b174-543d9112e921}</destination>
+			<destination>{f738dab6-9d7d-4324-946f-585357bf3416}</destination>
+			<destination>{bc1d56f7-48db-4d60-8bde-9f17a531f6c5}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{71eef1e2-99c5-4bdd-930c-05af7b06dffc}">
@@ -99,6 +103,9 @@
 	</object>
 	<object class="MixerBusPanner" id="{6c59f183-c98d-4478-b52a-3ef4b7593136}" />
 	<object class="SingleSound" id="{8ec71a4d-9717-42a5-ad19-6759a3c671bd}">
+		<property name="start">
+			<value>3</value>
+		</property>
 		<property name="length">
 			<value>15.832471655328797</value>
 		</property>
@@ -108,7 +115,7 @@
 	</object>
 	<object class="EventMixerGroup" id="{8aacd64a-bab3-4bd0-8ba4-8e443b708562}">
 		<property name="name">
-			<value>Audio 1</value>
+			<value>VO</value>
 		</property>
 		<relationship name="effectChain">
 			<destination>{fb1c096a-635f-4a0b-9492-6c66077ce3c0}</destination>
@@ -122,11 +129,33 @@
 	</object>
 	<object class="CommandSound" id="{09565b4d-38ac-444a-b174-543d9112e921}">
 		<property name="start">
-			<value>18</value>
+			<value>20</value>
 		</property>
 		<property name="commandType">
 			<value>1</value>
 		</property>
+		<relationship name="commandTarget">
+			<destination>{403c742e-eef7-47f7-9759-a31c503d7c91}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{f738dab6-9d7d-4324-946f-585357bf3416}">
+		<property name="name">
+			<value>Forest ambient</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{403c742e-eef7-47f7-9759-a31c503d7c91}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{bc1d56f7-48db-4d60-8bde-9f17a531f6c5}">
+		<property name="length">
+			<value>0.20000000000000001</value>
+		</property>
+		<property name="commandType">
+			<value>1</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{d4d65d8f-1ffd-4a6b-8541-877f26c5eca9}</destination>
+		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{cb5d37eb-cf1b-4285-9b03-8686282c2aa9}">
 		<property name="name">
