@@ -72,6 +72,7 @@
 	<object class="GroupTrack" id="{924a84ba-9d2a-498d-bdc3-4fdc32247c6b}">
 		<relationship name="modules">
 			<destination>{064d2f23-0e37-4fee-a2cc-b1a2317d556f}</destination>
+			<destination>{3289fd6e-cf56-420f-a086-fc945044a675}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{360199d9-6fcb-409e-ab99-7257cbcad94f}</destination>
@@ -94,6 +95,7 @@
 	<object class="GroupTrack" id="{6a5223a9-ea4f-4d0a-8798-c092b9353b43}">
 		<relationship name="modules">
 			<destination>{c62e23fe-a256-4788-9c17-84303c24f62e}</destination>
+			<destination>{c72c1fbb-6379-49aa-bb19-98074f78541c}</destination>
 		</relationship>
 		<relationship name="mixerGroup">
 			<destination>{6e823e1e-6125-46ff-93eb-138c4d8240ca}</destination>
@@ -111,6 +113,8 @@
 			<destination>{c62e23fe-a256-4788-9c17-84303c24f62e}</destination>
 			<destination>{98d71d2a-31b6-4183-afe9-c7d62adc1a16}</destination>
 			<destination>{8a0eada5-a16e-4fa9-b621-70d8e78ae7e8}</destination>
+			<destination>{c72c1fbb-6379-49aa-bb19-98074f78541c}</destination>
+			<destination>{3289fd6e-cf56-420f-a086-fc945044a675}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerMaster" id="{404ee4b5-152e-4d31-920b-34936895650b}">
@@ -161,6 +165,17 @@
 		</property>
 		<relationship name="commandTarget">
 			<destination>{384c83bf-8859-444f-a03f-4892aac15277}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{3289fd6e-cf56-420f-a086-fc945044a675}">
+		<property name="length">
+			<value>0.5</value>
+		</property>
+		<property name="commandType">
+			<value>1</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{403c742e-eef7-47f7-9759-a31c503d7c91}</destination>
 		</relationship>
 	</object>
 	<object class="EventMixerGroup" id="{360199d9-6fcb-409e-ab99-7257cbcad94f}">
@@ -280,6 +295,17 @@
 	<object class="CommandSound" id="{c62e23fe-a256-4788-9c17-84303c24f62e}">
 		<property name="start">
 			<value>6.6000000000000005</value>
+		</property>
+		<property name="commandType">
+			<value>3</value>
+		</property>
+		<relationship name="commandTarget">
+			<destination>{a9d7e1d5-7f3e-4f09-a7a2-a8f141ea0db8}</destination>
+		</relationship>
+	</object>
+	<object class="CommandSound" id="{c72c1fbb-6379-49aa-bb19-98074f78541c}">
+		<property name="length">
+			<value>0</value>
 		</property>
 		<property name="commandType">
 			<value>3</value>
